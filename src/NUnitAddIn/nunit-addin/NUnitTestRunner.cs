@@ -192,7 +192,7 @@ namespace NUnit.AddInRunner
 				CoreExtensions.Host.InitializeService();
 			}
 
-			string assemblyFile = new Uri(assembly.EscapedCodeBase).LocalPath;
+            string assemblyFile = toLocalPath(assembly);
 			TestPackage package = new TestPackage(assemblyFile);
 			TestSuiteBuilder builder = new TestSuiteBuilder();
 			TestSuite testAssembly = builder.Build(package);
@@ -208,6 +208,14 @@ namespace NUnit.AddInRunner
             NUC.TestResult result = testAssembly.Run(listener, filter);
 
             return toTestRunState(result);
+        }
+
+        static string toLocalPath(Assembly assembly)
+        {
+            //return new Uri(assembly.EscapedCodeBase).LocalPath;
+
+            string escapedCodeBase = assembly.CodeBase.Replace("#", "%23");
+            return new Uri(escapedCodeBase).LocalPath;
         }
 
         static TestRunState toTestRunState(NUC.TestResult result)
