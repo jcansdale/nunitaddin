@@ -599,11 +599,15 @@ namespace NUnit.AddInRunner
             {
                 if (result.Test.TestType == "Test Fixture" && result.IsFailure)
                 {
-					if (result.Message != null && result.Message.Length > 0)
+                    if (result.Message != null && result.Message.Length > 0)
 					{
-						// HACK: Output as much info as we have (no exception type).
-						this.testListener.WriteLine("TestFixture failed: " + result.Message, Category.Info);
-						this.testListener.WriteLine(result.StackTrace, Category.Info);
+                        // Don't output message when child test fails.
+                        if (result.FailureSite != FailureSite.Child)
+                        {
+                            // HACK: Output as much info as we have (no exception type).
+                            this.testListener.WriteLine("TestFixture failed: " + result.Message, Category.Info);
+                            this.testListener.WriteLine(result.StackTrace, Category.Info);
+                        }
 					}
                 }
             }
