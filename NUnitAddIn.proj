@@ -2,7 +2,8 @@
 
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
-		<NUnitSolutionFile>..\nunit20_Release-2-4-Current\src\nunit_vs2005.sln</NUnitSolutionFile>
+		<!-- <NUnitSolutionFile>..\nunit20_Release-2-4-Current\src\nunit_vs2005.sln</NUnitSolutionFile> -->
+		<NUnitSolutionFile>..\nunit20\src\nunit_vs2005.sln</NUnitSolutionFile>
 		<ExtensionsSolutionFile>src\NUnit.Core.Extensions.Vsts.sln</ExtensionsSolutionFile>
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
