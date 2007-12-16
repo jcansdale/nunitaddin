@@ -234,35 +234,84 @@ namespace NUnit.AddInRunner
             }
         }
 
-		class MethodFilter : SimpleNameFilter
-		{
-			public MethodFilter(Assembly assembly, MethodInfo method)
-			{
+        class MethodFilter : TestFilter
+        {
+            MethodInfo method;
+            IList types;
+
+            public MethodFilter(Assembly assembly, MethodInfo method)
+            {
+                this.method = method.GetBaseDefinition();
                 Type type = method.ReflectedType;
-                foreach (Type candidateType in getCandidateTypes(assembly, type))
-                {
-                    this.Add(candidateType.FullName + "." + method.Name);
-
-                    /* TODO:
-                    // Support for parameterized tests.
-                    if (testFullName.StartsWith(fullName + "("))
-                    {
-                        return true;
-                    }
-                    */
-
-                    /* TODO
-                    // Test name might be qualified with method's type name.
-                    string qualifiedMethodName = this.method.DeclaringType.Name + "." + this.method.Name;
-                    string fullName2 = type.FullName + "." + qualifiedMethodName;
-                    if (testFullName == fullName2)
-                    {
-                        return true;
-                    }
-                    */
-                }
+                this.types = getCandidateTypes(assembly, type);
             }
-		}
+
+            public override bool Match(ITest test)
+            {
+                NotRunnableTestCase notRunnableTestCase = test as NotRunnableTestCase;
+                if(notRunnableTestCase != null)
+                {
+                    // NOTE: Can't match on MethodInfo so use FullName.
+                    string fullName = this.method.ReflectedType.FullName + "." + this.method.Name;
+                    if (notRunnableTestCase.TestName.FullName == fullName)
+                    {
+                        return true;
+                    }
+                }
+
+                TestMethod testMethod = test as TestMethod;
+                if (testMethod == null)
+                {
+                    return false;
+                }
+
+                if (testMethod.Method.MethodHandle.Value != this.method.MethodHandle.Value)
+                {
+                    return false;
+                }
+
+                Type reflectedType = testMethod.Method.ReflectedType;
+                foreach (Type type in this.types)
+                {
+                    if (reflectedType == type)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        //class MethodFilter : SimpleNameFilter
+        //{
+        //    public MethodFilter(Assembly assembly, MethodInfo method)
+        //    {
+        //        Type type = method.ReflectedType;
+        //        foreach (Type candidateType in getCandidateTypes(assembly, type))
+        //        {
+        //            this.Add(candidateType.FullName + "." + method.Name);
+
+        //            /* TODO:
+        //            // Support for parameterized tests.
+        //            if (testFullName.StartsWith(fullName + "("))
+        //            {
+        //                return true;
+        //            }
+        //            */
+
+        //            /* TODO
+        //            // Test name might be qualified with method's type name.
+        //            string qualifiedMethodName = this.method.DeclaringType.Name + "." + this.method.Name;
+        //            string fullName2 = type.FullName + "." + qualifiedMethodName;
+        //            if (testFullName == fullName2)
+        //            {
+        //                return true;
+        //            }
+        //            */
+        //        }
+        //    }
+        //}
 
 		class TypeFilter : SimpleNameFilter
 		{

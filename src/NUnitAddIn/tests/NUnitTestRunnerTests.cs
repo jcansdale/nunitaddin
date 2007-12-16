@@ -71,6 +71,21 @@ namespace NUnit.AddInRunner.Tests
         }
 
         [Test]
+        public void RunMember_BadsigTests_TestRetInt()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            MemberInfo member = typeof(Examples.BadsigTests).GetMethod("TestRetInt");
+            TestRunState result = testRunner.RunMember(testListener, assembly, member);
+            Assert.AreEqual(1, testListener.TestFinishedCount);
+            Assert.AreEqual(0, testListener.SuccessCount);
+            Assert.AreEqual(1, testListener.IgnoredCount);
+            Assert.AreEqual(0, testListener.FailureCount);
+            Assert.AreEqual(result, TestRunState.Success);
+        }
+
+        [Test]
         public void RunMember_Ignored_Test()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -321,6 +336,24 @@ namespace NUnit.AddInRunner.Tests
 
         public class ConcreateTests2 : AbstractTests
         {
+        }
+
+        /// <test pass="0" fail="0" ignore="2" />
+        [TestFixture]
+        public class BadsigTests
+        {
+            /// <test pass="0" fail="0" ignore="1" />
+            [Test]
+            public int TestRetInt()
+            {
+                return 0;
+            }
+
+            /// <test pass="0" fail="0" ignore="1" />
+            [Test]
+            public void TestTakeInt(int i)
+            {
+            }
         }
 
         /// <test pass="0" fail="0" />
