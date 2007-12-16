@@ -14,13 +14,9 @@
    <DirectoryRef Id="INSTALLDIR">
     <Directory Id="D__nunitaddin_b" Name="NUnit">
     <Directory Id="D__nunitaddin_2_4" Name="2.4">
-
-	<Directory Id="D__nunitaddin_2_4_addins" Name="addins">
-            <Component Id="C__nunitaddin_2_4_addins" DiskId="1" Guid="0b20200e-0398-11dc-8314-0800200c9a66">
-                <File Id="F__nunitaddin_2_4_addins_txt" Name="addins.txt" src="v1.0\NUnit24\addins.txt" />
-            </Component>
-	</Directory>
-
+		<Component Id="C__nunitaddin_2_4_addins" DiskId="1" Guid="0b20200e-0398-11dc-8314-0800200c9a66">
+			<File Id="F__nunitaddin_2_4_addins_txt" Name="addins.txt" src="v1.0\NUnit24\addins.txt" />
+		</Component>
         <Component Id="C__addin24" DiskId="1" Guid="6753bd06-c98f-11db-8314-0800200c9a66">
 			<File Id="F__nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.addin.dll" src="v1.0\NUnit24\nunit.addin.dll" />
 			
