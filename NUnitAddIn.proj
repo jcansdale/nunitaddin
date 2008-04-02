@@ -16,7 +16,11 @@
 		<Wxs Include="install\nunitaddin.wxs" />
 		<Wxs Include="install\Package.wxs" />
 	</ItemGroup>
-		
+	
+    <ItemGroup>
+        <NUnitFiles Include="..\nunit20_Release-2-4-Current\build\win32\net\1.1\release\**\*.*"/>
+    </ItemGroup>
+    		
 	<Target Name="Clean">
 		<RemoveDir Directories="$(OutputPath)" />
 	</Target>
@@ -26,9 +30,17 @@
 	<Target Name="BuildNUnitAddin">
 		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_v1_0)" />
 	</Target>
-	
+
 	<Target Name="BuildNUnit">
+		<!--
 		<MSBuild Projects="$(NUnitSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_v1_0)" />
+		-->
+
+        <Copy
+            SourceFiles="@(NUnitFiles)"
+            DestinationFolder="$(OutputPath_V1_0)"
+        />
+
 	</Target>
 	
 	<Target Name="Package">

@@ -55,7 +55,7 @@
           <File Id="nunit_mocks_dll" Name="NUM.DLL" LongName="nunit.mocks.dll" src="v1.0\NUnit24\nunit.mocks.dll" />
           <File Id="F__TestDriven_Framework_dll" Name="TDFW.DLL" LongName="TestDriven.Framework.dll" src="v1.0\NUnit24\TestDriven.Framework.dll" />
           <File Id="nunit_license.rtf" Name="license.rtf" src="v1.0\NUnit24\license.rtf" />
-          <File Id="log4net_dll" Name="log4net.dll" src="v1.0\NUnit24\log4net.dll" />
+          <!-- <File Id="log4net_dll" Name="log4net.dll" src="v1.0\NUnit24\log4net.dll" /> -->
         </Component>
         
         <Component Id="C__nunit24_console" DiskId="1" Guid="1990b06c-c98f-11db-8314-0800200c9a66">
