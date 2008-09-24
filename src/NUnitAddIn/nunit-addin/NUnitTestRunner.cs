@@ -12,12 +12,19 @@ namespace NUnit.AddInRunner
     using NUnit.Util;
     using NUnit.Core.Builders;
 	using NUnit.Core.Filters;
+    using Microsoft.Win32;
 
     public class NUnitTestRunner : ITestRunner
     {
+        // TODO: Create standard API for access to category settings.
+        // TODO: Always run test excluded by category when targeted directly.
+        // TODO: Add support for include and exclude category.
+
         public TestRunState RunAssembly(ITestListener testListener, Assembly assembly)
         {
             ITestFilter filter = TestFilter.Empty;
+            filter = addCategoriesFilter(filter);
+
             return run(testListener, assembly, filter);
         }
 
@@ -41,6 +48,8 @@ namespace NUnit.AddInRunner
         TestRunState runMethod(ITestListener testListener, Assembly assembly, MethodInfo method)
         {
             ITestFilter filter = new MethodFilter(assembly, method);
+            filter = addCategoriesFilter(filter);
+
             TestRunState state = run(testListener, assembly, filter);
             if (state == TestRunState.NoTests)
             {
@@ -90,6 +99,8 @@ namespace NUnit.AddInRunner
         TestRunState runType(ITestListener testListener, Assembly assembly, Type type)
         {
             ITestFilter filter = new TypeFilter(assembly, type);
+            filter = addCategoriesFilter(filter);
+
             TestRunState state = run(testListener, assembly, filter);
             if (state == TestRunState.NoTests)
             {
@@ -106,6 +117,67 @@ namespace NUnit.AddInRunner
             }
 
             return state;
+        }
+
+        ITestFilter addCategoriesFilter(ITestFilter filter)
+        {
+            string[] categories = findCategories();
+            CategoriesFilter categoriesFilter = findCategoriesFilter();
+
+            if (categories != null && categoriesFilter != CategoriesFilter.None)
+            {
+                switch (categoriesFilter)
+                {
+                    case CategoriesFilter.Exclude:
+                        filter = new AndFilter(filter, new NotFilter(new CategoryFilter(categories)));
+                        break;
+                    case CategoriesFilter.Include:
+                        filter = new AndFilter(filter, new CategoryFilter(categories));
+                        break;
+                }
+            }
+
+            return filter;
+        }
+
+        static string[] findCategories()
+        {
+            string categories = findOption("Categories");
+            if (categories == null)
+            {
+                return null;
+            }
+
+            return categories.Split(',', ';');
+        }
+
+        static CategoriesFilter findCategoriesFilter()
+        {
+            string str = findOption("CategoriesFilter");
+            if (str == null)
+            {
+                return CategoriesFilter.None;
+            }
+
+            return (CategoriesFilter)Enum.Parse(typeof(CategoriesFilter), str, true);
+        }
+
+        static string findOption(string name)
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\MutantDesign\TestDriven.NET\Options\General", false))
+            {
+                if (key == null)
+                {
+                    return null;
+                }
+
+                return (string)key.GetValue(name);
+            }
+        }
+
+        enum CategoriesFilter
+        {
+            None, Exclude, Include
         }
 
         static bool hasTestAttribute(Assembly assembly, MethodInfo method)
@@ -170,6 +242,8 @@ namespace NUnit.AddInRunner
         public TestRunState RunNamespace(ITestListener testListener, Assembly assembly, string ns)
         {
             ITestFilter filter = new NamespaceFilter(assembly, ns);
+            filter = addCategoriesFilter(filter);
+
             return run(testListener, assembly, filter);
         }
 
