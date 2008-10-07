@@ -46,6 +46,7 @@
       <Link>license.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="TestDrivenOptions.cs" />
     <Compile Include="NUnitTestRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="..\..\..\install\nunitaddin.wxs">

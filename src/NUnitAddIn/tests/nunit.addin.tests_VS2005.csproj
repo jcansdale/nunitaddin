@@ -42,6 +42,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MockTestListener.cs" />
+    <Compile Include="NUnitTestRunnerCategoriesTests.cs" />
     <Compile Include="NUnitTestRunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

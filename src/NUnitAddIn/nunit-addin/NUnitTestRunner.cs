@@ -3,28 +3,25 @@ namespace NUnit.AddInRunner
     using System;
     using System.Text;
     using System.Reflection;
+    using System.Diagnostics;
+    using System.Collections;
     using TestDriven.Framework;
+    using TestDriven.Framework.Options;
     using TDF = TestDriven.Framework;
     using NUnit.Core;
     using NUC = NUnit.Core;
-    using System.Diagnostics;
-    using System.Collections;
     using NUnit.Util;
-    using NUnit.Core.Builders;
 	using NUnit.Core.Filters;
-    using Microsoft.Win32;
+    using NUnit.Core.Builders;
 
     public class NUnitTestRunner : ITestRunner
     {
-        // TODO: Create standard API for access to category settings.
-        // TODO: Always run test excluded by category when targeted directly.
-        // TODO: Add support for include and exclude category.
+        // TODO: Always run test fixture excluded by category when targeted directly.
 
         public TestRunState RunAssembly(ITestListener testListener, Assembly assembly)
         {
             ITestFilter filter = TestFilter.Empty;
             filter = addCategoriesFilter(filter);
-
             return run(testListener, assembly, filter);
         }
 
@@ -48,7 +45,9 @@ namespace NUnit.AddInRunner
         TestRunState runMethod(ITestListener testListener, Assembly assembly, MethodInfo method)
         {
             ITestFilter filter = new MethodFilter(assembly, method);
-            filter = addCategoriesFilter(filter);
+
+            // NOTE: Don't filter by category when targeting an individual method.
+            //filter = addCategoriesFilter(filter);
 
             TestRunState state = run(testListener, assembly, filter);
             if (state == TestRunState.NoTests)
@@ -121,63 +120,19 @@ namespace NUnit.AddInRunner
 
         ITestFilter addCategoriesFilter(ITestFilter filter)
         {
-            string[] categories = findCategories();
-            CategoriesFilter categoriesFilter = findCategoriesFilter();
-
-            if (categories != null && categoriesFilter != CategoriesFilter.None)
+            string[] includeCategories = TestDrivenOptions.IncludeCategories;
+            if (includeCategories != null)
             {
-                switch (categoriesFilter)
-                {
-                    case CategoriesFilter.Exclude:
-                        filter = new AndFilter(filter, new NotFilter(new CategoryFilter(categories)));
-                        break;
-                    case CategoriesFilter.Include:
-                        filter = new AndFilter(filter, new CategoryFilter(categories));
-                        break;
-                }
+                filter = new AndFilter(filter, new CategoryFilter(includeCategories));
+            }
+
+            string[] excludeCategories = TestDrivenOptions.ExcludeCategories;
+            if (excludeCategories != null)
+            {
+                filter = new AndFilter(filter, new NotFilter(new CategoryFilter(excludeCategories)));
             }
 
             return filter;
-        }
-
-        static string[] findCategories()
-        {
-            string categories = findOption("Categories");
-            if (categories == null)
-            {
-                return null;
-            }
-
-            return categories.Split(',', ';');
-        }
-
-        static CategoriesFilter findCategoriesFilter()
-        {
-            string str = findOption("CategoriesFilter");
-            if (str == null)
-            {
-                return CategoriesFilter.None;
-            }
-
-            return (CategoriesFilter)Enum.Parse(typeof(CategoriesFilter), str, true);
-        }
-
-        static string findOption(string name)
-        {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\MutantDesign\TestDriven.NET\Options\General", false))
-            {
-                if (key == null)
-                {
-                    return null;
-                }
-
-                return (string)key.GetValue(name);
-            }
-        }
-
-        enum CategoriesFilter
-        {
-            None, Exclude, Include
         }
 
         static bool hasTestAttribute(Assembly assembly, MethodInfo method)
