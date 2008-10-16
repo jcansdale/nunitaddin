@@ -34,7 +34,7 @@
     </Reference>
     <Reference Include="nunit.util, Version=2.4.0.2, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v1.0\NUnit24\nunit.util.dll</HintPath>
+      <HintPath>..\..\..\build\v1.0\NUnit25\nunit.util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -42,7 +42,7 @@
     <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\nunit20_Release-2-4-Current\src\license.rtf">
+    <None Include="..\..\..\..\nunit20\license.rtf">
       <Link>license.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -58,13 +58,13 @@
     <Compile Include="StackTraceFilter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\build\v1.0\NUnit24\nunit.core.dll">
+    <Content Include="..\..\..\build\v1.0\NUnit25\nunit.core.dll">
       <Link>nunit.core.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v1.0\NUnit24\nunit.core.interfaces.dll">
+    <Content Include="..\..\..\build\v1.0\NUnit25\nunit.core.interfaces.dll">
       <Link>nunit.core.interfaces.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v1.0\NUnit24\nunit.util.dll">
+    <Content Include="..\..\..\build\v1.0\NUnit25\nunit.util.dll">
       <Link>nunit.util.dll</Link>
     </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
