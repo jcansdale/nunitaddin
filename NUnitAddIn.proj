@@ -6,7 +6,7 @@
 		<ExtensionsSolutionFile>src\NUnit.Core.Extensions.Vsts.sln</ExtensionsSolutionFile>
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
-		<OutputPath_V1_0>$(OutputPath)v1.0\NUnit24\</OutputPath_V1_0>
+		<OutputPath_V1_0>$(OutputPath)v1.0\NUnit25\</OutputPath_V1_0>
 		<Properties_v1_0>OutputPath=$(OutputPath_V1_0);NoWarn=;TargetFrameworkVersion=v1.0;MSBuildExtensionsPath=$(MSBuildExtensionsPath);CustomAfterMicrosoftCommonTargets=$(MSBuildExtensionsPath)\CrossCompile.CSharp.targets</Properties_v1_0>
 		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
 		<PackageId>{AB679633-3BD8-4b21-9043-BACB811A72C7}</PackageId>
