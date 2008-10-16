@@ -277,6 +277,8 @@ namespace NUnit.AddInRunner
 
             public override bool Match(ITest test)
             {
+                // HACK: What should this be replaced by?
+                /*
                 NotRunnableTestCase notRunnableTestCase = test as NotRunnableTestCase;
                 if(notRunnableTestCase != null)
                 {
@@ -287,6 +289,7 @@ namespace NUnit.AddInRunner
                         return true;
                     }
                 }
+                */
 
                 TestMethod testMethod = test as TestMethod;
                 if (testMethod == null)
@@ -624,7 +627,7 @@ namespace NUnit.AddInRunner
 			{
 			}
 
-            public void TestFinished(TestCaseResult result)
+            public void TestFinished(NUC.TestResult result)
             {
                 TDF.TestResult summary = new TDF.TestResult();
                 summary.TotalTests = totalTestCases;
@@ -650,7 +653,7 @@ namespace NUnit.AddInRunner
                 this.testListener.TestFinished(summary);
             }
 
-            static TDF.TestState toTestState(TestCaseResult result)
+            static TDF.TestState toTestState(NUC.TestResult result)
             {
                 if (result.IsFailure)
                 {
@@ -673,9 +676,12 @@ namespace NUnit.AddInRunner
                 return TDF.TestState.Ignored;
             }
 
-            public void SuiteFinished(TestSuiteResult result)
+            public void SuiteFinished(NUC.TestResult result)
             {
-                if (result.Test.TestType == "Test Fixture" && result.IsFailure)
+                //if (result.Test.TestType == "Test Fixture" && result.IsFailure)
+
+                // NOTE: Output if we have a stack trace.
+                if (result.StackTrace != null)
                 {
                     if (result.Message != null && result.Message.Length > 0)
 					{
