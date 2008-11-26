@@ -3,74 +3,74 @@
   <Fragment>
 
 	  <Feature Id="F__nunitaddin25" Title="TestDriven.Net add-in for NUnit 2.5" Level="1">
-		  <ComponentRef Id="C__addin25" />
-		  <ComponentRef Id="C__addin25_64" />
-		  <ComponentRef Id="C__nunit25" />
-		  <ComponentRef Id="C__nunit25_gui" />
-		  <ComponentRef Id="C__nunit25_console" />
+		  <ComponentRef Id="C__25.addin" />
+		  <ComponentRef Id="C__25.addin_64" />
+		  <ComponentRef Id="C__25.nunit" />
+		  <ComponentRef Id="C__25.nunit_gui" />
+		  <ComponentRef Id="C__25.nunit_console" />
 		  <ComponentRef Id="C__nunitaddin_2_5_addins" />
 	  </Feature>
 
-   <DirectoryRef Id="INSTALLDIR">
-    <Directory Id="D__nunitaddin_c" Name="NUnit">
-    <Directory Id="D__nunitaddin_2_5" Name="2.5">
-		<Component Id="C__nunitaddin_2_5_addins" DiskId="1" Guid="5535c3a0-9b87-11dd-ad8b-0800200c9a66">
-			<File Id="F__nunitaddin_2_5_addins_txt" Name="addins.txt" src="v1.0\NUnit25\addins.txt" />
-		</Component>
-        <Component Id="C__addin25" DiskId="1" Guid="a1d194a0-9b87-11dd-ad8b-0800200c9a66">
-			<File Id="F__nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.addin.dll" src="v1.0\NUnit25\nunit.addin.dll" />
-			
-			<!-- use this test runner if using nunit.framework -->
-			<Registry Id="R__NUnit" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
-			<Registry Id="R__NUnit_AssemblyPath" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="AssemblyPath" Type="string" Value="[D__nunitaddin_2_5]nunit.addin.dll" />
-			<Registry Id="R__NUnit_TypeName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="TypeName" Type="string" Value="NUnit.AddInRunner.NUnitTestRunner" />
-			<Registry Id="R__NUnit_TargetFrameworkAssemblyName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
-			<Registry Id="R__NUnit_Application" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="Application" Type="string" Value="[D__nunitaddin_2_5]nunit.exe" />
-        </Component>
-	<!-- register for 64 bit mode -->
-        <Component Id="C__addin25_64" Win64="yes" DiskId="1" Guid="f3b68be0-9b87-11dd-ad8b-0800200c9a66">
-			<Registry Id="R__NUnit_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
-			<Registry Id="R__NUnit_AssemblyPath_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="AssemblyPath" Type="string" Value="[D__nunitaddin_2_5]nunit.addin.dll" />
-			<Registry Id="R__NUnit_TypeName_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="TypeName" Type="string" Value="NUnit.AddInRunner.NUnitTestRunner" />
-			<Registry Id="R__NUnit_TargetFrameworkAssemblyName_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
-			<Registry Id="R__NUnit_Application_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-				Name="Application" Type="string" Value="[D__nunitaddin_2_5]nunit.exe" />
-        </Component>
-        
-        <Component Id="C__nunit25" DiskId="1" Guid="208927e0-9b88-11dd-ad8b-0800200c9a66">
-          <File Id="file13" Name="NUNITC_1.DLL" LongName="nunit.core.dll" src="v1.0\NUnit25\nunit.core.dll" />
-          <File Id="F__nunit_core_interfaces_dll" Name="NUNITCI.DLL" LongName="nunit.core.interfaces.dll" src="v1.0\NUnit25\nunit.core.interfaces.dll" />
-          <File Id="file17" Name="NUNITF_1.DLL" LongName="nunit.framework.dll" src="v1.0\NUnit25\nunit.framework.dll" />
-          <File Id="file19" Name="NUNITF_1.XML" LongName="nunit.framework.xml" src="v1.0\NUnit25\nunit.framework.xml" />
-          <File Id="nunit_util_dll" Name="NUNITU_1.DLL" LongName="nunit.util.dll" src="v1.0\NUnit25\nunit.util.dll" />
-          <File Id="nunit_core_extensions_dll" Name="NCE33.DLL" LongName="nunit.core.extensions.dll" src="v1.0\NUnit25\nunit.core.extensions.dll" />
-          <File Id="nunit_framework_extensions_dll" Name="NFE.DLL" LongName="nunit.framework.extensions.dll" src="v1.0\NUnit25\nunit.framework.extensions.dll" />
-          <File Id="nunit_mocks_dll" Name="NUM.DLL" LongName="nunit.mocks.dll" src="v1.0\NUnit25\nunit.mocks.dll" />
-          <File Id="F__TestDriven_Framework_dll" Name="TDFW.DLL" LongName="TestDriven.Framework.dll" src="v1.0\NUnit25\TestDriven.Framework.dll" />
-          <File Id="nunit_license.rtf" Name="license.rtf" src="v1.0\NUnit25\license.rtf" />
-        </Component>
-        
-        <Component Id="C__nunit25_console" DiskId="1" Guid="54ac52e0-9b88-11dd-ad8b-0800200c9a66">
-          <File Id="file7" Name="NUNIT-_1.EXE" LongName="nunit-console.exe" src="v1.0\NUnit25\nunit-console.exe" />
-          <File Id="file8" Name="NUNIT-_1.CON" LongName="nunit-console.exe.config" src="v1.0\NUnit25\nunit-console.exe.config" />
-          <File Id="file31" Name="NUNCR_1.EXE" LongName="nunit-console-runner.dll" src="v1.0\NUnit25\nunit-console-runner.dll" />
-        </Component>
-       
-        <Component Id="C__nunit25_gui" DiskId="1" Guid="6d014440-9b88-11dd-ad8b-0800200c9a66">
-          <File Id="F__nunit_gui" Name="NUGUI.EXE" src="v1.0\NUnit25\nunit.exe" LongName="nunit.exe" Vital="yes" KeyPath="yes" />
-          <File Id="file11" Name="NUNIT-_2.CON" LongName="nunit.exe.config" src="v1.0\NUnit25\nunit.exe.config" />
-          <File Id="file32" Name="NUNGR_2.EXE" LongName="nunit-gui-runner.dll" src="v1.0\NUnit25\nunit-gui-runner.dll" />
-          <File Id="file25" Name="NUNITU_2.DLL" LongName="nunit.uikit.dll" src="v1.0\NUnit25\nunit.uikit.dll" />
-        </Component>
-      </Directory>
-      </Directory>
-     </DirectoryRef>
+	<DirectoryRef Id="INSTALLDIR">
+		<Directory Id="D__25.nunitaddin" Name="NUnit">
+			<Directory Id="D__25.nunitaddin_2_5" Name="2.5">
+				<Component Id="C__nunitaddin_2_5_addins" DiskId="1" Guid="5535c3a0-9b87-11dd-ad8b-0800200c9a66">
+					<File Id="F__nunitaddin_2_5_addins_txt" Name="addins.txt" src="v1.1\NUnit25\addins.txt" />
+				</Component>
+				<Component Id="C__25.addin" DiskId="1" Guid="a1d194a0-9b87-11dd-ad8b-0800200c9a66">
+					<File Id="F__25.nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.addin.dll" src="v1.1\NUnit25\nunit.addin.dll" />
+					<File Id="F__25.TestDriven_Framework_dll" Name="TDFW.DLL" LongName="TestDriven.Framework.dll" src="v1.1\NUnit25\TestDriven.Framework.dll" />
+					
+					<!-- use this test runner if using nunit.framework -->
+					<Registry Id="R__25.NUnit" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
+					<Registry Id="R__25.NUnit_AssemblyPath" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="AssemblyPath" Type="string" Value="[D__25.nunitaddin_2_5]nunit.addin.dll" />
+					<Registry Id="R__25.NUnit_TypeName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="TypeName" Type="string" Value="NUnit.AddInRunner.NUnitTestRunner" />
+					<Registry Id="R__25.NUnit_TargetFrameworkAssemblyName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
+					<Registry Id="R__25.NUnit_Application" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
+				</Component>
+				<!-- register for 64 bit mode -->
+				<Component Id="C__25.addin_64" Win64="yes" DiskId="1" Guid="f3b68be0-9b87-11dd-ad8b-0800200c9a66">
+					<Registry Id="R__25.NUnit_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
+					<Registry Id="R__25.NUnit_AssemblyPath_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="AssemblyPath" Type="string" Value="[D__25.nunitaddin_2_5]nunit.addin.dll" />
+					<Registry Id="R__25.NUnit_TypeName_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="TypeName" Type="string" Value="NUnit.AddInRunner.NUnitTestRunner" />
+					<Registry Id="R__25.NUnit_TargetFrameworkAssemblyName_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
+					<Registry Id="R__25.NUnit_Application_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
+				</Component>
+				
+				<Component Id="C__25.nunit" DiskId="1" Guid="208927e0-9b88-11dd-ad8b-0800200c9a66">
+				  <File Id="F__25.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="v1.1\NUnit25\nunit.framework.dll" />
+				  <File Id="F__25.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="v1.1\NUnit25\nunit.framework.xml" />
+				  <File Id="F__25.nunit_core_dll" Name="NUC.DLL" LongName="nunit.core.dll" src="v1.1\NUnit25\nunit.core.dll" />
+				  <File Id="F__25.nunit_core_interfaces_dll" Name="NUCI.DLL" LongName="nunit.core.interfaces.dll" src="v1.1\NUnit25\nunit.core.interfaces.dll" />
+				  <File Id="F__25.nunit_util_dll" Name="NUU.DLL" LongName="nunit.util.dll" src="v1.1\NUnit25\nunit.util.dll" />
+				  <File Id="F__25.nunit_license_rtf" Name="license.rtf" src="v1.1\NUnit25\license.rtf" />
+				  <File Id="F__25.nunit_framework_extensions_dll" Name="NFE.DLL" LongName="nunit.framework.extensions.dll" src="v1.1\NUnit25\nunit.framework.extensions.dll" />
+				</Component>
+				
+				<Component Id="C__25.nunit_console" DiskId="1" Guid="54ac52e0-9b88-11dd-ad8b-0800200c9a66">
+				  <File Id="F__25.nunit_console_exe" Name="NUC.EXE" LongName="nunit-console.exe" src="v1.1\NUnit25\nunit-console.exe" />
+				  <File Id="F__25.nunit_console_exe_config" Name="NUC.CFG" LongName="nunit-console.exe.config" src="v1.1\NUnit25\nunit-console.exe.config" />
+				  <File Id="F__25.nunit_console_runner_dll" Name="NUCR.DLL" LongName="nunit-console-runner.dll" src="v1.1\NUnit25\nunit-console-runner.dll" />
+				  <File Id="F__25.nunit_agent_exe" Name="NUA.EXE" LongName="nunit-agent.exe" src="v1.1\NUnit25\nunit-agent.exe" />
+				  <File Id="F__25.nunit_agent_exe_config" Name="NUA.CFG" LongName="nunit-agent.exe.config" src="v1.1\NUnit25\nunit-agent.exe.config" />
+				</Component>
+				
+				<Component Id="C__25.nunit_gui" DiskId="1" Guid="6d014440-9b88-11dd-ad8b-0800200c9a66">
+				  <File Id="F__25.nunit_gui" Name="NUGUI.EXE" src="v1.1\NUnit25\nunit.exe" LongName="nunit.exe" Vital="yes" KeyPath="yes" />
+				  <File Id="F__25.nunit_exe_config" Name="NUEXE.CFG" LongName="nunit.exe.config" src="v1.1\NUnit25\nunit.exe.config" />
+				  <File Id="F__25.nunit_gui_runner_dll" Name="NUGR.DLL" LongName="nunit-gui-runner.dll" src="v1.1\NUnit25\nunit-gui-runner.dll" />
+				  <File Id="F__25.nunit_uikit_dll" Name="NUUIK.DLL" LongName="nunit.uikit.dll" src="v1.1\NUnit25\nunit.uikit.dll" />
+				</Component>
+			</Directory>
+		</Directory>
+	</DirectoryRef>
   </Fragment>
 </Wix>
