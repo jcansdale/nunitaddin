@@ -26,20 +26,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.core, Version=2.4.0.2, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+    <Reference Include="nunit.core, Version=2.5.0.8290, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="nunit.core.interfaces, Version=2.4.0.2, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+    <Reference Include="nunit.core.interfaces, Version=2.5.0.8290, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="nunit.util, Version=2.4.0.2, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v1.0\NUnit25\nunit.util.dll</HintPath>
+      <HintPath>..\..\..\build\v1.1\NUnit25\nunit.util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2" />
+    <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\nunit20\license.rtf">
@@ -58,13 +60,13 @@
     <Compile Include="StackTraceFilter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\build\v1.0\NUnit25\nunit.core.dll">
+    <Content Include="..\..\..\build\v1.1\NUnit25\nunit.core.dll">
       <Link>nunit.core.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v1.0\NUnit25\nunit.core.interfaces.dll">
+    <Content Include="..\..\..\build\v1.1\NUnit25\nunit.core.interfaces.dll">
       <Link>nunit.core.interfaces.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v1.0\NUnit25\nunit.util.dll">
+    <Content Include="..\..\..\build\v1.1\NUnit25\nunit.util.dll">
       <Link>nunit.util.dll</Link>
     </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
