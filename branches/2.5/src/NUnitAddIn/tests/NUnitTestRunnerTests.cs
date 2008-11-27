@@ -9,6 +9,7 @@ namespace NUnit.AddInRunner.Tests
     using System.Threading;
     using Microsoft.CSharp;
     using System.Collections;
+    using System.Collections.Generic;
 
     [TestFixture]
     public class NUnitTestRunnerTests
@@ -190,10 +191,130 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(0, testListener.IgnoredCount, "Expect tests ignored");
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
+
+        [Test]
+        public void RunMember_NoTestFixtureAttribute()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type type = typeof(Examples.NoTestFixtureAttributeTests);
+            TestRunState result = testRunner.RunMember(testListener, assembly, type);
+            Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+            Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to succeed");
+            Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
+        }
+
+        [Test]
+        public void RunMember_StaticFixture()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type type = typeof(Examples.StaticFixtureTests);
+            TestRunState result = testRunner.RunMember(testListener, assembly, type);
+            Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+            Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to succeed");
+            Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
+        }
+
+        [Test]
+        public void RunMember_GenericFixture_Class()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type type = typeof(Examples.GenericFixtureTests<>);
+            TestRunState result = testRunner.RunMember(testListener, assembly, type);
+            Assert.AreEqual(2, testListener.TestFinishedCount, "Expect 2 tests to finnish");
+            Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to succeed");
+            Assert.AreEqual(1, testListener.FailureCount, "Expect 1 test to fail");
+            Assert.AreEqual(result, TestRunState.Failure);
+        }
+
+        [Test]
+        public void RunMember_GenericFixture_Method()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type type = typeof(Examples.GenericFixtureTests<>);
+            MethodInfo method = type.GetMethod("CanAddToList");
+            TestRunState result = testRunner.RunMember(testListener, assembly, method);
+            Assert.AreEqual(2, testListener.TestFinishedCount, "Expect 2 tests to finnish");
+            Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to succeed");
+            Assert.AreEqual(1, testListener.FailureCount, "Expect 1 test to fail");
+            Assert.AreEqual(result, TestRunState.Failure);
+        }
+
+        [Test]
+        public void RunMember_NoNamespaceFicture()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type type = typeof(NoNamespaceFixtureTests);
+            TestRunState result = testRunner.RunMember(testListener, assembly, type);
+            Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+            Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to succeed");
+            Assert.AreEqual(result, TestRunState.Success);
+        }
+
+        [Test]
+        public void RunMember_NestedClass()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type type = typeof(Examples.OuterClass.NestedClassTests);
+            TestRunState result = testRunner.RunMember(testListener, assembly, type);
+            Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+            Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to succeed");
+            Assert.AreEqual(result, TestRunState.Success);
+        }
     }
 
     namespace Examples
     {
+        public class NoTestFixtureAttributeTests
+        {
+            [Test]
+            public void Pass()
+            {
+            }
+        }
+
+        public static class StaticFixtureTests
+        {
+            [Test]
+            public static void Pass()
+            {
+            }
+        }
+
+        [TestFixture(typeof(ArrayList))]
+        [TestFixture(typeof(List<int>))]
+        public class GenericFixtureTests<TList> where TList : IList, new()
+        {
+            [Test]
+            public void CanAddToList()
+            {
+                Assert.AreEqual(typeof(ArrayList), typeof(TList));
+            }
+        }
+
+        public class OuterClass
+        {
+            [TestFixture]
+            public class NestedClassTests
+            {
+                [Test]
+                public static void Pass()
+                {
+                }
+            }
+        }
+
         [TestFixture]
         public class FailTests
         {
@@ -369,5 +490,13 @@ namespace NUnit.AddInRunner.Tests
                 internal static int TestFixtureSetUpCount;
             }
         }
+    }
+}
+
+public class NoNamespaceFixtureTests
+{
+    [NUnit.Framework.Test]
+    public void Pass()
+    {
     }
 }

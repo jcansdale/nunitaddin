@@ -28,11 +28,11 @@
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.3.6006.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v1.1\nunit.core.dll</HintPath>
+      <HintPath>..\..\..\build\v2.0\nunit.core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.3.6006.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v1.1\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\build\v2.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -54,10 +54,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\build\v1.1\NUnit25\nunit.core.dll">
+    <Content Include="..\..\..\build\v2.0\NUnit25\nunit.core.dll">
       <Link>nunit.core.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v1.1\NUnit25\nunit.framework.dll">
+    <Content Include="..\..\..\build\v2.0\NUnit25\nunit.framework.dll">
       <Link>nunit.framework.dll</Link>
     </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
