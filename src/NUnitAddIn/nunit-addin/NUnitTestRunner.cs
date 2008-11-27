@@ -297,15 +297,20 @@ namespace NUnit.AddInRunner
                     return false;
                 }
 
-                if (testMethod.Method.MethodHandle.Value != this.method.MethodHandle.Value)
+                if (!isSameMetadata(testMethod.Method, this.method))
                 {
                     return false;
                 }
 
-                Type reflectedType = testMethod.Method.ReflectedType;
+                Type baseType = testMethod.FixtureType;
+                if (baseType.IsGenericType)
+                {
+                    baseType = baseType.GetGenericTypeDefinition();
+                }
+
                 foreach (Type type in this.types)
                 {
-                    if (reflectedType == type)
+                    if (baseType == type)
                     {
                         return true;
                     }
@@ -315,35 +320,11 @@ namespace NUnit.AddInRunner
             }
         }
 
-        //class MethodFilter : SimpleNameFilter
-        //{
-        //    public MethodFilter(Assembly assembly, MethodInfo method)
-        //    {
-        //        Type type = method.ReflectedType;
-        //        foreach (Type candidateType in getCandidateTypes(assembly, type))
-        //        {
-        //            this.Add(candidateType.FullName + "." + method.Name);
-
-        //            /* TODO:
-        //            // Support for parameterized tests.
-        //            if (testFullName.StartsWith(fullName + "("))
-        //            {
-        //                return true;
-        //            }
-        //            */
-
-        //            /* TODO
-        //            // Test name might be qualified with method's type name.
-        //            string qualifiedMethodName = this.method.DeclaringType.Name + "." + this.method.Name;
-        //            string fullName2 = type.FullName + "." + qualifiedMethodName;
-        //            if (testFullName == fullName2)
-        //            {
-        //                return true;
-        //            }
-        //            */
-        //        }
-        //    }
-        //}
+        static bool isSameMetadata(MemberInfo memberA, MemberInfo memberB)
+        {
+            return memberA.MetadataToken == memberB.MetadataToken &&
+                   memberA.Module == memberB.Module;
+        }
 
 		class TypeFilter : SimpleNameFilter
 		{
@@ -351,7 +332,13 @@ namespace NUnit.AddInRunner
 			{
                 foreach (Type candidateType in getCandidateTypes(assembly, type))
                 {
-                    this.Add(candidateType.FullName);
+                    string name = TypeHelper.GetDisplayName(candidateType);
+                    string ns = candidateType.Namespace;
+                    if(ns != null)
+                    {
+                        name = ns + "." + name;
+                    }
+                    this.Add(name);
                 }
 			}
 		}
@@ -367,7 +354,8 @@ namespace NUnit.AddInRunner
         static IList getCandidateTypes(Assembly assembly, Type type)
         {
             ArrayList types = new ArrayList();
-            if (type.IsAbstract)
+            // NOTE: Static classes are abstract and sealed.
+            if (type.IsAbstract && !type.IsSealed)
             {
                 foreach (Type candidateType in assembly.GetExportedTypes())
                 {
@@ -381,235 +369,6 @@ namespace NUnit.AddInRunner
 
             types.Add(type);
             return types;
-        }
-
-		/*
-        class NoFilter : IFilter
-        {
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.IsExplicit)
-                {
-                    return false;
-                }
-
-                if (isAbstract(suite))
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                if (test.IsExplicit)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-
-        class MethodFilter : IFilter
-        {
-            Assembly assembly;
-            MethodInfo method;
-            IList types;
-
-            public MethodFilter(Assembly assembly, MethodInfo method)
-            {
-                this.assembly = assembly;
-                this.method = method;
-                Type type = method.ReflectedType;
-                this.types = getCandidateTypes(assembly, type);
-            }
-
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.FixtureType == null)
-                {
-                    return true;
-                }
-
-                foreach (Type type in types)
-                {
-                    if (type == suite.FixtureType)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                string testFullName = test.FullName;
-
-                foreach (Type type in this.types)
-                {
-                    string fullName = type.FullName + "." + this.method.Name;
-                    if (testFullName == fullName)
-                    {
-                        return true;
-                    }
-
-                    // Support for parameterized tests.
-                    if (testFullName.StartsWith(fullName + "("))
-                    {
-                        return true;
-                    }
-
-					// Test name might be qualified with method's type name.
-					string qualifiedMethodName = this.method.DeclaringType.Name + "." + this.method.Name;
-					string fullName2 = type.FullName + "." + qualifiedMethodName;
-					if (testFullName == fullName2)
-					{
-						return true;
-					}
-				}
-
-                return false;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-
-        class TypeFilter : IFilter
-        {
-            Assembly assembly;
-            IList types;
-
-            public TypeFilter(Assembly assembly, Type type)
-            {
-                this.assembly = assembly;
-                this.types = getCandidateTypes(assembly, type);
-            }
-
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.FixtureType == null)
-                {
-                    return true;
-                }
-
-                foreach (Type type in types)
-                {
-                    if (type == suite.FixtureType)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                if (test.IsExplicit)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-
-        static IList getCandidateTypes(Assembly assembly, Type type)
-        {
-            ArrayList types = new ArrayList();
-            if (type.IsAbstract)
-            {
-                foreach (Type candidateType in assembly.GetExportedTypes())
-                {
-                    if (type.IsAssignableFrom(candidateType) && !candidateType.IsAbstract)
-                    {
-                        types.Add(candidateType);
-                    }
-                }
-                return types;
-            }
-
-            types.Add(type);
-            return types;
-        }
-
-        class NamespaceFilter : IFilter
-        {
-            Assembly assembly;
-            string ns;
-
-            public NamespaceFilter(Assembly assembly, string ns)
-            {
-                this.assembly = assembly;
-                this.ns = ns;
-            }
-
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.IsExplicit)
-                {
-                    return false;
-                }
-
-                if (isAbstract(suite))
-                {
-                    return false;
-                }
-
-                if (suite.FullName == assembly.FullName)
-                {
-                    return true;
-                }
-
-                if (this.ns == "" || this.ns.StartsWith(suite.FullName + ".") || this.ns == suite.FullName || suite.FullName.StartsWith(ns + "."))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                if (test.IsExplicit)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-		*/
-
-		static bool isAbstract(TestSuite testSuite)
-        {
-            if (testSuite.FixtureType == null)
-            {
-                return false;
-            }
-
-            return testSuite.FixtureType.IsAbstract;
         }
 
         class ProxyEventListener : EventListener
