@@ -6,8 +6,8 @@
 		<ExtensionsSolutionFile>src\NUnit.Core.Extensions.Vsts.sln</ExtensionsSolutionFile>
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
-		<OutputPath_V1_0>$(OutputPath)v1.0\NUnit24\</OutputPath_V1_0>
-		<Properties_v1_0>OutputPath=$(OutputPath_V1_0);NoWarn=;TargetFrameworkVersion=v1.0;MSBuildExtensionsPath=$(MSBuildExtensionsPath);CustomAfterMicrosoftCommonTargets=$(MSBuildExtensionsPath)\CrossCompile.CSharp.targets</Properties_v1_0>
+		<OutputPath_V1_0>$(OutputPath)v1.1\NUnit24\</OutputPath_V1_0>
+		<Properties_v1_0>OutputPath=$(OutputPath_V1_0);NoWarn=;TargetFrameworkVersion=v1.1;MSBuildExtensionsPath=$(MSBuildExtensionsPath);CustomAfterMicrosoftCommonTargets=$(MSBuildExtensionsPath)\CrossCompile.CSharp.v1.1.targets</Properties_v1_0>
 		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
 		<PackageId>{AB679633-3BD8-4b21-9043-BACB811A72C7}</PackageId>
 	</PropertyGroup>
@@ -32,10 +32,6 @@
 	</Target>
 
 	<Target Name="BuildNUnit">
-		<!--
-		<MSBuild Projects="$(NUnitSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_v1_0)" />
-		-->
-
         <Copy
             SourceFiles="@(NUnitFiles)"
             DestinationFolder="$(OutputPath_V1_0)"
