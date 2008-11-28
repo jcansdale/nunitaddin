@@ -4,7 +4,6 @@
 
 	  <Feature Id="F__nunitaddin25" Title="TestDriven.Net add-in for NUnit 2.5" Level="1">
 		  <ComponentRef Id="C__25.addin" />
-		  <ComponentRef Id="C__25.addin_64" />
 		  <ComponentRef Id="C__25.nunit" />
 		  <ComponentRef Id="C__25.nunit_gui" />
 		  <ComponentRef Id="C__25.nunit_console" />
@@ -21,7 +20,7 @@
 					<File Id="F__25.nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.addin.dll" src="v2.0\NUnit25\nunit.addin.dll" />
 					<File Id="F__25.TestDriven_Framework_dll" Name="TDFW.DLL" LongName="TestDriven.Framework.dll" src="v2.0\NUnit25\TestDriven.Framework.dll" />
 					
-					<!-- use this test runner if using nunit.framework -->
+					<!-- use this test runner if using nunit.framework 2.5 -->
 					<Registry Id="R__25.NUnit" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
 					<Registry Id="R__25.NUnit_AssemblyPath" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="AssemblyPath" Type="string" Value="[D__25.nunitaddin_2_5]nunit.addin.dll" />
@@ -30,18 +29,6 @@
 					<Registry Id="R__25.NUnit_TargetFrameworkAssemblyName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
 					<Registry Id="R__25.NUnit_Application" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-						Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
-				</Component>
-				<!-- register for 64 bit mode -->
-				<Component Id="C__25.addin_64" Win64="yes" DiskId="1" Guid="f3b68be0-9b87-11dd-ad8b-0800200c9a66">
-					<Registry Id="R__25.NUnit_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
-					<Registry Id="R__25.NUnit_AssemblyPath_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-						Name="AssemblyPath" Type="string" Value="[D__25.nunitaddin_2_5]nunit.addin.dll" />
-					<Registry Id="R__25.NUnit_TypeName_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-						Name="TypeName" Type="string" Value="NUnit.AddInRunner.NUnitTestRunner" />
-					<Registry Id="R__25.NUnit_TargetFrameworkAssemblyName_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-						Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
-					<Registry Id="R__25.NUnit_Application_64" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
 				</Component>
 				
