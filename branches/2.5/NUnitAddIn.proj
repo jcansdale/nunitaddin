@@ -2,7 +2,6 @@
 
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
-		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
 		<OutputPath_V2_0>$(OutputPath)v2.0\NUnit25\</OutputPath_V2_0>
 		<Properties_V2_0>OutputPath=$(OutputPath_V2_0)</Properties_V2_0>
