@@ -1,7 +1,6 @@
 namespace NUnit.AddInRunner
 {
     using System;
-    using System.Text;
     using System.Reflection;
     using System.Diagnostics;
     using System.Collections;
@@ -12,7 +11,6 @@ namespace NUnit.AddInRunner
     using NUC = NUnit.Core;
     using NUnit.Util;
 	using NUnit.Core.Filters;
-    using NUnit.Core.Builders;
 
     public class NUnitTestRunner : ITestRunner
     {
@@ -414,31 +412,26 @@ namespace NUnit.AddInRunner
 
             static TDF.TestState toTestState(NUC.TestResult result)
             {
-                if (result.IsFailure)
+                switch(result.ResultState)
                 {
-                    return TDF.TestState.Failed;
+                    case ResultState.Success:
+                        return TDF.TestState.Passed;
+                    case ResultState.Failure:   // Assert.Fail
+                    case ResultState.Error:     // Exception
+                        return TDF.TestState.Failed;
+                    case ResultState.Ignored:
+                    case ResultState.Skipped:
+                    case ResultState.NotRunnable:
+                    case ResultState.Inconclusive:
+                        return TDF.TestState.Ignored;
+                    default:
+                        Trace.WriteLine("Unknown ResultState: " + result.ResultState);
+                        return TDF.TestState.Ignored;
                 }
-
-                if (!result.Executed)
-                {
-                    // NOTE: Does this always mean ignored?
-                    return TDF.TestState.Ignored;
-                }
-
-                if (result.IsSuccess)
-                {
-                    return TDF.TestState.Passed;
-                }
-
-
-                // NOTE: What would this mean?
-                return TDF.TestState.Ignored;
             }
 
             public void SuiteFinished(NUC.TestResult result)
             {
-                //if (result.Test.TestType == "Test Fixture" && result.IsFailure)
-
                 // NOTE: Output if we have a stack trace.
                 if (result.StackTrace != null)
                 {
