@@ -27,6 +27,34 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
+        [Test]
+        public void RunMember_Test_FailWithAssert()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            MemberInfo member = new ThreadStart(new Examples.FailTestFixture().FailWithAssert).Method;
+            TestRunState result = testRunner.RunMember(testListener, assembly, member);
+            Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+            Assert.AreEqual(0, testListener.SuccessCount, "Expect no tests to succeed");
+            Assert.AreEqual(1, testListener.FailureCount, "Expect 1 test to fail");
+            Assert.AreEqual(result, TestRunState.Failure, "Check that tests were executed");
+        }
+
+        [Test]
+        public void RunMember_Test_FailWithException()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            MemberInfo member = new ThreadStart(new Examples.FailTestFixture().FailWithException).Method;
+            TestRunState result = testRunner.RunMember(testListener, assembly, member);
+            Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+            Assert.AreEqual(0, testListener.SuccessCount, "Expect no tests to succeed");
+            Assert.AreEqual(1, testListener.FailureCount, "Expect 1 test to fail");
+            Assert.AreEqual(result, TestRunState.Failure, "Check that tests were executed");
+        }
+
         // NOTE: Fix assert message formatting in NUnit 2.4.
         [Test]
         public void RunMember_AssertMessageFormatting()
@@ -357,6 +385,22 @@ namespace NUnit.AddInRunner.Tests
             [Test]
             public void Test2()
             {
+            }
+        }
+
+        [TestFixture]
+        public class FailTestFixture
+        {
+            [Test]
+            public void FailWithException()
+            {
+                throw new Exception();
+            }
+
+            [Test]
+            public void FailWithAssert()
+            {
+                Assert.Fail("Boom!");
             }
         }
 
