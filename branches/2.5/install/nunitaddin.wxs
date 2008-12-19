@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
   <Fragment>
 
-	  <Feature Id="F__nunitaddin25" Title="TestDriven.Net add-in for NUnit 2.5" Level="1">
+	  <Feature Id="F__nunitaddin25" Title="NUnit 2.5" Level="1">
 		  <ComponentRef Id="C__25.addin" />
 		  <ComponentRef Id="C__25.nunit" />
 		  <ComponentRef Id="C__25.nunit_gui" />
