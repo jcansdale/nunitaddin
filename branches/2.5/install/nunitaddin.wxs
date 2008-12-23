@@ -55,7 +55,9 @@
 				  <File Id="F__25.nunit_exe_config" Name="NUEXE.CFG" LongName="nunit.exe.config" src="v2.0\NUnit25\nunit.exe.config" />
 				  <File Id="F__25.nunit_gui_runner_dll" Name="NUGR.DLL" LongName="nunit-gui-runner.dll" src="v2.0\NUnit25\nunit-gui-runner.dll" />
 				  <File Id="F__25.nunit_uikit_dll" Name="NUUIK.DLL" LongName="nunit.uikit.dll" src="v2.0\NUnit25\nunit.uikit.dll" />
+				  <!-- NOTE: Re-enable this in next release of NUnit 2.5.
 				  <File Id="F__25.nunit_uiexception_dll" Name="NUUIE.DLL" LongName="nunit.uiexception.dll" src="v2.0\NUnit25\nunit.uiexception.dll" />
+				  -->
 				</Component>
 			</Directory>
 		</Directory>
