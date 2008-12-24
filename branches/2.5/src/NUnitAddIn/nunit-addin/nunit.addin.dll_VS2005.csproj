@@ -44,13 +44,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\nunit20\license.rtf">
-      <Link>license.rtf</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="TestDrivenOptions.cs" />
     <Compile Include="NUnitTestRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="..\..\..\..\nunit20_Release-2-5-Current\license.rtf">
+      <Link>license.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\..\install\nunitaddin.wxs">
       <Link>nunitaddin.wxs</Link>
     </None>
