@@ -58,4 +58,5 @@
 		<Exec Command="start /wait msiexec /q /i $(Msi) /l* install.log" />
 	</Target>
 	
+	
 </Project>
