@@ -29,17 +29,25 @@
 	</Target>
 
 	<Target Name="CopyNUnit">
-
         <Copy
             SourceFiles="@(NUnitFiles)"
             DestinationFolder="$(OutputPath_V2_0)"
         />
-
 	</Target>
 	
-	<Target Name="Package">
+	<Target Name="Package" DependsOnTargets="CSharpNUnitProject;FSharpNUnitProject">
 		<Exec Command='candle.exe "@(Wxs)" -out "$(OutputPath)%(Wxs.Filename).wixobj"' />	
 		<Exec Command="light.exe @(Wxs->'$(OutputPath)%(Filename).wixobj', ' ') -b $(OutputPath) -out $(Msi)" />
+	</Target>
+	
+	<Target Name="CSharpNUnitProject">
+		<MSBuild Projects="src\ProjectTemplates\CSharpNUnitProject\Build.proj"
+			Properties="OutputDir=$(OutputPath)CSharpNUnitProject;LibDir=$(OutputPath)v2.0\NUnit25" />
+	</Target>
+
+	<Target Name="FSharpNUnitProject">
+		<MSBuild Projects="src\ProjectTemplates\FSharpNUnitProject\Build.proj"
+			Properties="OutputDir=$(OutputPath)FSharpNUnitProject;LibDir=$(OutputPath)v2.0\NUnit25" />
 	</Target>
 
 	<Target Name="Uninstall" Condition="Exists('$(ProgramFiles)\NUnitAddIn\NUnit\nunit.addin.dll')">
@@ -51,4 +59,3 @@
 	</Target>
 	
 </Project>
-

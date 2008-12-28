@@ -1,0 +1,23 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>F# NUnit Project</Name>
+    <Description>Project for executing F# NUnit tests.</Description>
+    <ProjectType>FSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>FSharpNUnitProject</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="NUnitFSharpProject.fsproj" File="NUnitFSharpProject.fsproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="Tests.fs">Tests.fs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="nunit.framework.dll">nunit.framework.dll</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="nunit.framework.xml">nunit.framework.xml</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

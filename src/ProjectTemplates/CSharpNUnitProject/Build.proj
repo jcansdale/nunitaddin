@@ -1,0 +1,21 @@
+<Project DefaultTargets="Clean;Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\..\Tools\MSBuildExtensions</MSBuildExtensionsPath>
+	
+		<ContentDir>Content</ContentDir>
+		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
+		
+		<OutputDir>build</OutputDir>
+		<OutputContentDir>$(OutputDir)\Content</OutputContentDir>
+
+		<VsiFileName>NUnitProject.vsi</VsiFileName>
+		<ZipFileName>NUnitProject.zip</ZipFileName>
+		
+		<LibPath>lib</LibPath>
+		<LibFiles>$(LibDir)\nunit.framework.dll;$(LibDir)\nunit.framework.xml</LibFiles>
+	</PropertyGroup>
+	
+	<Import Project="$(MSBuildExtensionsPath)\Build.targets" />
+	
+</Project>
