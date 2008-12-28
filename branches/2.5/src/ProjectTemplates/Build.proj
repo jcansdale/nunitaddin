@@ -1,0 +1,14 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<OutputDir>$(MSBuildProjectDirectory)\build</OutputDir>
+	</PropertyGroup>
+
+	<Target Name="Build">
+        <MSBuild Projects="FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\FSharpNUnitProject" />
+        <MSBuild Projects="NUnitExecutableProject\Build.proj" Properties="OutputDir=$(OutputDir)\NUnitExecutableProject" />
+        <MSBuild Projects="NUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\NUnitProject" />
+        <MSBuild Projects="SilverlightNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\SilverlightNUnitProject" />
+	</Target>
+	
+</Project>
