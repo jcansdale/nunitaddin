@@ -9,12 +9,14 @@
 	<Target Name="Build">
         <MakeDir Directories="$(OutputDir)" />
         
+        <!--
 		<XmlRead Prefix="n"
 			Namespace="http://schemas.microsoft.com/developer/vscontent/2005" 
 			XPath="/n:VSContent/n:Content/n:FileName"
 			XmlFileName="$(VSContentFileName)">
 			<Output TaskParameter="Value" PropertyName="ContentZipFileName" />
 		</XmlRead>
+		-->
 		
         <Copy
             SourceFiles="@(ContentFiles)"
@@ -32,15 +34,20 @@
 
 		<Zip Files="@(OutputContentFiles)" WorkingDirectory="$(OutputContentDir)" ZipFileName="$(OutputDir)\$(ContentZipFileName)" />
 	
+		<!--
 		<Copy SourceFiles="$(VSContentFileName)" DestinationFolder="$(OutputDir)" />
 		<Zip Files="$(OutputDir)\$(VSContentFileName);$(OutputDir)\$(ContentZipFileName)"
 			WorkingDirectory="$(OutputDir)" ZipFileName="$(OutputDir)\$(VsiFileName)" />
 	
 		<Zip Files="$(OutputDir)\$(VsiFileName)" WorkingDirectory="$(OutputDir)" ZipFileName="$(ZipFileName)" />
+		-->
 	</Target>
 	
 	<Target Name="Clean">
+		<!--
 		<Delete Files="$(ZipFile)" />
+		-->
+
   		<RemoveDir Directories="$(OutputDir)" />
 	</Target>
 	
