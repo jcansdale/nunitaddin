@@ -4,15 +4,18 @@
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\..\Tools\MSBuildExtensions</MSBuildExtensionsPath>
 
 		<ContentDir>Content</ContentDir>
-		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
-		
 		<LibFiles>$(LibDir)\nunit.framework.dll;$(LibDir)\nunit.framework.xml</LibFiles>
 		
 		<OutputDir>build</OutputDir>
 		<OutputContentDir>$(OutputDir)\Content</OutputContentDir>
-		
+		<ContentZipFileName>CSharpNUnitProject.zip</ContentZipFileName>
+
+		<!--
+		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
 		<VsiFileName>FSharpNUnitProject.vsi</VsiFileName>
 		<ZipFileName>FSharpNUnitProject.zip</ZipFileName>
+		-->
+
 	</PropertyGroup>
 	
 	<Import Project="$(MSBuildExtensionsPath)\Build.targets" />

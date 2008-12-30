@@ -2,13 +2,18 @@
 
 	<PropertyGroup>
 		<OutputDir>$(MSBuildProjectDirectory)\build</OutputDir>
+		<LibDir>$(MSBuildProjectDirectory)\..\..\build\v2.0\NUnit25</LibDir>
 	</PropertyGroup>
 
 	<Target Name="Build">
-        <MSBuild Projects="FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\FSharpNUnitProject" />
-        <MSBuild Projects="NUnitExecutableProject\Build.proj" Properties="OutputDir=$(OutputDir)\NUnitExecutableProject" />
-        <MSBuild Projects="NUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\NUnitProject" />
-        <MSBuild Projects="SilverlightNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\SilverlightNUnitProject" />
+        <MSBuild Projects="FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\FSharpNUnitProject;LibDir=$(LibDir)" />
+        <MSBuild Projects="CSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\CSharpNUnitProject;LibDir=$(LibDir)" />
+        
+        <!--
+        <MSBuild Projects="NUnitExecutableProject\Build.proj" Properties="OutputDir=$(OutputDir)\NUnitExecutableProject;LibDir=$(LibDir)" />
+        <MSBuild Projects="SilverlightNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\SilverlightNUnitProject;LibDir=$(LibDir)" />
+        -->
+        
 	</Target>
 	
 </Project>
