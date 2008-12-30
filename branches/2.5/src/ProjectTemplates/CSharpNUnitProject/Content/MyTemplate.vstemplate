@@ -15,14 +15,10 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="NUnitProject.csproj" File="NUnitProject.csproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="true" TargetFileName="MyTests.cs">MyTests.cs</ProjectItem>
-      <Folder Name="lib" TargetFolderName="lib">
-        <ProjectItem ReplaceParameters="false" TargetFileName="nunit.framework.dll">nunit.framework.dll</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="nunit.framework.xml">nunit.framework.xml</ProjectItem>
-      </Folder>
-      <Folder Name="Properties" TargetFolderName="Properties">
-        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
-      </Folder>
+		<ProjectItem ReplaceParameters="true" TargetFileName="MyTests.cs">MyTests.cs</ProjectItem>
+		<ProjectItem ReplaceParameters="false" TargetFileName="lib\nunit.framework.dll">nunit.framework.dll</ProjectItem>
+		<ProjectItem ReplaceParameters="true" TargetFileName="lib\nunit.framework.xml">nunit.framework.xml</ProjectItem>
+		<ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>
