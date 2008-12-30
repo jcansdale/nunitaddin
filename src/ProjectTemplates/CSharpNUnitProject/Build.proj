@@ -12,7 +12,6 @@
 		<VsiFileName>NUnitProject.vsi</VsiFileName>
 		<ZipFileName>NUnitProject.zip</ZipFileName>
 		
-		<LibPath>lib</LibPath>
 		<LibFiles>$(LibDir)\nunit.framework.dll;$(LibDir)\nunit.framework.xml</LibFiles>
 	</PropertyGroup>
 	
