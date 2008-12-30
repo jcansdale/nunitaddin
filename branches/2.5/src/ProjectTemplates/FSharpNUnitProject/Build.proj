@@ -8,7 +8,7 @@
 		
 		<OutputDir>build</OutputDir>
 		<OutputContentDir>$(OutputDir)\Content</OutputContentDir>
-		<ContentZipFileName>CSharpNUnitProject.zip</ContentZipFileName>
+		<ContentZipFileName>FSharpNUnitProject.zip</ContentZipFileName>
 
 		<!--
 		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
