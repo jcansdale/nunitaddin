@@ -7,14 +7,14 @@
     </ProjectSubType>
     <SortOrder>1000</SortOrder>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>FSharpNUnitProject</DefaultName>
+    <DefaultName>NUnitProject</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="NUnitFSharpProject.fsproj" File="NUnitFSharpProject.fsproj" ReplaceParameters="true">
+    <Project TargetFileName="Project.fsproj" File="Project.fsproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="Tests.fs">Tests.fs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="nunit.framework.dll">nunit.framework.dll</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="nunit.framework.xml">nunit.framework.xml</ProjectItem>
