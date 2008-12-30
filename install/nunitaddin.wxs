@@ -8,7 +8,7 @@
 		  <ComponentRef Id="C__25.nunit_gui" />
 		  <ComponentRef Id="C__25.nunit_console" />
 		  <ComponentRef Id="C__nunitaddin_2_5_addins" />
-		  <ComponentRef Id="C__NUnitProject" />
+		  <ComponentRef Id="C__CSharpNUnitProject" />
 		  <ComponentRef Id="C__FSharpNUnitProject" />
 	  </Feature>
 
@@ -23,8 +23,8 @@
 					</Component>
 					<Directory Id="D__Visual_CSharp" Name="VisualCS" LongName="Visual C#">
 						<Directory Id="D__Windows" Name="Windows">
-							<Component Id="C__NUnitProject" DiskId="1" Guid="f516adb4-d09f-4563-b882-0468477be469">
-							  <File Id="F__NUnitProject_zip" Name="NUP.ZIP" LongName="NUnitProject.zip" src="CSharpNUnitProject\NUnitProject.zip" />
+							<Component Id="C__CSharpNUnitProject" DiskId="1" Guid="f516adb4-d09f-4563-b882-0468477be469">
+							  <File Id="F__CSharpNUnitProject_zip" Name="NUP.ZIP" LongName="CSharpNUnitProject.zip" src="CSharpNUnitProject\CSharpNUnitProject.zip" />
 							</Component>
 						</Directory>
 					</Directory>
