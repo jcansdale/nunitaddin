@@ -4,7 +4,7 @@
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\..\Tools\MSBuildExtensions</MSBuildExtensionsPath>
 
 		<ContentDir>Content</ContentDir>
-		<VSContentFileName>FSharpNUnitProject.vscontent</VSContentFileName>
+		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
 		
 		<LibFiles>$(LibDir)\nunit.framework.dll;$(LibDir)\nunit.framework.xml</LibFiles>
 		
