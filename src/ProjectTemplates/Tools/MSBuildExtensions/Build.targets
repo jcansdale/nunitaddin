@@ -23,7 +23,7 @@
 		
         <Copy
             SourceFiles="$(LibFiles)"
-            DestinationFolder="$(OutputContentDir)\$(LibPath)"
+            DestinationFolder="$(OutputContentDir)"
         />
 		
 		<CreateItem Include="$(OutputContentDir)\**\*.*">
