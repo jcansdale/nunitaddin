@@ -6,7 +6,6 @@
 		<ContentDir>Content</ContentDir>
 		<VSContentFileName>FSharpNUnitProject.vscontent</VSContentFileName>
 		
-		<LibPath>.</LibPath>
 		<LibFiles>$(LibDir)\nunit.framework.dll;$(LibDir)\nunit.framework.xml</LibFiles>
 		
 		<OutputDir>build</OutputDir>
