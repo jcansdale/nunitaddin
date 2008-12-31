@@ -42,11 +42,6 @@
     <Content Include="lib\nunit.framework.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <StartAction>Program</StartAction>
-    <StartArguments>$(TargetFileName)</StartArguments>
-    <StartProgram>$(MSBuildProjectDirectory)\NUnit\bin\nunit-console.exe</StartProgram>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
