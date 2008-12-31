@@ -22,34 +22,28 @@
 		<RemoveDir Directories="$(OutputPath)" />
 	</Target>
 	
-	<Target Name="Build" DependsOnTargets="CopyNUnit;BuildNUnitAddin" />
+	<Target Name="Build" DependsOnTargets="CopyNUnit;BuildNUnitAddin;ProjectTemplates" />
+
+	<Target Name="CopyNUnit">
+        <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(OutputPath_V2_0)" />
+	</Target>
 
 	<Target Name="BuildNUnitAddin">
 		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_V2_0)" />
 	</Target>
-
-	<Target Name="CopyNUnit">
-        <Copy
-            SourceFiles="@(NUnitFiles)"
-            DestinationFolder="$(OutputPath_V2_0)"
-        />
+	
+	<Target Name="ProjectTemplates">
+		<MSBuild Projects="src\ProjectTemplates\VS2005\CSharpNUnitProject\Build.proj"
+			Properties="OutputDir=$(OutputPath)VS2005\CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+		<MSBuild Projects="src\ProjectTemplates\VS2008\FSharpNUnitProject\Build.proj"
+			Properties="OutputDir=$(OutputPath)VS2008\FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
 	</Target>
 	
-	<Target Name="Package" DependsOnTargets="CSharpNUnitProject;FSharpNUnitProject">
+	<Target Name="Package">
 		<Exec Command='candle.exe "@(Wxs)" -out "$(OutputPath)%(Wxs.Filename).wixobj"' />	
 		<Exec Command="light.exe @(Wxs->'$(OutputPath)%(Filename).wixobj', ' ') -b $(OutputPath) -out $(Msi)" />
 	</Target>
 	
-	<Target Name="CSharpNUnitProject">
-		<MSBuild Projects="src\ProjectTemplates\CSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)CSharpNUnitProject;LibDir=$(OutputPath)v2.0\NUnit25" />
-	</Target>
-
-	<Target Name="FSharpNUnitProject">
-		<MSBuild Projects="src\ProjectTemplates\FSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)FSharpNUnitProject;LibDir=$(OutputPath)v2.0\NUnit25" />
-	</Target>
-
 	<Target Name="Uninstall" Condition="Exists('$(ProgramFiles)\NUnitAddIn\NUnit\nunit.addin.dll')">
 		<Exec Command="start /wait msiexec /q /x $(PackageId) /l* uninstall.log" />
 	</Target>

@@ -6,14 +6,8 @@
 	</PropertyGroup>
 
 	<Target Name="Build">
-        <MSBuild Projects="FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\FSharpNUnitProject;LibDir=$(LibDir)" />
-        <MSBuild Projects="CSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\CSharpNUnitProject;LibDir=$(LibDir)" />
-        
-        <!--
-        <MSBuild Projects="NUnitExecutableProject\Build.proj" Properties="OutputDir=$(OutputDir)\NUnitExecutableProject;LibDir=$(LibDir)" />
-        <MSBuild Projects="SilverlightNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\SilverlightNUnitProject;LibDir=$(LibDir)" />
-        -->
-        
+        <MSBuild Projects="VS2008\FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\VS2008\FSharpNUnitProject;LibDir=$(LibDir)" />
+        <MSBuild Projects="VS2005\CSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputDir)\VS2005\CSharpNUnitProject;LibDir=$(LibDir)" />
 	</Target>
 	
 </Project>
