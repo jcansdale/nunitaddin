@@ -33,10 +33,10 @@
 	</Target>
 	
 	<Target Name="ProjectTemplates">
-		<MSBuild Projects="src\ProjectTemplates\VS2005\CSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)VS2005\CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
-		<MSBuild Projects="src\ProjectTemplates\VS2008\FSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)VS2008\FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+		<MSBuild Projects="src\ProjectTemplates\VS2005\CSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputPath)VS2005\CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+		
+		<MSBuild Projects="src\ProjectTemplates\VS2008\CSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputPath)VS2008\CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+		<MSBuild Projects="src\ProjectTemplates\VS2008\FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputPath)VS2008\FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
 	</Target>
 	
 	<Target Name="Package">
