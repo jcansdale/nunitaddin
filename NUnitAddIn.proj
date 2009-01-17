@@ -43,8 +43,7 @@
 	</Target>
 	
 	<Target Name="Test">
-		<Exec Command='"$(NUnitConsole)" /load:NUnit.AddInRunner.Tests.NUnitTestRunnerTests "$(TestAssembly)"' />
-		<Exec Command='"$(NUnitConsole)" /load:NUnit.AddInRunner.Tests.NUnitTestRunnerCategoriesTests "$(TestAssembly)"' />
+		<Exec Command='"$(NUnitConsole)" /load:NUnit.AddInRunner.Tests "$(TestAssembly)"' />
 	</Target>
 	
 	<Target Name="Package">
