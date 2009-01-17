@@ -7,7 +7,9 @@
 		<Properties_V2_0>OutputPath=$(OutputPath_V2_0)</Properties_V2_0>
 		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
 		<PackageId>{B97011D0-9B88-11DD-AD8B-0800200C9A66}</PackageId>
+
 		<NUnitConsole>$(MSBuildProjectDirectory)\tools\NUnit\2.4.8\net-2.0\bin\nunit-console.exe</NUnitConsole>
+		<TestAssembly>$(OutputPath_V2_0)nunit.addin.tests.dll</TestAssembly>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -41,7 +43,8 @@
 	</Target>
 	
 	<Target Name="Test">
-		<Exec Command='"$(NUnitConsole)" /exclude:Examples "$(OutputPath_V2_0)nunit.addin.tests.dll"' />
+		<Exec Command='"$(NUnitConsole)" /load:NUnit.AddInRunner.Tests.NUnitTestRunnerTests "$(TestAssembly)"' />
+		<Exec Command='"$(NUnitConsole)" /load:NUnit.AddInRunner.Tests.NUnitTestRunnerCategoriesTests "$(TestAssembly)"' />
 	</Target>
 	
 	<Target Name="Package">
