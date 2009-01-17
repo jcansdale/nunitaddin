@@ -7,6 +7,7 @@
 		<Properties_V2_0>OutputPath=$(OutputPath_V2_0)</Properties_V2_0>
 		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
 		<PackageId>{B97011D0-9B88-11DD-AD8B-0800200C9A66}</PackageId>
+		<NUnitConsole>$(MSBuildProjectDirectory)\tools\NUnit\2.4.8\net-2.0\bin\nunit-console.exe</NUnitConsole>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -39,10 +40,8 @@
 		<MSBuild Projects="src\ProjectTemplates\VS2008\FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputPath)VS2008\FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
 	</Target>
 	
-	<UsingTask Condition=" '$(teamcity_dotnet_nunitlauncher_msbuild_task)' != '' " TaskName="NUnit" AssemblyFile="$(teamcity_dotnet_nunitlauncher_msbuild_task)" />
-
-	<Target Condition=" '$(teamcity_dotnet_nunitlauncher_msbuild_task)' != '' " Name="Test">
-		<NUnitTeamCity Assemblies="$(OutputPath_V2_0)nunit.addin.tests.dll" />
+	<Target Name="Test">
+		<Exec Command='"$(NUnitConsole)" /exclude:Examples "$(OutputPath_V2_0)nunit.addin.tests.dll"' />
 	</Target>
 	
 	<Target Name="Package">
