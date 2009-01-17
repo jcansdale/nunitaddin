@@ -1,4 +1,4 @@
-<Project DefaultTargets="Clean;Build;Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Clean;Build;Package;Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
@@ -37,6 +37,12 @@
 		
 		<MSBuild Projects="src\ProjectTemplates\VS2008\CSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputPath)VS2008\CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
 		<MSBuild Projects="src\ProjectTemplates\VS2008\FSharpNUnitProject\Build.proj" Properties="OutputDir=$(OutputPath)VS2008\FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+	</Target>
+	
+	<UsingTask Condition=" '$(teamcity_dotnet_nunitlauncher_msbuild_task)' != '' " TaskName="NUnit" AssemblyFile="$(teamcity_dotnet_nunitlauncher_msbuild_task)" />
+
+	<Target Condition=" '$(teamcity_dotnet_nunitlauncher_msbuild_task)' != '' " Name="Test">
+		<NUnitTeamCity Assemblies="$(OutputPath_V2_0)nunit.addin.tests.dll" />
 	</Target>
 	
 	<Target Name="Package">
