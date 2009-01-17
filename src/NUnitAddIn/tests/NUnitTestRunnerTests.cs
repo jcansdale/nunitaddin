@@ -303,6 +303,32 @@ namespace NUnit.AddInRunner
                 Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to succeed");
                 Assert.AreEqual(result, TestRunState.Success);
             }
+
+            [Test]
+            public void RunMember_ThrowException()
+            {
+                NUnitTestRunner testRunner = new NUnitTestRunner();
+                MockTestListener testListener = new MockTestListener();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Type type = typeof(Examples.ExceptionTests);
+                TestRunState result = testRunner.RunMember(testListener, assembly, type);
+                Assert.AreEqual(TestRunState.Failure, result);
+                Assert.AreEqual(1, testListener.TestFinishedCount);
+                Assert.AreEqual(1, testListener.FailureCount);
+            }
+
+            [Test]
+            public void RunMember_Inconclusive()
+            {
+                NUnitTestRunner testRunner = new NUnitTestRunner();
+                MockTestListener testListener = new MockTestListener();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Type type = typeof(Examples.InconclusiveTests);
+                TestRunState result = testRunner.RunMember(testListener, assembly, type);
+                Assert.AreEqual(TestRunState.Success, result);
+                Assert.AreEqual(1, testListener.TestFinishedCount);
+                Assert.AreEqual(1, testListener.IgnoredCount);
+            }
         }
     }
 
@@ -312,6 +338,24 @@ namespace NUnit.AddInRunner
         using System.Collections.Generic;
         using System.Collections;
         using System;
+
+        public class InconclusiveTests
+        {
+            [Test]
+            public void Inconclusive()
+            {
+                Assert.Inconclusive("Oops!");
+            }
+        }
+
+        public class ExceptionTests
+        {
+            [Test]
+            public void ThrowException()
+            {
+                throw new Exception("Boom!");
+            }
+        }
 
         public class NoTestFixtureAttributeTests
         {
