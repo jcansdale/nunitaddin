@@ -329,6 +329,19 @@ namespace NUnit.AddInRunner
                 Assert.AreEqual(1, testListener.TestFinishedCount);
                 Assert.AreEqual(1, testListener.IgnoredCount);
             }
+
+            [Test]
+            public void RunMember_AssumeFalse()
+            {
+                NUnitTestRunner testRunner = new NUnitTestRunner();
+                MockTestListener testListener = new MockTestListener();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Type type = typeof(Examples.AssumeTests);
+                TestRunState result = testRunner.RunMember(testListener, assembly, type);
+                Assert.AreEqual(TestRunState.Success, result);
+                Assert.AreEqual(1, testListener.TestFinishedCount);
+                Assert.AreEqual(1, testListener.IgnoredCount);
+            }
         }
     }
 
@@ -338,6 +351,15 @@ namespace NUnit.AddInRunner
         using System.Collections.Generic;
         using System.Collections;
         using System;
+
+        public class AssumeTests
+        {
+            [Test]
+            public void AssumeFalse()
+            {
+                Assume.That(false, "False assumption!");
+            }
+        }
 
         public class InconclusiveTests
         {
