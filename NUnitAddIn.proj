@@ -37,9 +37,9 @@
 	
 	<Target Name="ProjectTemplates">
 		<MSBuild Projects="src\ProjectTemplates\CSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+			Properties="OutputDir=$(OutputPath)ProjectTemplates\CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
 		<MSBuild Projects="src\ProjectTemplates\FSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+			Properties="OutputDir=$(OutputPath)ProjectTemplates\FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
 	</Target>
 	
 	<Target Name="Test">
