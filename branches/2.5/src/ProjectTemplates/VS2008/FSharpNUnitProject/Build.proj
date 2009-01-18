@@ -10,9 +10,9 @@
 		<OutputContentDir>$(OutputDir)\Content</OutputContentDir>
 		<ContentZipFileName>FSharpNUnitProject.zip</ContentZipFileName>
 
-		<!--
 		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
 		<VsiFileName>FSharpNUnitProject.vsi</VsiFileName>
+		<!--
 		<ZipFileName>FSharpNUnitProject.zip</ZipFileName>
 		-->
 

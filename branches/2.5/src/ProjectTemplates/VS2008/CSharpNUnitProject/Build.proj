@@ -11,9 +11,9 @@
 
 		<LibFiles>$(LibDir)\nunit.framework.dll;$(LibDir)\nunit.framework.xml</LibFiles>
 		
-		<!--
 		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
-		<VsiFileName>NUnitProject.vsi</VsiFileName>
+		<VsiFileName>CSharpNUnitProject.vsi</VsiFileName>
+		<!--
 		<ZipFileName>NUnitProject.zip</ZipFileName>
 		-->
 		
