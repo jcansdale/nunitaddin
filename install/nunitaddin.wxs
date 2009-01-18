@@ -8,47 +8,9 @@
 		  <ComponentRef Id="C__25.nunit_gui" />
 		  <ComponentRef Id="C__25.nunit_console" />
 		  <ComponentRef Id="C__nunitaddin_2_5_addins" />
-		  <ComponentRef Id="C__VS2005.CSharpNUnitProject" />
-		  <ComponentRef Id="C__VS2008.CSharpNUnitProject" />
-		  <ComponentRef Id="C__VS2008.FSharpNUnitProject" />
 	  </Feature>
 
 	<DirectoryRef Id="INSTALLDIR">
-	
-	<Directory Id="PersonalFolder" Name="PFolder">
-	
-		<Directory Id="D__Visual_Studio_2005" Name="VS2005" LongName="Visual Studio 2005">
-			<Directory Id="D__VS2005.Templates" Name="Templa" LongName="Templates">
-				<Directory Id="D__VS2005.ProjectTemplates" Name="PTempla" LongName="ProjectTemplates">
-					<Directory Id="D__VS2005.Visual_CSharp" Name="VisualCS" LongName="Visual C#">
-						<Directory Id="D__VS2005.Windows" Name="Windows">
-							<Component Id="C__VS2005.CSharpNUnitProject" DiskId="1" Guid="f516adb4-d09f-4563-b882-0468477be469">
-							  <File Id="F__VS2005.CSharpNUnitProject_zip" Name="NUP.ZIP" LongName="CSharpNUnitProject.zip" src="VS2005\CSharpNUnitProject\CSharpNUnitProject.zip" />
-							</Component>
-						</Directory>
-					</Directory>
-				</Directory>
-			</Directory>
-		</Directory>
-
-		<Directory Id="D__Visual_Studio_2008" Name="VS2008" LongName="Visual Studio 2008">
-			<Directory Id="D__VS2008.Templates" Name="Templa" LongName="Templates">
-				<Directory Id="D__VS2008.ProjectTemplates" Name="PTempla" LongName="ProjectTemplates">
-					<Component Id="C__VS2008.FSharpNUnitProject" DiskId="1" Guid="60b40200-d507-11dd-ad8b-0800200c9a66">
-					  <File Id="F__VS2008.FSharpNUnitProject_zip" Name="FSNUP.ZIP" LongName="FSharpNUnitProject.zip" src="VS2008\FSharpNUnitProject\FSharpNUnitProject.zip" />
-					</Component>
-					<Directory Id="D__VS2008.Visual_CSharp" Name="VisualCS" LongName="Visual C#">
-						<Directory Id="D__VS2008.Windows" Name="Windows">
-							<Component Id="C__VS2008.CSharpNUnitProject" DiskId="1" Guid="75aba133-699c-4f60-92b9-5e2cb4ec2314">
-							  <File Id="F__VS2008.CSharpNUnitProject_zip" Name="NUP.ZIP" LongName="CSharpNUnitProject.zip" src="VS2008\CSharpNUnitProject\CSharpNUnitProject.zip" />
-							</Component>
-						</Directory>
-					</Directory>
-				</Directory>
-			</Directory>
-		</Directory>
-
-	</Directory>
 	
 		<Directory Id="D__25.nunitaddin" Name="NUnit">
 			<Directory Id="D__25.nunitaddin_2_5" Name="2.5">
