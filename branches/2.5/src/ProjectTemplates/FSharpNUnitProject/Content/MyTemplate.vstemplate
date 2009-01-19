@@ -7,7 +7,7 @@
     </ProjectSubType>
     <SortOrder>1000</SortOrder>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>NUnitProject</DefaultName>
+    <DefaultName>NUnitProject.Tests</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
@@ -15,7 +15,7 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="Project.fsproj" File="Project.fsproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="false" TargetFileName="Tests.fs">Tests.fs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="ExampleTests.fs">ExampleTests.fs</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="nunit.framework.dll">nunit.framework.dll</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="nunit.framework.xml">nunit.framework.xml</ProjectItem>
     </Project>
