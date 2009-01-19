@@ -2,7 +2,7 @@
 <VSContent
     xmlns="http://schemas.microsoft.com/developer/vscontent/2005">
   <Content>
-    <FileName>FSharpNUnitProject.zip</FileName>
+    <FileName>FSharp_NUnit2.5_Project.zip</FileName>
     <DisplayName>NUnit Project (F#)</DisplayName>
     <Description>A project for creating and running NUnit tests (F#)</Description>
     <FileContentType>VSTemplate</FileContentType>
