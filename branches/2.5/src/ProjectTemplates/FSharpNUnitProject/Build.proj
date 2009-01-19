@@ -8,14 +8,10 @@
 		
 		<OutputDir>build</OutputDir>
 		<OutputContentDir>$(OutputDir)\Content</OutputContentDir>
-		<ContentZipFileName>FSharpNUnitProject.zip</ContentZipFileName>
+		<ContentZipFileName>FSharp_NUnit2.5_Project.vsi.zip</ContentZipFileName>
 
 		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
-		<VsiFileName>FSharpNUnitProject.vsi</VsiFileName>
-		<!--
-		<ZipFileName>FSharpNUnitProject.zip</ZipFileName>
-		-->
-
+		<VsiFileName>FSharp_NUnit2.5_Project.vsi.vsi</VsiFileName>
 	</PropertyGroup>
 	
 	<Import Project="$(MSBuildExtensionsPath)\Build.targets" />
