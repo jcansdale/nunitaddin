@@ -34,7 +34,7 @@
     <OtherFlags>--optimize+ notailcalls</OtherFlags>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Tests.fs" />
+    <Compile Include="ExampleTests.fs" />
     <Content Include="nunit.framework.dll" />
     <Content Include="nunit.framework.xml" />
   </ItemGroup>
