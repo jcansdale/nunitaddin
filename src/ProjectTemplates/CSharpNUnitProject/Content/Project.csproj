@@ -34,7 +34,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyTests.cs" />
+    <Compile Include="ExampleTests.cs" />
     <Compile Include="Properties\assemblyinfo.cs" />
   </ItemGroup>
   <ItemGroup>

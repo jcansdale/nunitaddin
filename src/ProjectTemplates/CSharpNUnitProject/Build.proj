@@ -7,16 +7,12 @@
 	
 		<OutputDir>build</OutputDir>
 		<OutputContentDir>$(OutputDir)\Content</OutputContentDir>
-		<ContentZipFileName>CSharpNUnitProject.zip</ContentZipFileName>
+		<ContentZipFileName>CSharp_NUnit2.5_Project.zip</ContentZipFileName>
 
 		<LibFiles>$(LibDir)\nunit.framework.dll;$(LibDir)\nunit.framework.xml</LibFiles>
 		
 		<VSContentFileName>NUnitProject.vscontent</VSContentFileName>
-		<VsiFileName>CSharpNUnitProject.vsi</VsiFileName>
-		<!--
-		<ZipFileName>NUnitProject.zip</ZipFileName>
-		-->
-		
+		<VsiFileName>CSharp_NUnit2.5_Project.vsi</VsiFileName>
 	</PropertyGroup>
 	
 	<Import Project="$(MSBuildExtensionsPath)\Build.targets" />
