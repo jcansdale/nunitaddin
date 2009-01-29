@@ -10,6 +10,7 @@
 
 		<NUnitConsole>$(MSBuildProjectDirectory)\tools\NUnit\2.4.8\net-2.0\bin\nunit-console.exe</NUnitConsole>
 		<TestAssembly>$(OutputPath_V2_0)nunit.addin.tests.dll</TestAssembly>
+		<NUnitDirectory>lib\v2.0\NUnit</NUnitDirectory>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -18,7 +19,7 @@
 	</ItemGroup>
 	
     <ItemGroup>
-        <NUnitFiles Include="..\nunit20_Release-2-5-Current\build\net\2.0\release\**\*.*" />
+        <NUnitFiles Include="$(NUnitDirectory)\**\*.*" />
     </ItemGroup>
     		
 	<Target Name="Clean">
