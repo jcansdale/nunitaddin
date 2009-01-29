@@ -6,7 +6,6 @@
 	
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
-		<ExtensionsSolutionFile>src\NUnit.Core.Extensions.Vsts.sln</ExtensionsSolutionFile>
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
 		<OutputPath_V1_1>$(OutputPath)v1.1\NUnit24\</OutputPath_V1_1>
@@ -26,20 +25,17 @@
     		
 	<Target Name="Clean">
 		<RemoveDir Directories="$(OutputPath)" />
+		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean" Properties="$(Properties_V1_1)" />
 	</Target>
 	
-	<Target Name="Build" DependsOnTargets="BuildNUnit;BuildNUnitAddin" />
+	<Target Name="Build" DependsOnTargets="CopyNUnit;BuildNUnitAddin" />
 
 	<Target Name="BuildNUnitAddin">
-		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_V1_1)" />
+		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Rebuild" Properties="$(Properties_V1_1)" />
 	</Target>
 
-	<Target Name="BuildNUnit">
-        <Copy
-            SourceFiles="@(NUnitFiles)"
-            DestinationFolder="$(OutputPath_V1_1)"
-        />
-
+	<Target Name="CopyNUnit">
+        <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(OutputPath_V1_1)" />
 	</Target>
 	
 	<Target Name="Package">
