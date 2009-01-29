@@ -1,5 +1,9 @@
 <Project DefaultTargets="Clean;Build;Package;Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+	<PropertyGroup Condition="'$(NUnitDirectory)' == ''" >
+		<NUnitDirectory>lib\v2.0\NUnit</NUnitDirectory>
+	</PropertyGroup>
+
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
@@ -10,7 +14,6 @@
 
 		<NUnitConsole>$(MSBuildProjectDirectory)\tools\NUnit\2.4.8\net-2.0\bin\nunit-console.exe</NUnitConsole>
 		<TestAssembly>$(OutputPath_V2_0)nunit.addin.tests.dll</TestAssembly>
-		<NUnitDirectory>lib\v2.0\NUnit</NUnitDirectory>
 	</PropertyGroup>
 	
 	<ItemGroup>
