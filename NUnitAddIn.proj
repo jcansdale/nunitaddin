@@ -27,6 +27,7 @@
     		
 	<Target Name="Clean">
 		<RemoveDir Directories="$(OutputPath)" />
+		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean" Properties="$(Properties_V2_0)" />
 	</Target>
 	
 	<Target Name="Build" DependsOnTargets="CopyNUnit;BuildNUnitAddin;ProjectTemplates" />
@@ -36,7 +37,7 @@
 	</Target>
 
 	<Target Name="BuildNUnitAddin">
-		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_V2_0)" />
+		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Rebuild" Properties="$(Properties_V2_0)" />
 	</Target>
 	
 	<Target Name="ProjectTemplates">
