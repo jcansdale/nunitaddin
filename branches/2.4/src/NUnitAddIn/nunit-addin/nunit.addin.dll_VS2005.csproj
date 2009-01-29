@@ -42,8 +42,8 @@
     <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\nunit20_Release-2-4-Current\src\license.rtf">
-      <Link>license.rtf</Link>
+    <None Include="..\..\..\..\nunit20_Release-2-4-Current\src\license.txt">
+      <Link>license.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="TestDrivenOptions.cs" />
