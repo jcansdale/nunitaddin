@@ -48,7 +48,7 @@
     <Compile Include="NUnitTestRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="..\..\..\build\v2.0\NUnit25\license.txt">
-      <Link>license.rtf</Link>
+      <Link>license.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\..\..\install\nunitaddin.wxs">
