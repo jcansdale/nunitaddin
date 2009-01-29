@@ -1,13 +1,16 @@
 <Project DefaultTargets="Clean;Build;Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+	<PropertyGroup Condition="'$(NUnitDirectory)' == ''" >
+		<NUnitDirectory>lib\v1.1\NUnit</NUnitDirectory>
+	</PropertyGroup>
+	
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
-		<NUnitSolutionFile>..\nunit20_Release-2-4-Current\src\nunit_vs2005.sln</NUnitSolutionFile>
 		<ExtensionsSolutionFile>src\NUnit.Core.Extensions.Vsts.sln</ExtensionsSolutionFile>
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
-		<OutputPath_V1_0>$(OutputPath)v1.1\NUnit24\</OutputPath_V1_0>
-		<Properties_v1_0>OutputPath=$(OutputPath_V1_0);NoWarn=;TargetFrameworkVersion=v1.1;MSBuildExtensionsPath=$(MSBuildExtensionsPath);CustomAfterMicrosoftCommonTargets=$(MSBuildExtensionsPath)\CrossCompile.CSharp.v1.1.targets</Properties_v1_0>
+		<OutputPath_V1_1>$(OutputPath)v1.1\NUnit24\</OutputPath_V1_1>
+		<Properties_V1_1>OutputPath=$(OutputPath_V1_1);NoWarn=;TargetFrameworkVersion=v1.1;MSBuildExtensionsPath=$(MSBuildExtensionsPath);CustomAfterMicrosoftCommonTargets=$(MSBuildExtensionsPath)\CrossCompile.CSharp.v1.1.targets</Properties_V1_1>
 		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
 		<PackageId>{AB679633-3BD8-4b21-9043-BACB811A72C7}</PackageId>
 	</PropertyGroup>
@@ -18,7 +21,7 @@
 	</ItemGroup>
 	
     <ItemGroup>
-        <NUnitFiles Include="..\nunit20_Release-2-4-Current\build\win32\net\1.1\release\**\*.*"/>
+        <NUnitFiles Include="$(NUnitDirectory)\*.*"/>
     </ItemGroup>
     		
 	<Target Name="Clean">
@@ -28,13 +31,13 @@
 	<Target Name="Build" DependsOnTargets="BuildNUnit;BuildNUnitAddin" />
 
 	<Target Name="BuildNUnitAddin">
-		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_v1_0)" />
+		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean;Rebuild" Properties="$(Properties_V1_1)" />
 	</Target>
 
 	<Target Name="BuildNUnit">
         <Copy
             SourceFiles="@(NUnitFiles)"
-            DestinationFolder="$(OutputPath_V1_0)"
+            DestinationFolder="$(OutputPath_V1_1)"
         />
 
 	</Target>
