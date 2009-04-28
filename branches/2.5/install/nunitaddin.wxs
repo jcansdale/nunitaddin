@@ -31,6 +31,8 @@
 						Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
 					<Registry Id="R__25.NUnit_Application" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
+					<Registry Id="R__25.NUnit_Application86" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="Application86" Type="string" Value="[D__25.nunitaddin_2_5]nunit-x86.exe" />
 				</Component>
 				
 				<Component Id="C__25.nunit" DiskId="1" Guid="208927e0-9b88-11dd-ad8b-0800200c9a66">
@@ -40,7 +42,6 @@
 				  <File Id="F__25.nunit_core_interfaces_dll" Name="NUCI.DLL" LongName="nunit.core.interfaces.dll" src="v2.0\NUnit25\nunit.core.interfaces.dll" />
 				  <File Id="F__25.nunit_util_dll" Name="NUU.DLL" LongName="nunit.util.dll" src="v2.0\NUnit25\nunit.util.dll" />
 				  <File Id="F__25.nunit_license_txt" Name="license.txt" src="v2.0\NUnit25\license.txt" />
-				  <File Id="F__25.nunit_framework_extensions_dll" Name="NFE.DLL" LongName="nunit.framework.extensions.dll" src="v2.0\NUnit25\nunit.framework.extensions.dll" />
 				</Component>
 				
 				<Component Id="C__25.nunit_console" DiskId="1" Guid="54ac52e0-9b88-11dd-ad8b-0800200c9a66">
@@ -54,6 +55,8 @@
 				<Component Id="C__25.nunit_gui" DiskId="1" Guid="6d014440-9b88-11dd-ad8b-0800200c9a66">
 				  <File Id="F__25.nunit_gui" Name="NUGUI.EXE" src="v2.0\NUnit25\nunit.exe" LongName="nunit.exe" Vital="yes" KeyPath="yes" />
 				  <File Id="F__25.nunit_exe_config" Name="NUEXE.CFG" LongName="nunit.exe.config" src="v2.0\NUnit25\nunit.exe.config" />
+				  <File Id="F__25.nunit86_gui" Name="NUGUI86.EXE" src="v2.0\NUnit25\nunit-x86.exe" LongName="nunit-x86.exe" />
+				  <File Id="F__25.nunit86_exe_config" Name="NUEXE86.CFG" LongName="nunit-x86.exe.config" src="v2.0\NUnit25\nunit-x86.exe.config" />
 				  <File Id="F__25.nunit_gui_runner_dll" Name="NUGR.DLL" LongName="nunit-gui-runner.dll" src="v2.0\NUnit25\nunit-gui-runner.dll" />
 				  <File Id="F__25.nunit_uikit_dll" Name="NUUIK.DLL" LongName="nunit.uikit.dll" src="v2.0\NUnit25\nunit.uikit.dll" />
 				  <File Id="F__25.nunit_uiexception_dll" Name="NUUIE.DLL" LongName="nunit.uiexception.dll" src="v2.0\NUnit25\nunit.uiexception.dll" />
