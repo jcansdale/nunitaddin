@@ -31,6 +31,20 @@ namespace NUnit.AddInRunner
             }
 
             [Test]
+            public void RunMember_TestResult_Name()
+            {
+                NUnitTestRunner testRunner = new NUnitTestRunner();
+                MockTestListener testListener = new MockTestListener();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                MemberInfo member = new ThreadStart(new Examples.MockTestFixture().Test1).Method;
+                TestRunState result = testRunner.RunMember(testListener, assembly, member);
+                Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+                TestResult testResult = testListener.TestResults[0];
+                string testName = member.DeclaringType.FullName + "." + member.Name;
+                Assert.AreEqual(testName, testResult.Name);
+            }
+
+            [Test]
             public void RunMember_Test_FailWithAssert()
             {
                 NUnitTestRunner testRunner = new NUnitTestRunner();

@@ -404,7 +404,7 @@ namespace NUnit.AddInRunner
                     }
                 }
                 summary.Message = message;
-                summary.Name = result.Name;
+                summary.Name = result.FullName;
                 summary.StackTrace = StackTraceFilter.Filter(result.StackTrace);
                 summary.TimeSpan = TimeSpan.FromSeconds(result.Time);
                 this.testListener.TestFinished(summary);
