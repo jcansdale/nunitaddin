@@ -33,6 +33,8 @@
 						Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
 					<Registry Id="R__25.NUnit_Application86" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="Application86" Type="string" Value="[D__25.nunitaddin_2_5]nunit-x86.exe" />
+					<Registry Id="R__25.NUnit_RuntimeVersion" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="RuntimeVersion" Type="string" Value="v2.0.50727" />
 				</Component>
 				
 				<Component Id="C__25.nunit" DiskId="1" Guid="208927e0-9b88-11dd-ad8b-0800200c9a66">
