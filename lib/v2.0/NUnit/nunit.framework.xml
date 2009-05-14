@@ -322,31 +322,6 @@
             </summary>
             <param name="writer">The MessageWriter to use</param>
         </member>
-        <member name="T:NUnit.Framework.Constraints.ExpectedExceptionConstraint">
-            <summary>
-            ExpectedExceptionConstraint is used to test that a delegate
-            throws a particular exception when executed.
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.ExpectedExceptionConstraint.#ctor(System.Type)">
-            <summary>
-            Initializes a new instance of the <see cref="T:ExpectedExceptionConstraint"/> class.
-            </summary>
-            <param name="expectedType">The expected type.</param>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.ExpectedExceptionConstraint.Matches(System.Object)">
-            <summary>
-            Test whether the constraint is satisfied by a given value
-            </summary>
-            <param name="actual">The value to be tested</param>
-            <returns>True for success, false for failure</returns>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.ExpectedExceptionConstraint.WriteDescriptionTo(NUnit.Framework.Constraints.MessageWriter)">
-            <summary>
-            Write the constraint description to a MessageWriter
-            </summary>
-            <param name="writer">The writer on which the description is displayed</param>
-        </member>
         <member name="T:NUnit.Framework.Constraints.ConstraintBuilder">
             <summary>
             ConstraintBuilder maintains the stacks that are used in
@@ -1245,6 +1220,18 @@
             presence of a particular attribute on an object.
             </summary>
         </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintExpression.Matches(NUnit.Framework.Constraints.Constraint)">
+            <summary>
+            Returns the constraint provided as an argument - used to allow custom
+            custom constraints to easily participate in the syntax.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintExpression.Matches``1(System.Predicate{``0})">
+            <summary>
+            Returns the constraint provided as an argument - used to allow custom
+            custom constraints to easily participate in the syntax.
+            </summary>
+        </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.EqualTo(System.Object)">
             <summary>
             Returns a constraint that tests two items for equality
@@ -1407,7 +1394,7 @@
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.Matches(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
-            value matches the pattern supplied as an argument.
+            value matches the Regex pattern supplied as an argument.
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.SamePath(System.String)">
@@ -2581,7 +2568,7 @@
         </member>
         <member name="F:NUnit.Framework.Constraints.ComparisonConstraint.comparer">
             <summary>
-            IComparer to be used in making the comparison
+            ComparisonAdapter to be used in making the comparison
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ComparisonConstraint.#ctor(System.Object,System.Boolean,System.Boolean,System.Boolean,System.String)">
@@ -2980,7 +2967,7 @@
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.Matches(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
-            value matches the pattern supplied as an argument.
+            value matches the Regex pattern supplied as an argument.
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.DoesNotMatch(System.String)">
@@ -3166,6 +3153,112 @@
             Returns the string representation of the constraint.
             </summary>
         </member>
+        <member name="T:NUnit.Framework.Constraints.NUnitComparer">
+            <summary>
+            NUnitComparer encapsulates NUnit's default behavior
+            in comparing two objects.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.NUnitComparer.Compare(System.Object,System.Object)">
+            <summary>
+            Compares two objects
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="P:NUnit.Framework.Constraints.NUnitComparer.Default">
+            <summary>
+            Returns the default NUnitComparer.
+            </summary>
+        </member>
+        <member name="T:NUnit.Framework.Constraints.ActualValueDelegate">
+            <summary>
+            Delegate used to delay evaluation of the actual value
+            to be used in evaluating a constraint
+            </summary>
+        </member>
+        <member name="T:NUnit.Framework.Constraints.NUnitEqualityComparer">
+            <summary>
+            NUnitEqualityComparer encapsulates NUnit's handling of
+            equality tests between objects.
+            </summary>
+        </member>
+        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.caseInsensitive">
+            <summary>
+            If true, all string comparisons will ignore case
+            </summary>
+        </member>
+        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.compareAsCollection">
+            <summary>
+            If true, arrays will be treated as collections, allowing
+            those of different dimensions to be compared
+            </summary>
+        </member>
+        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.tolerance">
+            <summary>
+            If non-zero, equality comparisons within the specified 
+            tolerance will succeed.
+            </summary>
+        </member>
+        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.externalComparer">
+            <summary>
+            Comparison object used in comparisons for some constraints.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.NUnitEqualityComparer.ObjectsEqual(System.Object,System.Object)">
+            <summary>
+            Compares two objects for equality.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.NUnitEqualityComparer.ArraysEqual(System.Array,System.Array)">
+            <summary>
+            Helper method to compare two arrays
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.NUnitEqualityComparer.DirectoriesEqual(System.IO.DirectoryInfo,System.IO.DirectoryInfo)">
+            <summary>
+            Method to compare two DirectoryInfo objects
+            </summary>
+            <param name="x">first directory to compare</param>
+            <param name="y">second directory to compare</param>
+            <returns>true if equivalent, false if not</returns>
+        </member>
+        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.Default">
+            <summary>
+            Returns the default NUnitEqualityComparer
+            </summary>
+        </member>
+        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.IgnoreCase">
+            <summary>
+            Gets and sets a flag indicating whether case should
+            be ignored in determining equality.
+            </summary>
+        </member>
+        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.CompareAsCollection">
+            <summary>
+            Gets and sets a flag indicating that arrays should be
+            compared as collections, without regard to their shape.
+            </summary>
+        </member>
+        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.ExternalComparer">
+            <summary>
+            Gets and sets an external comparer to be used to
+            test for equality. It is applied to members of
+            collections, in place of NUnit's own logic.
+            </summary>
+        </member>
+        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.Tolerance">
+            <summary>
+            Gets and sets a tolerance used to compare objects of 
+            certin types.
+            </summary>
+        </member>
+        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.FailurePoints">
+            <summary>
+            Gets the list of failure points for the last Match performed.
+            </summary>
+        </member>
         <member name="T:NUnit.Framework.Constraints.ComparisonAdapter">
             <summary>
             ComparisonAdapter class centralizes all comparisons of
@@ -3242,74 +3335,6 @@
         <member name="M:NUnit.Framework.Constraints.ComparisonAdapter.ComparisonAdapterForComparison`1.Compare(System.Object,System.Object)">
             <summary>
             Compare a Type T to an object
-            </summary>
-        </member>
-        <member name="T:NUnit.Framework.Constraints.ActualValueDelegate">
-            <summary>
-            Delegate used to delay evaluation of the actual value
-            to be used in evaluating a constraint
-            </summary>
-        </member>
-        <member name="T:NUnit.Framework.Constraints.EqualityAdapter">
-            <summary>
-            EqualityAdapter class handles all equality comparisons
-            that use an IEqualityComparer, IEqualityComparer&lt;T&gt;
-            or a ComparisonAdapter.
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.ObjectsEqual(System.Object,System.Object)">
-            <summary>
-            Compares two objects, returning true if they are equal
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For(System.Collections.IComparer)">
-            <summary>
-            Returns an EqualityAdapter that wraps an IComparer.
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For(System.Collections.IEqualityComparer)">
-            <summary>
-            Returns an EqualityAdapter that wraps an IEqualityComparer.
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For``1(System.Collections.Generic.IEqualityComparer{``0})">
-            <summary>
-            Returns an EqualityAdapter that wraps an IEqualityComparer&lt;T&gt;.
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For``1(System.Collections.Generic.IComparer{``0})">
-            <summary>
-            Returns an EqualityAdapter that wraps an IComparer&lt;T&gt;.
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For``1(System.Comparison{``0})">
-            <summary>
-            Returns an EqualityAdapter that wraps a Comparison&lt;T&gt;.
-            </summary>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.EqualityAdapter.Default">
-            <summary>
-            Returns the default EqualityAdapter, which wraps an
-            instance of the standard NUnitEqualityComparer.
-            </summary>
-        </member>
-        <member name="T:NUnit.Framework.Constraints.NUnitComparer">
-            <summary>
-            NUnitComparer encapsulates NUnit's default behavior
-            in comparing two objects.
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.NUnitComparer.Compare(System.Object,System.Object)">
-            <summary>
-            Compares two objects
-            </summary>
-            <param name="x"></param>
-            <param name="y"></param>
-            <returns></returns>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.NUnitComparer.Default">
-            <summary>
-            Returns the default NUnitComparer.
             </summary>
         </member>
         <member name="T:NUnit.Framework.Constraints.ConstraintOperator">
@@ -3702,85 +3727,41 @@
             Appends an Or operator to the expression.
             </summary>
         </member>
-        <member name="T:NUnit.Framework.Constraints.NUnitEqualityComparer">
+        <member name="T:NUnit.Framework.Constraints.EqualityAdapter">
             <summary>
-            NUnitEqualityComparer encapsulates NUnit's handling of
-            equality tests between objects.
+            EqualityAdapter class handles all equality comparisons
+            that use an IEqualityComparer, IEqualityComparer&lt;T&gt;
+            or a ComparisonAdapter.
             </summary>
         </member>
-        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.caseInsensitive">
+        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.ObjectsEqual(System.Object,System.Object)">
             <summary>
-            If true, all string comparisons will ignore case
+            Compares two objects, returning true if they are equal
             </summary>
         </member>
-        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.compareAsCollection">
+        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For(System.Collections.IComparer)">
             <summary>
-            If true, arrays will be treated as collections, allowing
-            those of different dimensions to be compared
+            Returns an EqualityAdapter that wraps an IComparer.
             </summary>
         </member>
-        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.tolerance">
+        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For(System.Collections.IEqualityComparer)">
             <summary>
-            If non-zero, equality comparisons within the specified 
-            tolerance will succeed.
+            Returns an EqualityAdapter that wraps an IEqualityComparer.
             </summary>
         </member>
-        <member name="F:NUnit.Framework.Constraints.NUnitEqualityComparer.externalComparer">
+        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For``1(System.Collections.Generic.IEqualityComparer{``0})">
             <summary>
-            Comparison object used in comparisons for some constraints.
+            Returns an EqualityAdapter that wraps an IEqualityComparer&lt;T&gt;.
             </summary>
         </member>
-        <member name="M:NUnit.Framework.Constraints.NUnitEqualityComparer.ObjectsEqual(System.Object,System.Object)">
+        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For``1(System.Collections.Generic.IComparer{``0})">
             <summary>
-            Compares two objects for equality.
+            Returns an EqualityAdapter that wraps an IComparer&lt;T&gt;.
             </summary>
         </member>
-        <member name="M:NUnit.Framework.Constraints.NUnitEqualityComparer.ArraysEqual(System.Array,System.Array)">
+        <member name="M:NUnit.Framework.Constraints.EqualityAdapter.For``1(System.Comparison{``0})">
             <summary>
-            Helper method to compare two arrays
-            </summary>
-        </member>
-        <member name="M:NUnit.Framework.Constraints.NUnitEqualityComparer.DirectoriesEqual(System.IO.DirectoryInfo,System.IO.DirectoryInfo)">
-            <summary>
-            Method to compare two DirectoryInfo objects
-            </summary>
-            <param name="x">first directory to compare</param>
-            <param name="y">second directory to compare</param>
-            <returns>true if equivalent, false if not</returns>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.Default">
-            <summary>
-            Returns the default NUnitEqualityComparer
-            </summary>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.IgnoreCase">
-            <summary>
-            Gets and sets a flag indicating whether case should
-            be ignored in determining equality.
-            </summary>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.CompareAsCollection">
-            <summary>
-            Gets and sets a flag indicating that arrays should be
-            compared as collections, without regard to their shape.
-            </summary>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.ExternalComparer">
-            <summary>
-            Gets and sets an external comparer to be used to
-            test for equality. It is applied to members of
-            collections, in place of NUnit's own logic.
-            </summary>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.Tolerance">
-            <summary>
-            Gets and sets a tolerance used to compare objects of 
-            certin types.
-            </summary>
-        </member>
-        <member name="P:NUnit.Framework.Constraints.NUnitEqualityComparer.FailurePoints">
-            <summary>
-            Gets the list of failure points for the last Match performed.
+            Returns an EqualityAdapter that wraps a Comparison&lt;T&gt;.
             </summary>
         </member>
         <member name="T:NUnit.Framework.Constraints.AttributeExistsConstraint">
@@ -3985,6 +3966,28 @@
         </member>
         <member name="F:NUnit.Framework.Constraints.FloatingPointNumerics.DoubleLongUnion.ULong">
             <summary>The union's value as an unsigned long</summary>
+        </member>
+        <member name="T:NUnit.Framework.Constraints.PredicateConstraint`1">
+            <summary>
+            Predicate constraint wraps a Predicate in a constraint,
+            returning success if the predicate is true.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.PredicateConstraint`1.#ctor(System.Predicate{`0})">
+            <summary>
+            Construct a PredicateConstraint from a predicate
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.PredicateConstraint`1.Matches(System.Object)">
+            <summary>
+            Determines whether the predicate succeeds when applied
+            to the actual value.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.PredicateConstraint`1.WriteDescriptionTo(NUnit.Framework.Constraints.MessageWriter)">
+            <summary>
+            Writes the description to a MessageWriter
+            </summary>
         </member>
         <member name="T:NUnit.Framework.TestCaseData">
             <summary>
@@ -4331,6 +4334,9 @@
         <member name="F:NUnit.Framework.MessageMatch.Regex">
             Match the regular expression provided as a parameter
         </member>
+        <member name="F:NUnit.Framework.MessageMatch.StartsWith">
+            Expect a message that starts with the parameter string
+        </member>
         <member name="T:NUnit.Framework.ExpectedExceptionAttribute">
             <summary>
             ExpectedExceptionAttribute
@@ -4446,6 +4452,11 @@
             Gets or sets the expected message of the expected exception
             </summary>
             <value>The expected message of the exception.</value>
+        </member>
+        <member name="P:NUnit.Framework.TestCaseAttribute.MatchType">
+            <summary>
+             Gets or sets the type of match to be performed on the expected message
+            </summary>
         </member>
         <member name="P:NUnit.Framework.TestCaseAttribute.Description">
             <summary>
@@ -9112,7 +9123,7 @@
         <member name="M:NUnit.Framework.Text.Matches(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
-            value matches the pattern supplied as an argument.
+            value matches the Regex pattern supplied as an argument.
             </summary>
         </member>
         <member name="M:NUnit.Framework.Text.DoesNotMatch(System.String)">
