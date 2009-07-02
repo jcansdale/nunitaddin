@@ -3,23 +3,29 @@
   <Fragment>
 
 	  <Feature Id="F__nunitaddin25" Title="NUnit 2.5" Level="1">
-		  <ComponentRef Id="C__25.addin" />
-		  <ComponentRef Id="C__25.nunit" />
-		  <ComponentRef Id="C__25.nunit_gui" />
-		  <ComponentRef Id="C__25.nunit_console" />
-		  <ComponentRef Id="C__nunitaddin_2_5_addins" />
+		<ComponentRef Id="C__25.addin" />
+		<ComponentRef Id="C__25.net_2.0.framework" />
+		<ComponentRef Id="C__25.net_2.0.lib" />
+		<ComponentRef Id="C__25.net_2.0.gui" />
+		<ComponentRef Id="C__25.net_2.0.console" />
+		<ComponentRef Id="C__25.net_1.1.framework" />
+		<ComponentRef Id="C__25.net_1.1.lib" />
+		<ComponentRef Id="C__25.net_1.1.console" />
+		<ComponentRef Id="C__25.readme" />
 	  </Feature>
 
 	<DirectoryRef Id="INSTALLDIR">
 	
 		<Directory Id="D__25.nunitaddin" Name="NUnit">
-			<Directory Id="D__25.nunitaddin_2_5" Name="2.5">
-				<Component Id="C__nunitaddin_2_5_addins" DiskId="1" Guid="5535c3a0-9b87-11dd-ad8b-0800200c9a66">
-					<File Id="F__nunitaddin_2_5_addins_txt" Name="addins.txt" src="v2.0\NUnit25\addins.txt" />
+			<Directory Id="D__25.nunitaddin_2_5" Name="2.5">		
+				<Component Id="C__25.readme" DiskId="1" Guid="5535c3a0-9b87-11dd-ad8b-0800200c9a66">
+					<File Id="F__25.nunit_license_txt" Name="license.txt" src="..\artifacts\NUnit\license.txt" />
+					<File Id="F__25.addins_txt" Name="addins.txt" src="v1.1\NUnit25\addins.txt" />
 				</Component>
+
 				<Component Id="C__25.addin" DiskId="1" Guid="a1d194a0-9b87-11dd-ad8b-0800200c9a66">
-					<File Id="F__25.nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.addin.dll" src="v2.0\NUnit25\nunit.addin.dll" />
-					<File Id="F__25.TestDriven_Framework_dll" Name="TDFW.DLL" LongName="TestDriven.Framework.dll" src="v2.0\NUnit25\TestDriven.Framework.dll" />
+					<File Id="F__25.nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.addin.dll" src="v1.1\NUnit25\nunit.addin.dll" />
+					<File Id="F__25.TestDriven_Framework_dll" Name="TDFW.DLL" LongName="TestDriven.Framework.dll" src="v1.1\NUnit25\TestDriven.Framework.dll" />
 					
 					<!-- use this test runner if using nunit.framework 2.5 -->
 					<Registry Id="R__25.NUnit" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
@@ -33,36 +39,67 @@
 						Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
 					<Registry Id="R__25.NUnit_Application86" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="Application86" Type="string" Value="[D__25.nunitaddin_2_5]nunit-x86.exe" />
-					<Registry Id="R__25.NUnit_RuntimeVersion" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-						Name="RuntimeVersion" Type="string" Value="v2.0.50727" />
 				</Component>
 				
-				<Component Id="C__25.nunit" DiskId="1" Guid="208927e0-9b88-11dd-ad8b-0800200c9a66">
-				  <File Id="F__25.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="v2.0\NUnit25\nunit.framework.dll" />
-				  <File Id="F__25.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="v2.0\NUnit25\nunit.framework.xml" />
-				  <File Id="F__25.nunit_core_dll" Name="NUC.DLL" LongName="nunit.core.dll" src="v2.0\NUnit25\nunit.core.dll" />
-				  <File Id="F__25.nunit_core_interfaces_dll" Name="NUCI.DLL" LongName="nunit.core.interfaces.dll" src="v2.0\NUnit25\nunit.core.interfaces.dll" />
-				  <File Id="F__25.nunit_util_dll" Name="NUU.DLL" LongName="nunit.util.dll" src="v2.0\NUnit25\nunit.util.dll" />
-				  <File Id="F__25.nunit_license_txt" Name="license.txt" src="v2.0\NUnit25\license.txt" />
-				</Component>
+				<Directory Id="D__25.net_2.0" Name="net-2.0">
+					<Directory Id="D__25.net_2.0.framework" Name="fwk" LongName="framework">
+						<Component Id="C__25.net_2.0.framework" DiskId="1" Guid="208927e0-9b88-11dd-ad8b-0800200c9a66">
+						  <File Id="F__25.net_2.0.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.dll" />
+						  <File Id="F__25.net_2.0.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.xml" />
+						</Component>
+					</Directory>
+						
+					<Directory Id="D__25.net_2.0.lib" Name="lib">
+						<Component Id="C__25.net_2.0.lib" DiskId="1" Guid="534c7a1b-24fa-497e-a44b-5f6111c9920c">
+							<File Id="F__25.net_2.0.nunit_core_dll" Name="NUC.DLL" LongName="nunit.core.dll" src="..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll" />
+							<File Id="F__25.net_2.0.nunit_core_interfaces_dll" Name="NUCI.DLL" LongName="nunit.core.interfaces.dll" src="..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.interfaces.dll" />
+							<File Id="F__25.net_2.0.nunit_uiexception_dll" Name="NUUIE.DLL" LongName="nunit.uiexception.dll" src="..\artifacts\NUnit\bin\net-2.0\lib\nunit.uiexception.dll" />
+							<File Id="F__25.net_2.0.nunit_uikit_dll" Name="NUUIK.DLL" LongName="nunit.uikit.dll" src="..\artifacts\NUnit\bin\net-2.0\lib\nunit.uikit.dll" />
+							<File Id="F__25.net_2.0.nunit_util_dll" Name="NUU.DLL" LongName="nunit.util.dll" src="..\artifacts\NUnit\bin\net-2.0\lib\nunit.util.dll" />
+							<File Id="F__25.net_2.0.nunit_console_runner_dll" Name="NUCR.DLL" LongName="nunit-console-runner.dll" src="..\artifacts\NUnit\bin\net-2.0\lib\nunit-console-runner.dll" />
+							<File Id="F__25.net_2.0.nunit_gui_runner_dll" Name="NUGR.DLL" LongName="nunit-gui-runner.dll" src="..\artifacts\NUnit\bin\net-2.0\lib\nunit-gui-runner.dll" />
+						</Component>
+					</Directory>
+					
+					<Component Id="C__25.net_2.0.console" DiskId="1" Guid="54ac52e0-9b88-11dd-ad8b-0800200c9a66">
+						<File Id="F__25.net_2.0.nunit_console_exe" Name="NUC.EXE" LongName="nunit-console.exe" src="..\artifacts\NUnit\bin\net-2.0\nunit-console.exe" />
+						<File Id="F__25.net_2.0.nunit_console_exe_config" Name="NUC.CFG" LongName="nunit-console.exe.config" src="..\artifacts\NUnit\bin\net-2.0\nunit-console.exe.config" />
+						<File Id="F__25.net_2.0.nunit_agent_exe" Name="NUA.EXE" LongName="nunit-agent.exe" src="..\artifacts\NUnit\bin\net-2.0\nunit-agent.exe" />
+						<File Id="F__25.net_2.0.nunit_agent_exe_config" Name="NUA.CFG" LongName="nunit-agent.exe.config" src="..\artifacts\NUnit\bin\net-2.0\nunit-agent.exe.config" />
+					</Component>
+					
+					<Component Id="C__25.net_2.0.gui" DiskId="1" Guid="6d014440-9b88-11dd-ad8b-0800200c9a66">
+						<File Id="F__25.net_2.0.nunit_gui" Name="NUGUI.EXE" src="..\artifacts\NUnit\bin\net-2.0\nunit.exe" LongName="nunit.exe" Vital="yes" KeyPath="yes" />
+						<File Id="F__25.net_2.0.nunit_exe_config" Name="NUEXE.CFG" LongName="nunit.exe.config" src="..\artifacts\NUnit\bin\net-2.0\nunit.exe.config" />
+						<File Id="F__25.net_2.0.nunit86_gui" Name="NUGUI86.EXE" src="..\artifacts\NUnit\bin\net-2.0\nunit-x86.exe" LongName="nunit-x86.exe" />
+						<File Id="F__25.net_2.0.nunit86_exe_config" Name="NUEXE86.CFG" LongName="nunit-x86.exe.config" src="..\artifacts\NUnit\bin\net-2.0\nunit-x86.exe.config" />
+					</Component>
+				</Directory>
 				
-				<Component Id="C__25.nunit_console" DiskId="1" Guid="54ac52e0-9b88-11dd-ad8b-0800200c9a66">
-				  <File Id="F__25.nunit_console_exe" Name="NUC.EXE" LongName="nunit-console.exe" src="v2.0\NUnit25\nunit-console.exe" />
-				  <File Id="F__25.nunit_console_exe_config" Name="NUC.CFG" LongName="nunit-console.exe.config" src="v2.0\NUnit25\nunit-console.exe.config" />
-				  <File Id="F__25.nunit_console_runner_dll" Name="NUCR.DLL" LongName="nunit-console-runner.dll" src="v2.0\NUnit25\nunit-console-runner.dll" />
-				  <File Id="F__25.nunit_agent_exe" Name="NUA.EXE" LongName="nunit-agent.exe" src="v2.0\NUnit25\nunit-agent.exe" />
-				  <File Id="F__25.nunit_agent_exe_config" Name="NUA.CFG" LongName="nunit-agent.exe.config" src="v2.0\NUnit25\nunit-agent.exe.config" />
-				</Component>
+				<Directory Id="D__25.net_1.1" Name="net-1.1">
+					<Directory Id="D__25.net_1.1.framework" Name="fwk" LongName="framework">
+						<Component Id="C__25.net_1.1.framework" DiskId="1" Guid="6a786913-b56d-4972-88ba-1a35b675632e">
+						  <File Id="F__25.1.1_nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="..\artifacts\NUnit\bin\net-1.1\framework\nunit.framework.dll" />
+						  <File Id="F__25.1.1_nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="..\artifacts\NUnit\bin\net-1.1\framework\nunit.framework.xml" />
+						</Component>
+					</Directory>
+						
+					<Directory Id="D__25.net_1.1.lib" Name="lib">
+						<Component Id="C__25.net_1.1.lib" DiskId="1" Guid="10c41815-4a4f-49d8-9916-83e2f1bfab05">
+							<File Id="F__25.net_1_1.nunit_core_dll" Name="NUC.DLL" LongName="nunit.core.dll" src="..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.dll" />
+							<File Id="F__25.net_1_1.nunit_core_interfaces_dll" Name="NUCI.DLL" LongName="nunit.core.interfaces.dll" src="..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.interfaces.dll" />
+							<File Id="F__25.net_1_1.nunit_util_dll" Name="NUU.DLL" LongName="nunit.util.dll" src="..\artifacts\NUnit\bin\net-1.1\lib\nunit.util.dll" />
+						</Component>
+					</Directory>
+					
+					<Component Id="C__25.net_1.1.console" DiskId="1" Guid="709b3039-6321-4542-b5d6-30ad1d29fb47">
+						<File Id="F__25.net_1_1.nunit_console_exe" Name="NUC.EXE" LongName="nunit-console.exe" src="..\artifacts\NUnit\bin\net-1.1\nunit-console.exe" />
+						<File Id="F__25.net_1_1.nunit_console_exe_config" Name="NUC.CFG" LongName="nunit-console.exe.config" src="..\artifacts\NUnit\bin\net-1.1\nunit-console.exe.config" />
+						<File Id="F__25.net_1_1.nunit_agent_exe" Name="NUA.EXE" LongName="nunit-agent.exe" src="..\artifacts\NUnit\bin\net-1.1\nunit-agent.exe" />
+						<File Id="F__25.net_1_1.nunit_agent_exe_config" Name="NUA.CFG" LongName="nunit-agent.exe.config" src="..\artifacts\NUnit\bin\net-1.1\nunit-agent.exe.config" />
+					</Component>
+				</Directory>
 				
-				<Component Id="C__25.nunit_gui" DiskId="1" Guid="6d014440-9b88-11dd-ad8b-0800200c9a66">
-				  <File Id="F__25.nunit_gui" Name="NUGUI.EXE" src="v2.0\NUnit25\nunit.exe" LongName="nunit.exe" Vital="yes" KeyPath="yes" />
-				  <File Id="F__25.nunit_exe_config" Name="NUEXE.CFG" LongName="nunit.exe.config" src="v2.0\NUnit25\nunit.exe.config" />
-				  <File Id="F__25.nunit86_gui" Name="NUGUI86.EXE" src="v2.0\NUnit25\nunit-x86.exe" LongName="nunit-x86.exe" />
-				  <File Id="F__25.nunit86_exe_config" Name="NUEXE86.CFG" LongName="nunit-x86.exe.config" src="v2.0\NUnit25\nunit-x86.exe.config" />
-				  <File Id="F__25.nunit_gui_runner_dll" Name="NUGR.DLL" LongName="nunit-gui-runner.dll" src="v2.0\NUnit25\nunit-gui-runner.dll" />
-				  <File Id="F__25.nunit_uikit_dll" Name="NUUIK.DLL" LongName="nunit.uikit.dll" src="v2.0\NUnit25\nunit.uikit.dll" />
-				  <File Id="F__25.nunit_uiexception_dll" Name="NUUIE.DLL" LongName="nunit.uiexception.dll" src="v2.0\NUnit25\nunit.uiexception.dll" />
-				</Component>
 			</Directory>
 		</Directory>
 	</DirectoryRef>

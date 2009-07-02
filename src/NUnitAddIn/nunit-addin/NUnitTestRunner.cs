@@ -14,16 +14,31 @@ namespace NUnit.AddInRunner
 
     public class NUnitTestRunner : ITestRunner
     {
-        // TODO: Always run test fixture excluded by category when targeted directly.
-
         public TestRunState RunAssembly(ITestListener testListener, Assembly assembly)
         {
-            ITestFilter filter = TestFilter.Empty;
-            filter = addCategoriesFilter(filter);
-            return run(testListener, assembly, filter);
+            using(new LibAssemblyResolver(assembly))
+            {
+                return runAssembly(testListener, assembly);
+            }
         }
 
         public TestRunState RunMember(ITestListener testListener, Assembly assembly, MemberInfo member)
+        {
+            using (new LibAssemblyResolver(assembly))
+            {
+                return runMember(member, testListener, assembly);
+            }
+        }
+
+        public TestRunState RunNamespace(ITestListener testListener, Assembly assembly, string ns)
+        {
+            using (new LibAssemblyResolver(assembly))
+            {
+                return runNamespace(assembly, ns, testListener);
+            }
+        }
+
+        TestRunState runMember(MemberInfo member, ITestListener testListener, Assembly assembly)
         {
             MethodInfo method = member as MethodInfo;
             if (method != null)
@@ -38,6 +53,21 @@ namespace NUnit.AddInRunner
             }
 
             return TestRunState.NoTests;
+        }
+
+        private TestRunState runNamespace(Assembly assembly, string ns, ITestListener testListener)
+        {
+            ITestFilter filter = new NamespaceFilter(assembly, ns);
+            filter = addCategoriesFilter(filter);
+
+            return run(testListener, assembly, filter);
+        }
+
+        TestRunState runAssembly(ITestListener testListener, Assembly assembly)
+        {
+            ITestFilter filter = TestFilter.Empty;
+            filter = addCategoriesFilter(filter);
+            return run(testListener, assembly, filter);
         }
 
         TestRunState runMethod(ITestListener testListener, Assembly assembly, MethodInfo method)
@@ -192,14 +222,6 @@ namespace NUnit.AddInRunner
             return null;
         }
 
-        public TestRunState RunNamespace(ITestListener testListener, Assembly assembly, string ns)
-        {
-            ITestFilter filter = new NamespaceFilter(assembly, ns);
-            filter = addCategoriesFilter(filter);
-
-            return run(testListener, assembly, filter);
-        }
-
         TestRunState run(ITestListener testListener, Assembly assembly, ITestFilter filter)
         {
             // Add Standard Services to ServiceManager
@@ -301,9 +323,11 @@ namespace NUnit.AddInRunner
                 }
 
                 Type baseType = testMethod.FixtureType;
-                if (baseType.IsGenericType)
+
+                Type genericTypeDefinition = getGenericTypeDefinition(baseType);
+                if(genericTypeDefinition != null)
                 {
-                    baseType = baseType.GetGenericTypeDefinition();
+                    baseType = genericTypeDefinition;
                 }
 
                 foreach (Type type in this.types)
@@ -316,12 +340,55 @@ namespace NUnit.AddInRunner
 
                 return false;
             }
+
+            static readonly PropertyInfo isGenericTypeProperty = typeof(Type).GetProperty("IsGenericType");
+            static readonly MethodInfo getGenericTypeDefinitionMethod = typeof(Type).GetMethod("GetGenericTypeDefinition");
+
+            static Type getGenericTypeDefinition(Type baseType)
+            {
+                if(isGenericTypeProperty == null)
+                {
+                    return null;
+                }
+
+                bool isGenericType = (bool)isGenericTypeProperty.GetValue(baseType, null);
+                if (!isGenericType) return null;
+
+                if (getGenericTypeDefinitionMethod == null)
+                {
+                    return null;
+                }
+
+                Type genericTypeDefinition = (Type)getGenericTypeDefinitionMethod.Invoke(baseType, null);
+                return genericTypeDefinition;
+
+                //if (baseType.IsGenericType)
+                //{
+                //    baseType = baseType.GetGenericTypeDefinition();
+                //}
+            }
         }
 
-        static bool isSameMetadata(MemberInfo memberA, MemberInfo memberB)
+        static readonly PropertyInfo metadataTokenProperty = typeof(MemberInfo).GetProperty("MetadataToken");
+        static readonly PropertyInfo moduleProperty = typeof(MemberInfo).GetProperty("Module");
+
+        static bool isSameMetadata(MethodInfo memberA, MethodInfo memberB)
         {
-            return memberA.MetadataToken == memberB.MetadataToken &&
-                   memberA.Module == memberB.Module;
+            if (metadataTokenProperty != null && moduleProperty != null)
+            {
+                int tokenA = (int) metadataTokenProperty.GetValue(memberA, null);
+                int tokenB = (int) metadataTokenProperty.GetValue(memberB, null);
+                if (tokenA != tokenB) return false;
+
+                object moduleA = moduleProperty.GetValue(memberA, null);
+                object moduleB = moduleProperty.GetValue(memberB, null);
+                if (moduleA != moduleB) return false;
+
+                return true;
+            }
+
+            // No need to wory about generics or 64-bit on .NET 1.x.
+            return (ulong)memberA.MethodHandle.Value == (ulong)memberB.MethodHandle.Value;
         }
 
 		class TypeFilter : SimpleNameFilter

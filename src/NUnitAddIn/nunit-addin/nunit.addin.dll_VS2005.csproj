@@ -26,15 +26,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.core, Version=2.5.0.8290, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.core, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <Private>False</Private>
     </Reference>
-    <Reference Include="nunit.core.interfaces, Version=2.5.0.8290, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.core.interfaces, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <Private>False</Private>
     </Reference>
-    <Reference Include="nunit.util, Version=2.4.0.2, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v2.0\NUnit25\nunit.util.dll</HintPath>
+    <Reference Include="nunit.util, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -44,13 +43,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrameworkUtilities.cs" />
+    <Compile Include="LibAssemblyResolver.cs" />
+    <Compile Include="NUnitInfo.cs" />
+    <Compile Include="NUnitRegistry.cs" />
+    <Compile Include="NUnitSelector.cs" />
     <Compile Include="TestDrivenOptions.cs" />
     <Compile Include="NUnitTestRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="..\..\..\build\v2.0\NUnit25\license.txt">
-      <Link>license.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\..\..\install\nunitaddin.wxs">
       <Link>nunitaddin.wxs</Link>
     </None>
@@ -60,17 +60,22 @@
     <Compile Include="StackTraceFilter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\build\v2.0\NUnit25\nunit.core.dll">
+    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.dll">
       <Link>nunit.core.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v2.0\NUnit25\nunit.core.interfaces.dll">
+    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.interfaces.dll">
       <Link>nunit.core.interfaces.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v2.0\NUnit25\nunit.util.dll">
+    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.util.dll">
       <Link>nunit.util.dll</Link>
+    </Content>
+    <Content Include="..\..\..\artifacts\NUnit\license.txt">
+      <Link>license.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
       <Link>TestDriven.Framework.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="addins.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

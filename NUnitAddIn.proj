@@ -1,54 +1,66 @@
 <Project DefaultTargets="Clean;Build;Package;Test" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+<!--
 	<PropertyGroup Condition="'$(NUnitDirectory)' == ''" >
-		<NUnitDirectory>lib\v2.0\NUnit</NUnitDirectory>
+		<NUnitDirectory>artifacts\NUnit</NUnitDirectory>
 	</PropertyGroup>
+-->
 
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
+		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll_VS2005.csproj</NUnitAddinProjectFile>
+		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
-		<OutputPath_V2_0>$(OutputPath)v2.0\NUnit25\</OutputPath_V2_0>
-		<Properties_V2_0>OutputPath=$(OutputPath_V2_0)</Properties_V2_0>
+		<OutputPath_V1_1>$(OutputPath)v1.1\NUnit25\</OutputPath_V1_1>
+		<Properties_V1_1>OutputPath=$(OutputPath_V1_1);NoWarn=;TargetFrameworkVersion=v1.1;MSBuildExtensionsPath=$(MSBuildExtensionsPath);CustomAfterMicrosoftCommonTargets=$(MSBuildExtensionsPath)\CrossCompile.CSharp.v1.1.targets</Properties_V1_1>
 		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
 		<PackageId>{B97011D0-9B88-11DD-AD8B-0800200C9A66}</PackageId>
 
 		<NUnitConsole>$(MSBuildProjectDirectory)\tools\NUnit\2.4.8\net-2.0\bin\nunit-console.exe</NUnitConsole>
-		<TestAssembly>$(OutputPath_V2_0)nunit.addin.tests.dll</TestAssembly>
+		<TestAssembly>$(OutputPath_V1_1)nunit.addin.tests.dll</TestAssembly>
 	</PropertyGroup>
 	
 	<ItemGroup>
 		<Wxs Include="install\nunitaddin.wxs" />
 		<Wxs Include="install\Package.wxs" />
 	</ItemGroup>
-	
+
+<!--	
     <ItemGroup>
         <NUnitFiles Include="$(NUnitDirectory)\**\*.*" />
     </ItemGroup>
+-->
     		
 	<Target Name="Clean">
 		<RemoveDir Directories="$(OutputPath)" />
-		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Clean" Properties="$(Properties_V2_0)" />
+		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Clean" Properties="$(Properties_V1_1)" />
 	</Target>
 	
 	<Target Name="Build" DependsOnTargets="CopyNUnit;BuildNUnitAddin;ProjectTemplates" />
 
 	<Target Name="CopyNUnit">
-        <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(OutputPath_V2_0)" />
+<!--
+        <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(OutputPath_V1_1)" />
+-->
 	</Target>
 
 	<Target Name="BuildNUnitAddin">
-		<MSBuild Projects="$(NUnitAddinSolutionFile)" Targets="Rebuild" Properties="$(Properties_V2_0)" />
+		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Rebuild" Properties="$(Properties_V1_1)" />
 	</Target>
 	
 	<Target Name="ProjectTemplates">
+<!--
 		<MSBuild Projects="src\ProjectTemplates\CSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)ProjectTemplates\CSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+			Properties="OutputDir=$(OutputPath)ProjectTemplates\CSharpNUnitProject;LibDir=$(OutputPath_V1_1)" />
 		<MSBuild Projects="src\ProjectTemplates\FSharpNUnitProject\Build.proj"
-			Properties="OutputDir=$(OutputPath)ProjectTemplates\FSharpNUnitProject;LibDir=$(OutputPath_V2_0)" />
+			Properties="OutputDir=$(OutputPath)ProjectTemplates\FSharpNUnitProject;LibDir=$(OutputPath_V1_1)" />
+-->
 	</Target>
 	
 	<Target Name="Test">
+	<!--
 		<Exec Command='"$(NUnitConsole)" /load:NUnit.AddInRunner.Tests "$(TestAssembly)"' />
+	-->
 	</Target>
 	
 	<Target Name="Package">
