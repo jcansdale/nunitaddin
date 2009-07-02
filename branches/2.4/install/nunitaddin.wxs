@@ -20,13 +20,13 @@
 			<File Id="F__nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.addin.dll" src="v1.1\NUnit24\nunit.addin.dll" />
 			
 			<!-- use this test runner if using nunit.framework -->
-			<Registry Id="R__NUnit" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.4" Type="string" Value="6" />
+			<Registry Id="R__NUnit" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.4" Type="string" Value="5" />
 			<Registry Id="R__NUnit_AssemblyPath" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.4"
 				Name="AssemblyPath" Type="string" Value="[D__nunitaddin_2_4]nunit.addin.dll" />
 			<Registry Id="R__NUnit_TypeName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.4"
 				Name="TypeName" Type="string" Value="NUnit.AddInRunner.NUnitTestRunner" />
 			<Registry Id="R__NUnit_TargetFrameworkAssemblyName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.4"
-				Name="TargetFrameworkAssemblyName_Reference" Type="string" Value="nunit.framework, Version=2.3.0.0-2.5.65535.65535" />
+				Name="TargetFrameworkAssemblyName_Reference" Type="string" Value="nunit.framework, Version=2.3.0.0-2.4.65535.65535" />
 			<Registry Id="R__NUnit_Application" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.4"
 				Name="Application" Type="string" Value="[D__nunitaddin_2_4]nunit.exe" />
         </Component>
