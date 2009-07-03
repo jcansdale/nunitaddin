@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace NUnit.AddInRunner.Tests
 {
     using System;
@@ -13,11 +11,11 @@ namespace NUnit.AddInRunner.Tests
         {
             Version version = new Version("2.5.666.1");
             const string expectedDir = @"x:\testdir";
+            const string runtimeVersion = "v2.0.50727";
 
-            NUnitRegistry nunitRegistry = new NUnitRegistry(
-                new NUnitInfo[] { new NUnitInfo(expectedDir, version) });
+            NUnitInfo[] versions = new NUnitInfo[] { new NUnitInfo(expectedDir, version, runtimeVersion, null) };
             NUnitInfo info = FrameworkUtilities.FindInstallDir(
-                nunitRegistry, version, version);
+                versions, version, version, runtimeVersion);
             Assert.That(info.InstallDir, Is.EqualTo(expectedDir));
             Assert.That(info.ProductVersion, Is.EqualTo(version));
         }
@@ -29,13 +27,13 @@ namespace NUnit.AddInRunner.Tests
             Version version2 = new Version("2.5.666.2");
             const string expectedDir = @"x:\testdir";
             const string expectedDir2 = @"x:\testdir2";
+            const string runtimeVersion = "v2.0.50727";
 
             NUnitInfo[] versions = new NUnitInfo[] {
-                new NUnitInfo(expectedDir, version),
-                new NUnitInfo(expectedDir2, version2) };
-            NUnitRegistry nunitRegistry = new NUnitRegistry(versions);
+                new NUnitInfo(expectedDir, version, runtimeVersion, null),
+                new NUnitInfo(expectedDir2, version2, runtimeVersion, null) };
             NUnitInfo info = FrameworkUtilities.FindInstallDir(
-                nunitRegistry, version, version);
+                versions, version, version, runtimeVersion);
             Assert.That(info.InstallDir, Is.EqualTo(expectedDir));
             Assert.That(info.ProductVersion, Is.EqualTo(version));
         }

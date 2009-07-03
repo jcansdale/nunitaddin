@@ -16,7 +16,7 @@ namespace NUnit.AddInRunner
     {
         public TestRunState RunAssembly(ITestListener testListener, Assembly assembly)
         {
-            using(new LibAssemblyResolver(assembly))
+            using (new LibAssemblyResolver(testListener, assembly))
             {
                 return runAssembly(testListener, assembly);
             }
@@ -24,7 +24,7 @@ namespace NUnit.AddInRunner
 
         public TestRunState RunMember(ITestListener testListener, Assembly assembly, MemberInfo member)
         {
-            using (new LibAssemblyResolver(assembly))
+            using (new LibAssemblyResolver(testListener, assembly))
             {
                 return runMember(member, testListener, assembly);
             }
@@ -32,7 +32,7 @@ namespace NUnit.AddInRunner
 
         public TestRunState RunNamespace(ITestListener testListener, Assembly assembly, string ns)
         {
-            using (new LibAssemblyResolver(assembly))
+            using (new LibAssemblyResolver(testListener, assembly))
             {
                 return runNamespace(assembly, ns, testListener);
             }

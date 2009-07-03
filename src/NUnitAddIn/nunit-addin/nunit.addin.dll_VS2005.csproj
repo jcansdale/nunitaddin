@@ -58,6 +58,7 @@
       <Link>Package.wxs</Link>
     </None>
     <Compile Include="StackTraceFilter.cs" />
+    <Compile Include="WarningMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.dll">
@@ -75,7 +76,7 @@
     </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
       <Link>TestDriven.Framework.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="addins.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
