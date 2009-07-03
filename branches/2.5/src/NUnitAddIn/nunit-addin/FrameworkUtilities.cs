@@ -43,12 +43,14 @@
             return null;
         }
 
-        public static NUnitInfo FindInstallDir(NUnitRegistry nunitRegistry, Version minVersion, Version maxVersion)
+        public static NUnitInfo FindInstallDir(NUnitInfo[] versions,
+            Version minVersion, Version maxVersion, string runtimeVersion)
         {
             NUnitInfo nunitVersion = null;
-            foreach (NUnitInfo info in nunitRegistry.Versions)
+            foreach (NUnitInfo info in versions)
             {
-                if (info.ProductVersion < minVersion || info.ProductVersion > maxVersion)
+                if (info.ProductVersion < minVersion || info.ProductVersion > maxVersion ||
+                    info.RuntimeVersion != runtimeVersion)
                 {
                     continue;
                 }

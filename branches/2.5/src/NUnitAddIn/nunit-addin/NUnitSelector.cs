@@ -7,60 +7,94 @@ namespace NUnit.AddInRunner
 {
     public class NUnitSelector
     {
+        WarningMessageHandler warningMessageHandler;
         NUnitRegistry nunitRegistry;
         Version minVersion;
         Version maxVersion;
         Version rtmVersion;
 
-        public NUnitSelector(NUnitRegistry nunitRegistry, Version minVersion, Version maxVersion, Version rtmVersion)
+        public NUnitSelector(WarningMessageHandler warningMessageHandler,
+            NUnitRegistry nunitRegistry, Version minVersion, Version maxVersion, Version rtmVersion)
         {
+            this.warningMessageHandler = warningMessageHandler;
             this.nunitRegistry = nunitRegistry;
             this.minVersion = minVersion;
             this.maxVersion = maxVersion;
             this.rtmVersion = rtmVersion;
         }
 
-        public string GetLibDir(Version frameworkVersion, string runtimeVersion)
+        public string GetLibDir(Version frameworkVersion)
         {
-            // TODO: Warn when .NET 1.1 feature not installed.
-
-            string binDir = getBinDir(frameworkVersion);
-            return FrameworkUtilities.GetLibDir(binDir, runtimeVersion);
-        }
-
-        string getBinDir(Version frameworkVersion)
-        {
-            NUnitInfo info = FrameworkUtilities.FindInstallDir(nunitRegistry, minVersion, maxVersion);
-            if (info != null)
+            string libDir = getInstallLibDir(frameworkVersion, nunitRegistry.RuntimeVersion);
+            if(libDir == null)
             {
-                if(info.ProductVersion < rtmVersion)
-                {
-                    // TODO: Use warning API.
-                    Trace.WriteLine("Please install NUnit " + rtmVersion + " RTM or greater:");
-                    Trace.WriteLine("http://nunit.com/index.php?p=download");
-                    Trace.WriteLine("");
-                    return getDefaultBinDir();
-                }
-
-                if(info.ProductVersion < frameworkVersion)
-                {
-                    // TODO: Use warning API.
-                    Trace.WriteLine("Please install NUnit " + frameworkVersion + " or greater:");
-                    Trace.WriteLine("http://nunit.com/index.php?p=download");
-                    Trace.WriteLine("");
-                    return getDefaultBinDir();
-                }
-
-                return Path.Combine(info.InstallDir, "bin");
+                libDir = getDefaultLibDir(frameworkVersion, nunitRegistry.RuntimeVersion);
             }
 
-            return getDefaultBinDir();
+            return libDir;
         }
 
-        static string getDefaultBinDir()
+        string getInstallLibDir(Version frameworkVersion, string runtimeVersion)
         {
-            string localPath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
-            return Path.GetDirectoryName(localPath);
+            NUnitInfo info = FrameworkUtilities.FindInstallDir(
+                nunitRegistry.Versions, minVersion, maxVersion, runtimeVersion);
+            if (info == null)
+            {
+                return null;
+            }
+
+            if(info.ProductVersion < rtmVersion)
+            {
+                warningMessageHandler(string.Format(
+@"Please install NUnit {0} RTM or greater:
+http://nunit.com/index.php?p=download
+", rtmVersion));
+                return null;
+            }
+
+            if(info.ProductVersion < frameworkVersion)
+            {
+                warningMessageHandler(string.Format(
+@"Please install NUnit {0} or greater:
+http://nunit.com/index.php?p=download
+", frameworkVersion));
+
+                return null;
+            }
+
+            return info.LibDir;
+        }
+
+        string getDefaultLibDir(Version frameworkVersion, string runtimeVersion)
+        {
+            NUnitInfo info = FrameworkUtilities.FindInstallDir(nunitRegistry.DefaultVersions,
+                minVersion, maxVersion, runtimeVersion);
+
+            if(info == null)
+            {
+                warningMessageHandler(string.Format(
+@"Couldn't find NUnit test runner for .NET {0}.
+Please install the latest version of TestDriven.Net:
+http://www.testdriven.net/download.aspx
+
+or let support@testdriven know you're seeing this message.
+", runtimeVersion));
+                return null;
+            }
+
+            if(info.ProductVersion < frameworkVersion)
+            {
+                warningMessageHandler(string.Format(
+@"The packaged version of NUnit is older than {0}.
+Please install the latest version of TestDriven.Net:
+http://www.testdriven.net/download.aspx
+
+or install NUnit {0} or later:
+http://nunit.com/index.php?p=download
+", frameworkVersion));
+            }
+
+            return info.LibDir;
         }
     }
 }
