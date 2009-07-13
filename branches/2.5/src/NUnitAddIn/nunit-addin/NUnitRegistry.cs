@@ -6,51 +6,83 @@ namespace NUnit.AddInRunner
     using System.IO;
     using System.Collections;
     using Microsoft.Win32;
-    using System.Runtime.InteropServices;
 
     public class NUnitRegistry
     {
         readonly NUnitInfo[] defaultVersions;
-        readonly NUnitInfo[] versions;
+        readonly NUnitInfo[] installedVersions;
+        readonly NUnitInfo[] developerVersions;
         readonly string runtimeVersion;
 
-        public static NUnitRegistry Load(string nunitKeyName)
+        public static NUnitRegistry Load(string nunitKeyName, string targetDir, string runtimeVersion)
         {
-            return Load(nunitKeyName, RuntimeEnvironment.GetSystemVersion());
+            NUnitInfo[] developerVersions = LoadDeveloperVersions(runtimeVersion,
+                AppDomain.CurrentDomain.BaseDirectory, Constants.ConfigFileName);
+            NUnitInfo[] defaultVersions = LoadDefaultVersions(runtimeVersion);
+            NUnitInfo[] installedVersions = LoadInstalledVersions(nunitKeyName);
+            return new NUnitRegistry(runtimeVersion, defaultVersions, installedVersions, developerVersions);
         }
 
-        public static NUnitRegistry Load(string nunitKeyName, string runtimeVersion)
+        public static NUnitInfo[] LoadDeveloperVersions(string runtimeVersion, string targetDir, string configFileName)
         {
-            NUnitInfo[] defaultVersions = getDefaultVersions(runtimeVersion);
-            NUnitInfo[] installedVersions = getInstalledVersions(nunitKeyName);
-            return new NUnitRegistry(runtimeVersion, defaultVersions, installedVersions);
+            while(targetDir != null)
+            {
+                string file = Path.Combine(targetDir, configFileName);
+                if (File.Exists(file))
+                {
+                    return loadConfigVersions(runtimeVersion, file);
+                }
+
+                targetDir = Path.GetDirectoryName(targetDir);
+            }
+
+            return new NUnitInfo[0];
         }
 
-        static NUnitInfo[] getDefaultVersions(string runtimeVersion)
+        public static NUnitInfo[] LoadDefaultVersions(string runtimeVersion)
         {
+            string dir = getDefaultBinDir();
+            string configFile = Path.Combine(dir, Constants.ConfigFileName);
+            return loadConfigVersions(runtimeVersion, configFile);
+        }
+
+        static NUnitInfo[] loadConfigVersions(string runtimeVersion, string configFile)
+        {
+            NUnitConfig config = NUnitConfig.Load(configFile);
+
+            string dir = Path.GetDirectoryName(configFile);
             ArrayList infoList = new ArrayList();
+            foreach (NUnitConfig.Info lib in config.Infos)
+            {
+                NUnitInfo info = getConfigVersion(runtimeVersion, dir, lib);
 
-            NUnitInfo net11Version = getDefaultVersion(runtimeVersion, "v1.1.4322");
-            if(net11Version != null) infoList.Add(net11Version);
-
-            NUnitInfo net20Version = getDefaultVersion(runtimeVersion, "v2.0.50727");
-            if (net20Version != null) infoList.Add(net20Version);
+                if (info != null)
+                {
+                    infoList.Add(info);
+                }
+            }
 
             return (NUnitInfo[])infoList.ToArray(typeof(NUnitInfo));
         }
 
-        static NUnitInfo getDefaultVersion(string runtimeVersion, string imageRuntimeVersion)
+        static NUnitInfo getConfigVersion(string runtimeVersion, string dir, NUnitConfig.Info info)
         {
-            if(toVersion(runtimeVersion) < toVersion(imageRuntimeVersion))
+            if (toVersion(runtimeVersion) < toVersion(info.RuntimeVersion))
             {
                 return null;
             }
 
-            string binDir = getDefaultBinDir();
-            string libDir = FrameworkUtilities.GetLibDir(binDir, imageRuntimeVersion);
-            string coreFile = Path.Combine(libDir, "nunit.core.dll");
-            AssemblyName assemblyName = AssemblyName.GetAssemblyName(coreFile);
-            return new NUnitInfo(null, assemblyName.Version, imageRuntimeVersion, libDir);
+            string baseDir = Path.Combine(dir, info.BaseDir);
+            baseDir = Path.GetFullPath(baseDir);
+            Version productVersion = info.ProductVersion;
+            if(productVersion == null)
+            {
+                string coreFile = Path.Combine(baseDir, @"lib\nunit.core.dll");
+                AssemblyName assemblyName = AssemblyName.GetAssemblyName(coreFile);
+                productVersion = assemblyName.Version;
+            }
+
+            return new NUnitInfo(productVersion, info.RuntimeVersion, baseDir);
         }
 
         static Version toVersion(string runtimeVersion)
@@ -64,7 +96,7 @@ namespace NUnit.AddInRunner
             return Path.GetDirectoryName(localPath);
         }
 
-        static NUnitInfo[] getInstalledVersions(string nunitKeyName)
+        public static NUnitInfo[] LoadInstalledVersions(string nunitKeyName)
         {
             using (RegistryKey nunitKey = Registry.CurrentUser.OpenSubKey(nunitKeyName))
             {
@@ -99,20 +131,18 @@ namespace NUnit.AddInRunner
                         Version version = new Version(productVersion);
 
                         const string runtimeVersion11 = "v1.1.4322";
-                        string libDir11 = FrameworkUtilities.GetLibDir(binDir, runtimeVersion11);
-                        if (Directory.Exists(libDir11))
+                        string baseDir11 = Path.Combine(binDir, "net-1.1");
+                        if (Directory.Exists(baseDir11))
                         {
-                            NUnitInfo info = new NUnitInfo(installDir, version,
-                                runtimeVersion11, libDir11);
+                            NUnitInfo info = new NUnitInfo(version, runtimeVersion11, baseDir11);
                             infoList.Add(info);
                         }
 
                         const string runtimeVersion20 = "v2.0.50727";
-                        string libDir20 = FrameworkUtilities.GetLibDir(binDir, runtimeVersion20);
-                        if (Directory.Exists(libDir20))
+                        string baseDir20 = Path.Combine(binDir, "net-2.0");
+                        if (Directory.Exists(baseDir20))
                         {
-                            NUnitInfo info = new NUnitInfo(installDir, version,
-                                runtimeVersion20, libDir20);
+                            NUnitInfo info = new NUnitInfo(version, runtimeVersion20, baseDir20);
                             infoList.Add(info);
                         }
                     }
@@ -122,16 +152,13 @@ namespace NUnit.AddInRunner
             }
         }
 
-        public NUnitRegistry(NUnitInfo[] versions) :
-            this(RuntimeEnvironment.GetSystemVersion(), new NUnitInfo[0], versions)
-        {
-        }
-
-        public NUnitRegistry(string runtimeVersion, NUnitInfo[] defaultVersions, NUnitInfo[] versions)
+        public NUnitRegistry(string runtimeVersion, NUnitInfo[] defaultVersions,
+            NUnitInfo[] installedVersions, NUnitInfo[] developerVersions)
         {
             this.runtimeVersion = runtimeVersion;
             this.defaultVersions = defaultVersions;
-            this.versions = versions;
+            this.installedVersions = installedVersions;
+            this.developerVersions = developerVersions;
         }
 
         public NUnitInfo[] DefaultVersions
@@ -139,9 +166,14 @@ namespace NUnit.AddInRunner
             get { return defaultVersions; }
         }
 
-        public NUnitInfo[] Versions
+        public NUnitInfo[] InstalledVersions
         {
-            get { return versions; }
+            get { return installedVersions; }
+        }
+
+        public NUnitInfo[] DeveloperVersions
+        {
+            get { return developerVersions; }
         }
 
         public string RuntimeVersion

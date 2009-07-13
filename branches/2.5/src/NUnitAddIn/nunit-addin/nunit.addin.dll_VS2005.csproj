@@ -43,8 +43,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="FrameworkUtilities.cs" />
     <Compile Include="LibAssemblyResolver.cs" />
+    <Compile Include="NUnitGuiApplication.cs" />
+    <Compile Include="NUnitConfig.cs" />
     <Compile Include="NUnitInfo.cs" />
     <Compile Include="NUnitRegistry.cs" />
     <Compile Include="NUnitSelector.cs" />
@@ -56,6 +59,9 @@
     </None>
     <None Include="..\..\..\install\Package.wxs">
       <Link>Package.wxs</Link>
+    </None>
+    <None Include="nunit.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="StackTraceFilter.cs" />
     <Compile Include="WarningMessageHandler.cs" />

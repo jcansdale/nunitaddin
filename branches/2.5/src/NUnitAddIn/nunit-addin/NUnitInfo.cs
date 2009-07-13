@@ -1,26 +1,21 @@
 using System;
+using System.IO;
 
 namespace NUnit.AddInRunner
 {
     public class NUnitInfo
     {
-        string installDir;
         Version productVersion;
         string runtimeVersion;
+        string baseDir;
         string libDir;
 
-        public NUnitInfo(string installDir, Version productVersion,
-            string runtimeVersion, string libDir)
+        public NUnitInfo(Version productVersion, string runtimeVersion, string baseDir)
         {
-            this.installDir = installDir;
             this.productVersion = productVersion;
             this.runtimeVersion = runtimeVersion;
-            this.libDir = libDir;
-        }
-
-        public string InstallDir
-        {
-            get { return installDir; }
+            this.baseDir = baseDir;
+            this.libDir = Path.Combine(baseDir, "lib");
         }
 
         public Version ProductVersion
@@ -31,6 +26,11 @@ namespace NUnit.AddInRunner
         public string RuntimeVersion
         {
             get { return runtimeVersion; }
+        }
+
+        public string BaseDir
+        {
+            get { return baseDir; }
         }
 
         public string LibDir
