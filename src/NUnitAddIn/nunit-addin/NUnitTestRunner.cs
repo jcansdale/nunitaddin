@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace NUnit.AddInRunner
 {
     using System;
@@ -14,60 +16,149 @@ namespace NUnit.AddInRunner
 
     public class NUnitTestRunner : ITestRunner
     {
+        string testRunnerName;
+
         public TestRunState RunAssembly(ITestListener testListener, Assembly assembly)
         {
-            using (new LibAssemblyResolver(testListener, assembly))
-            {
-                return runAssembly(testListener, assembly);
-            }
+            return run(testListener, assembly, new AssemblyRun());
         }
 
         public TestRunState RunMember(ITestListener testListener, Assembly assembly, MemberInfo member)
         {
-            using (new LibAssemblyResolver(testListener, assembly))
-            {
-                return runMember(member, testListener, assembly);
-            }
+            return run(testListener, assembly, new MemberRun(member));
         }
 
         public TestRunState RunNamespace(ITestListener testListener, Assembly assembly, string ns)
         {
-            using (new LibAssemblyResolver(testListener, assembly))
+            return run(testListener, assembly, new NamespaceRun(ns));
+        }
+
+        interface IRun
+        {
+            TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly);
+        }
+
+        class AssemblyRun : IRun
+        {
+            public TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly)
             {
-                return runNamespace(assembly, ns, testListener);
+                ITestFilter filter = TestFilter.Empty;
+                filter = testRunner.addCategoriesFilter(filter);
+                return testRunner.run(testListener, assembly, filter);
             }
         }
 
-        TestRunState runMember(MemberInfo member, ITestListener testListener, Assembly assembly)
+        class MemberRun : IRun
         {
-            MethodInfo method = member as MethodInfo;
-            if (method != null)
+            readonly MemberInfo member;
+
+            public MemberRun(MemberInfo member)
             {
-                return runMethod(testListener, assembly, method);
+                this.member = member;
             }
 
-            Type type = member as Type;
-            if (type != null)
+            public TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly)
             {
-                return runType(testListener, assembly, type);
+                MethodInfo method = member as MethodInfo;
+                if (method != null)
+                {
+                    return testRunner.runMethod(testListener, assembly, method);
+                }
+
+                Type type = member as Type;
+                if (type != null)
+                {
+                    return testRunner.runType(testListener, assembly, type);
+                }
+
+                return TestRunState.NoTests;
+            }
+        }
+
+        class NamespaceRun : IRun
+        {
+            readonly string ns;
+
+            public NamespaceRun(string ns)
+            {
+                this.ns = ns;
             }
 
-            return TestRunState.NoTests;
+            public TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly)
+            {
+                ITestFilter filter = new NamespaceFilter(assembly, ns);
+                filter = testRunner.addCategoriesFilter(filter);
+
+                return testRunner.run(testListener, assembly, filter);
+            }
         }
 
-        private TestRunState runNamespace(Assembly assembly, string ns, ITestListener testListener)
+        TestRunState run(ITestListener testListener, Assembly assembly, IRun run)
         {
-            ITestFilter filter = new NamespaceFilter(assembly, ns);
-            filter = addCategoriesFilter(filter);
+            NUnitInfo info = findNUnit(testListener, assembly);
+            if (info == null)
+            {
+                return TestRunState.Error;
+            }
 
-            return run(testListener, assembly, filter);
+            testRunnerName = toFriendlyName(info.ProductVersion);
+            using (new LibAssemblyResolver(info.LibDir))
+            {
+                return run.Run(this, testListener, assembly);
+            }
         }
 
-        TestRunState runAssembly(ITestListener testListener, Assembly assembly)
+        static string toFriendlyName(Version version)
         {
-            ITestFilter filter = TestFilter.Empty;
-            filter = addCategoriesFilter(filter);
-            return run(testListener, assembly, filter);
+            return string.Format("NUnit {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+        }
+
+        static NUnitInfo findNUnit(ITestListener testListener, Assembly targetAssembly)
+        {
+            WarningMessage warningMessage = new WarningMessage(testListener);
+
+            Assembly frameworkAssembly = FrameworkUtilities.FindFrameworkAssembly(targetAssembly);
+            if(frameworkAssembly == null)
+            {
+                warningMessage.Handler("Couldn't find reference to 'nunit.framework' on:" + targetAssembly.CodeBase);
+                warningMessage.Handler(targetAssembly.CodeBase);
+                return null;
+            }
+
+            NUnitRegistry nunitRegistry = NUnitRegistry.Load(Constants.NUnitRegistryRoot,
+                AppDomain.CurrentDomain.BaseDirectory, RuntimeEnvironment.GetSystemVersion());
+            NUnitSelector selector = new NUnitSelector(warningMessage.Handler, nunitRegistry,
+                Constants.MinVersion, Constants.MaxVersion, Constants.RtmVersion);
+            Version frameworkVersion = frameworkAssembly.GetName().Version;
+            NUnitInfo info = selector.GetInfo(frameworkVersion);
+            if(info == null)
+            {
+                warningMessage.Handler("Couldn't find NUnit runner for:");
+                warningMessage.Handler(frameworkAssembly.FullName);
+                return null;
+            }
+
+            return info;
+        }
+
+        class WarningMessage
+        {
+            readonly ITestListener testListener;
+
+            public WarningMessage(ITestListener testListener)
+            {
+                this.testListener = testListener;
+            }
+
+            public WarningMessageHandler Handler
+            {
+                get { return new WarningMessageHandler(warningMessage); }
+            }
+
+            void warningMessage(string text)
+            {
+                testListener.WriteLine(text, Category.Warning);
+            }
         }
 
         TestRunState runMethod(ITestListener testListener, Assembly assembly, MethodInfo method)
@@ -92,6 +183,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "Test methods must be public.";
                     summary.Name = method.ReflectedType.FullName + "." + method.Name;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -104,6 +196,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "No fixture attribute on parent class.";
                     summary.Name = method.ReflectedType.FullName + "." + method.Name;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -115,6 +208,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "Parent fixture must be public.";
                     summary.Name = method.ReflectedType.FullName + "." + method.Name;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -138,6 +232,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "Test fixtures must be public.";
                     summary.Name = type.FullName;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -252,7 +347,7 @@ namespace NUnit.AddInRunner
                 return TestRunState.NoTests;
             }
 
-            EventListener listener = new ProxyEventListener(testListener, totalTestCases);
+            EventListener listener = new ProxyEventListener(testListener, totalTestCases, testRunnerName);
 
             NUC.TestResult result = testAssembly.Run(listener, filter);
 
@@ -440,11 +535,13 @@ namespace NUnit.AddInRunner
         {
             ITestListener testListener;
             int totalTestCases;
+            string testRunnerName;
 
-            public ProxyEventListener(ITestListener testListener, int totalTestCases)
+            public ProxyEventListener(ITestListener testListener, int totalTestCases, string testRunnerName)
             {
                 this.testListener = testListener;
                 this.totalTestCases = totalTestCases;
+                this.testRunnerName = testRunnerName;
             }
 
 			public void RunFinished(Exception exception)
@@ -474,6 +571,7 @@ namespace NUnit.AddInRunner
                 summary.Name = result.FullName;
                 summary.StackTrace = StackTraceFilter.Filter(result.StackTrace);
                 summary.TimeSpan = TimeSpan.FromSeconds(result.Time);
+                summary.TestRunnerName = testRunnerName;
                 this.testListener.TestFinished(summary);
             }
 
