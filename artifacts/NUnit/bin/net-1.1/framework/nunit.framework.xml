@@ -1201,31 +1201,31 @@
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.GreaterThanOrEqualTo(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is greater than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.AtLeast(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is greater than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.LessThan(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.LessThanOrEqualTo(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.AtMost(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.TypeOf(System.Type)">
@@ -1293,6 +1293,12 @@
             collection member.
             </summary>
         </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintExpression.StringContaining(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value contains the substring supplied as an argument.
+            </summary>
+        </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.ContainsSubstring(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
@@ -1305,13 +1311,31 @@
             value starts with the substring supplied as an argument.
             </summary>
         </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintExpression.StringStarting(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value starts with the substring supplied as an argument.
+            </summary>
+        </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.EndsWith(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
             value ends with the substring supplied as an argument.
             </summary>
         </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintExpression.StringEnding(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value ends with the substring supplied as an argument.
+            </summary>
+        </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintExpression.Matches(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value matches the Regex pattern supplied as an argument.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintExpression.StringMatching(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
             value matches the Regex pattern supplied as an argument.
@@ -1802,7 +1826,7 @@
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="M:NUnit.Framework.Constraints.MsgUtils.ConvertWhitespace(System.String)">
+        <member name="M:NUnit.Framework.Constraints.MsgUtils.EscapeControlChars(System.String)">
             <summary>
             Converts any control characters in a string 
             to their escaped representation.
@@ -2672,31 +2696,31 @@
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.GreaterThanOrEqualTo(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is greater than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.AtLeast(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is greater than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.LessThan(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.LessThanOrEqualTo(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.AtMost(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.TypeOf(System.Type)">
@@ -2764,6 +2788,12 @@
             collection member.
             </summary>
         </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintFactory.StringContaining(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value contains the substring supplied as an argument.
+            </summary>
+        </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.ContainsSubstring(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
@@ -2782,6 +2812,12 @@
             value starts with the substring supplied as an argument.
             </summary>
         </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintFactory.StringStarting(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value starts with the substring supplied as an argument.
+            </summary>
+        </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.DoesNotStartWith(System.String)">
             <summary>
             Returns a constraint that fails if the actual
@@ -2794,6 +2830,12 @@
             value ends with the substring supplied as an argument.
             </summary>
         </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintFactory.StringEnding(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value ends with the substring supplied as an argument.
+            </summary>
+        </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.DoesNotEndWith(System.String)">
             <summary>
             Returns a constraint that fails if the actual
@@ -2801,6 +2843,12 @@
             </summary>
         </member>
         <member name="M:NUnit.Framework.Constraints.ConstraintFactory.Matches(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value matches the Regex pattern supplied as an argument.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Constraints.ConstraintFactory.StringMatching(System.String)">
             <summary>
             Returns a constraint that succeeds if the actual
             value matches the Regex pattern supplied as an argument.
@@ -3837,18 +3885,32 @@
             to tests without requiring the class to change.
             </summary>
         </member>
-        <member name="M:NUnit.Framework.TestCaseData.#ctor(System.Object,System.Object[])">
+        <member name="M:NUnit.Framework.TestCaseData.#ctor(System.Object[])">
             <summary>
             Initializes a new instance of the <see cref="T:TestCaseData"/> class.
             </summary>
-            <param name="arg1">The first argument</param>
-            <param name="args">The remaining arguments.</param>
+            <param name="args">The arguments.</param>
         </member>
         <member name="M:NUnit.Framework.TestCaseData.#ctor(System.Object)">
             <summary>
             Initializes a new instance of the <see cref="T:TestCaseData"/> class.
             </summary>
             <param name="arg">The argument.</param>
+        </member>
+        <member name="M:NUnit.Framework.TestCaseData.#ctor(System.Object,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TestCaseData"/> class.
+            </summary>
+            <param name="arg1">The first argument.</param>
+            <param name="arg2">The second argument.</param>
+        </member>
+        <member name="M:NUnit.Framework.TestCaseData.#ctor(System.Object,System.Object,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:TestCaseData"/> class.
+            </summary>
+            <param name="arg1">The first argument.</param>
+            <param name="arg2">The second argument.</param>
+            <param name="arg3">The third argument.</param>
         </member>
         <member name="M:NUnit.Framework.TestCaseData.Returns(System.Object)">
             <summary>
@@ -7691,31 +7753,31 @@
         <member name="M:NUnit.Framework.Is.GreaterThanOrEqualTo(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is greater than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Is.AtLeast(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is greater than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Is.LessThan(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Is.LessThanOrEqualTo(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Is.AtMost(System.Object)">
             <summary>
             Returns a constraint that tests whether the
-            actual value is greater than the suppled argument
+            actual value is less than or equal to the suppled argument
             </summary>
         </member>
         <member name="M:NUnit.Framework.Is.TypeOf(System.Type)">
@@ -7759,6 +7821,30 @@
             <summary>
             Returns a constraint that tests whether the actual value
             is a subset of the collection supplied as an argument.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Is.StringContaining(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value contains the substring supplied as an argument.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Is.StringStarting(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value starts with the substring supplied as an argument.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Is.StringEnding(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value ends with the substring supplied as an argument.
+            </summary>
+        </member>
+        <member name="M:NUnit.Framework.Is.StringMatching(System.String)">
+            <summary>
+            Returns a constraint that succeeds if the actual
+            value matches the Regex pattern supplied as an argument.
             </summary>
         </member>
         <member name="M:NUnit.Framework.Is.SamePath(System.String)">

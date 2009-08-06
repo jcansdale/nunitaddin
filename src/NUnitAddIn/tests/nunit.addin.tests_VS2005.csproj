@@ -27,15 +27,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.core.interfaces, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="nunit.util, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -80,6 +81,9 @@
       <Link>net-1.1\lib\nunit.util.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.dll">
+      <Link>lib\nunit.framework.dll</Link>
+    </Content>
     <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll">
       <Link>net-2.0\lib\nunit.core.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -99,7 +103,6 @@
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
       <Link>lib\TestDriven.Framework.dll</Link>
     </Content>
-    <Content Include="lib\nunit.framework.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\artifacts\NUnit\bin\net-2.0\nunit.exe.config">
