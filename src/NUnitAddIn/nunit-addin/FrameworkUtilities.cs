@@ -1,4 +1,6 @@
-﻿namespace NUnit.AddInRunner
+﻿using System.IO;
+
+namespace NUnit.AddInRunner
 {
     using System;
     using System.Reflection;
@@ -6,13 +8,13 @@
 
     public class FrameworkUtilities
     {
-        public static Assembly FindFrameworkAssembly(Assembly targetAssembly)
+        public static AssemblyName FindFrameworkAssembyName(AssemblyName[] assemblyNames)
         {
-            foreach (AssemblyName assemblyName in targetAssembly.GetReferencedAssemblies())
+            foreach (AssemblyName assemblyName in assemblyNames)
             {
                 if (assemblyName.Name.ToLower(CultureInfo.InvariantCulture) == "nunit.framework")
                 {
-                    return Assembly.Load(assemblyName);
+                    return assemblyName;
                 }
             }
 
