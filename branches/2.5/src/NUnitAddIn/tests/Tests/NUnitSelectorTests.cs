@@ -49,6 +49,64 @@ namespace NUnit.AddInRunner.Tests
         }
 
         [Test]
+        public void GetInfo_Installed_Exact()
+        {
+            Version minVersion = new Version("2.5.0.0");
+            Version maxVersion = new Version("2.5.65536.65536");
+            const string installDir = @"c:\install\dir";
+            const string runtimeVersion = "v2.0.50727";
+            string expectedBaseDir = Path.Combine(installDir, @"bin\net-2.0\lib");
+            string expectedBaseDir2 = Path.Combine(installDir, @"bin\net-2.0\lib2");
+            Version frameworkVersion = new Version("2.5.5.0");
+            Version frameworkVersion2 = new Version("2.5.6.0");
+            NUnitInfo[] versions = new NUnitInfo[]
+                                       {
+                                           new NUnitInfo(frameworkVersion, runtimeVersion, expectedBaseDir),
+                                           new NUnitInfo(frameworkVersion2, runtimeVersion, expectedBaseDir2)
+                                       };
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions, new NUnitInfo[0]);
+            WarningMessage warningMessage = new WarningMessage();
+            NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
+                registry, minVersion, maxVersion, minVersion);
+
+            NUnitInfo info = selector.GetInfo(frameworkVersion);
+
+            Assert.That(info, Is.Not.Null);
+            Assert.That(info.ProductVersion, Is.EqualTo(frameworkVersion));
+            Assert.That(info.BaseDir, Is.EqualTo(expectedBaseDir));
+            Assert.That(warningMessage.Text, Is.Null);
+        }
+
+        [Test]
+        public void GetInfo_Installed_Exact_MaxRuntime()
+        {
+            Version minVersion = new Version("2.5.0.0");
+            Version maxVersion = new Version("2.5.65536.65536");
+            const string installDir = @"c:\install\dir";
+            const string runtimeVersion1 = "v1.1.4322";
+            const string runtimeVersion2 = "v2.0.50727";
+            string expectedBaseDir = Path.Combine(installDir, @"bin\net-2.0\lib");
+            Version frameworkVersion = new Version("2.5.5.0");
+            NUnitInfo[] versions = new NUnitInfo[]
+                                       {
+                                           new NUnitInfo(frameworkVersion, runtimeVersion1, expectedBaseDir),
+                                           new NUnitInfo(frameworkVersion, runtimeVersion2, expectedBaseDir)
+                                       };
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion2, new NUnitInfo[0], versions, new NUnitInfo[0]);
+            WarningMessage warningMessage = new WarningMessage();
+            NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
+                registry, minVersion, maxVersion, minVersion);
+
+            NUnitInfo info = selector.GetInfo(frameworkVersion);
+
+            Assert.That(info, Is.Not.Null);
+            Assert.That(info.ProductVersion, Is.EqualTo(frameworkVersion));
+            Assert.That(info.BaseDir, Is.EqualTo(expectedBaseDir));
+            Assert.That(info.RuntimeVersion, Is.EqualTo(runtimeVersion2));
+            Assert.That(warningMessage.Text, Is.Null);
+        }
+
+        [Test]
         public void GetInfo_Developer()
         {
             Version frameworkVersion = new Version("2.5.666.0");

@@ -117,7 +117,7 @@ namespace NUnit.AddInRunner
         {
             WarningMessage warningMessage = new WarningMessage(testListener);
 
-            Assembly frameworkAssembly = FrameworkUtilities.FindFrameworkAssembly(targetAssembly);
+            AssemblyName frameworkAssembly = FrameworkUtilities.FindFrameworkAssembyName(targetAssembly.GetReferencedAssemblies());
             if(frameworkAssembly == null)
             {
                 warningMessage.Handler("Couldn't find reference to 'nunit.framework' on:" + targetAssembly.CodeBase);
@@ -129,7 +129,7 @@ namespace NUnit.AddInRunner
                 AppDomain.CurrentDomain.BaseDirectory, RuntimeEnvironment.GetSystemVersion());
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler, nunitRegistry,
                 Constants.MinVersion, Constants.MaxVersion, Constants.RtmVersion);
-            Version frameworkVersion = frameworkAssembly.GetName().Version;
+            Version frameworkVersion = frameworkAssembly.Version;
             NUnitInfo info = selector.GetInfo(frameworkVersion);
             if(info == null)
             {

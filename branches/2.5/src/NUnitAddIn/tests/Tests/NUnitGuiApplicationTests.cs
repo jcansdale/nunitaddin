@@ -11,7 +11,8 @@ namespace NUnit.AddInRunner.Tests
         {
             const string baseDir = @"c:\base\dir";
             string expectedFile = Path.Combine(baseDir, "nunit.exe");
-            NUnitSelector selector = createSelector(baseDir, new Version("2.5.0.0"), "v2.0.50727");
+            Version frameworkVersion = typeof (TestAttribute).Assembly.GetName().Version;
+            NUnitSelector selector = createSelector(baseDir, frameworkVersion, "v2.0.50727");
             NUnitGuiApplication application = new NUnitGuiApplication();
             string assemblyFile = new Uri(GetType().Assembly.CodeBase).LocalPath;
 
@@ -24,13 +25,14 @@ namespace NUnit.AddInRunner.Tests
         public void FindApplicationPath_32Bit()
         {
             const string baseDir = @"c:\base\dir";
-            string expectedFile = Path.Combine(baseDir, "nunit-x86.exe");
-            NUnitSelector selector = createSelector(baseDir, new Version("2.5.0.0"), "v2.0.50727");
+            Version frameworkVersion = typeof(TestAttribute).Assembly.GetName().Version;
+            NUnitSelector selector = createSelector(baseDir, frameworkVersion, "v2.0.50727");
             NUnitGuiApplication application = new NUnitGuiApplication();
             string assemblyFile = new Uri(GetType().Assembly.CodeBase).LocalPath;
 
             string exeFile = application.FindApplication(selector, assemblyFile, true);
 
+            string expectedFile = Path.Combine(baseDir, "nunit-x86.exe");
             Assert.That(exeFile, Is.EqualTo(expectedFile));
         }
 
@@ -40,7 +42,8 @@ namespace NUnit.AddInRunner.Tests
             NUnitInfo[] versions = new NUnitInfo[] { info };
             NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions, new NUnitInfo[0]);
             WarningMessage warningMessage = new WarningMessage();
-            NUnitSelector selector = new NUnitSelector(warningMessage.Handler, registry, productVersion, productVersion, productVersion);
+            NUnitSelector selector = new NUnitSelector(warningMessage.Handler, registry,
+                Constants.MinVersion, Constants.MaxVersion, Constants.RtmVersion);
             return selector;
         }
 

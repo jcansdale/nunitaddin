@@ -10,16 +10,23 @@ namespace NUnit.AddInRunner.Tests
         public void FindFrameworkAssembly()
         {
             Assembly targetAssembly = GetType().Assembly;
-            Assembly assembly = FrameworkUtilities.FindFrameworkAssembly(targetAssembly);
-            Assert.That(assembly, Is.EqualTo(typeof(TestAttribute).Assembly));
+            AssemblyName[] assemblyNames = targetAssembly.GetReferencedAssemblies();
+
+            AssemblyName assemblyName = FrameworkUtilities.FindFrameworkAssembyName(assemblyNames);
+
+            Version expectedVersion = typeof (TestAttribute).Assembly.GetName().Version;
+            Assert.That(assemblyName.Version, Is.EqualTo(expectedVersion));
         }
 
         [Test]
         public void FindFrameworkAssembly_None()
         {
             Assembly targetAssembly = typeof(object).Assembly;
-            Assembly assembly = FrameworkUtilities.FindFrameworkAssembly(targetAssembly);
-            Assert.That(assembly, Is.Null);
+            AssemblyName[] assemblyNames = targetAssembly.GetReferencedAssemblies();
+
+            AssemblyName assemblyName = FrameworkUtilities.FindFrameworkAssembyName(assemblyNames);
+
+            Assert.That(assemblyName, Is.Null);
         }
     }
 }

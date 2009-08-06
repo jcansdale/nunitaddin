@@ -1,10 +1,7 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-
 namespace NUnit.AddInRunner
 {
+    using System;
+
     public class NUnitSelector
     {
         readonly WarningMessageHandler warningMessageHandler;
@@ -48,7 +45,7 @@ namespace NUnit.AddInRunner
 
         NUnitInfo getDeveloperInfo(Version frameworkVersion, string runtimeVersion)
         {
-            NUnitInfo info = findInstallDir(
+            NUnitInfo info = findInfo(
                 nunitRegistry.DeveloperVersions, minVersion, maxVersion, runtimeVersion);
             if (info == null)
             {
@@ -60,30 +57,34 @@ namespace NUnit.AddInRunner
 
         NUnitInfo getInstalledInfo(Version frameworkVersion, string runtimeVersion)
         {
-            NUnitInfo info = findInstallDir(
-                nunitRegistry.InstalledVersions, minVersion, maxVersion, runtimeVersion);
+            NUnitInfo info = findInfo(nunitRegistry.InstalledVersions, frameworkVersion, runtimeVersion);
             if (info == null)
             {
-                return null;
+                info = findInfo(nunitRegistry.InstalledVersions, minVersion, maxVersion, runtimeVersion);
             }
 
-            if (info.ProductVersion < rtmVersion)
+            if (info != null)
             {
-                warningMessageHandler(string.Format(
+                if (info.ProductVersion < rtmVersion)
+                {
+                    warningMessageHandler(string.Format(
 @"Please install NUnit {0} RTM or greater:
-http://nunit.com/index.php?p=download
-", rtmVersion));
-                return null;
-            }
+    http://nunit.com/index.php?p=download
+    ",
+                                              rtmVersion));
+                    return null;
+                }
 
-            if (info.ProductVersion < frameworkVersion)
-            {
-                warningMessageHandler(string.Format(
+                if (info.ProductVersion < frameworkVersion)
+                {
+                    warningMessageHandler(string.Format(
 @"Please install NUnit {0} or greater:
-http://nunit.com/index.php?p=download
-", frameworkVersion));
+    http://nunit.com/index.php?p=download
+    ",
+                                              frameworkVersion));
 
-                return null;
+                    return null;
+                }
             }
 
             return info;
@@ -91,7 +92,7 @@ http://nunit.com/index.php?p=download
 
         NUnitInfo getDefaultInfo(Version frameworkVersion, string runtimeVersion)
         {
-            NUnitInfo info = findInstallDir(nunitRegistry.DefaultVersions,
+            NUnitInfo info = findInfo(nunitRegistry.DefaultVersions,
                 minVersion, maxVersion, runtimeVersion);
 
             if(info == null)
@@ -121,27 +122,63 @@ http://nunit.com/index.php?p=download
             return info;
         }
 
-        static NUnitInfo findInstallDir(NUnitInfo[] versions,
+        static NUnitInfo findInfo(NUnitInfo[] versions,
             Version minVersion, Version maxVersion, string runtimeVersion)
         {
             Version minRuntimeVersion = new Version(0, 0);
             Version maxRuntimeVersion = toVersion(runtimeVersion);
-            NUnitInfo nunitVersion = null;
+            NUnitInfo currentInfo = null;
+            Version currentVersion = new Version(0, 0);
             foreach (NUnitInfo info in versions)
             {
-                if (info.ProductVersion < minVersion || info.ProductVersion > maxVersion ||
-                    toVersion(info.RuntimeVersion) > maxRuntimeVersion ||
+                if (toVersion(info.RuntimeVersion) > maxRuntimeVersion ||
                     toVersion(info.RuntimeVersion) < minRuntimeVersion)
                 {
                     continue;
                 }
 
-                minVersion = info.ProductVersion;
+                if (info.ProductVersion < minVersion || info.ProductVersion > maxVersion)
+                {
+                    continue;
+                }
+
+                if (info.ProductVersion < currentVersion)
+                {
+                    continue;
+                }
+
+                currentVersion = info.ProductVersion;
                 minRuntimeVersion = toVersion(info.RuntimeVersion);
-                nunitVersion = info;
+                currentInfo = info;
             }
 
-            return nunitVersion;
+            return currentInfo;
+        }
+
+        static NUnitInfo findInfo(NUnitInfo[] versions,
+            Version preferredVersion, string runtimeVersion)
+        {
+            Version minRuntimeVersion = new Version(0, 0);
+            Version maxRuntimeVersion = toVersion(runtimeVersion);
+            NUnitInfo currentInfo = null;
+            foreach (NUnitInfo info in versions)
+            {
+                if (toVersion(info.RuntimeVersion) > maxRuntimeVersion ||
+                    toVersion(info.RuntimeVersion) < minRuntimeVersion)
+                {
+                    continue;
+                }
+
+                if (info.ProductVersion != preferredVersion)
+                {
+                    continue;
+                }
+
+                minRuntimeVersion = toVersion(info.RuntimeVersion);
+                currentInfo = info;
+            }
+
+            return currentInfo;
         }
 
         static Version toVersion(string runtimeVersion)
