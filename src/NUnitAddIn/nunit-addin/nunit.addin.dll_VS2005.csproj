@@ -63,7 +63,6 @@
     <None Include="nunit.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="StackTraceFilter.cs" />
     <Compile Include="WarningMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
