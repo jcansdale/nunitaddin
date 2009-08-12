@@ -52,24 +52,11 @@ namespace NUnit.AddInRunner
         {
             public static AssemblyName[] GetReferencedAssemblies(string assemblyFile)
             {
-                AppDomainSetup info = new AppDomainSetup();
-                info.ApplicationBase = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-
-                return getReferencedAssembliesInNewDomain(assemblyFile, info);
-            }
-
-            static AssemblyName[] getReferencedAssembliesInNewDomain(string assemblyFile, AppDomainSetup info)
-            {
-                AppDomain domain = AppDomain.CreateDomain("GetReferencedAssemblies", null, info);
-                try
+                Type type = typeof(AssemblyReflector);
+                using (RemoteObject remoteObject = new RemoteObject(type))
                 {
-                    Type type = typeof(AssemblyReflector);
-                    AssemblyReflector reflector = (AssemblyReflector)domain.CreateInstanceAndUnwrap(type.Assembly.FullName, type.FullName);
+                    AssemblyReflector reflector = (AssemblyReflector)remoteObject.CreateInstance();
                     return reflector.getReferencedAssemblies(assemblyFile);
-                }
-                finally
-                {
-                    AppDomain.Unload(domain);
                 }
             }
 
@@ -93,6 +80,41 @@ namespace NUnit.AddInRunner
                     assembly = Assembly.LoadFrom(assemblyFile);
                 }
                 return assembly;
+            }
+        }
+
+        class RemoteObject : IDisposable
+        {
+            readonly Type type;
+            AppDomain domain;
+
+            public RemoteObject(Type type)
+            {
+                this.type = type;
+                domain = AppDomain.CreateDomain("GetReferencedAssemblies");
+                AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+            }
+
+            public void Dispose()
+            {
+                AppDomain.CurrentDomain.AssemblyResolve -= new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+                AppDomain.Unload(domain);
+            }
+
+            public object CreateInstance()
+            {
+                return domain.CreateInstanceFromAndUnwrap(type.Assembly.CodeBase, type.FullName);
+            }
+
+            Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+            {
+                Assembly assembly = type.Assembly;
+                if(args.Name == assembly.FullName)
+                {
+                    return assembly;
+                }
+
+                return null;
             }
         }
     }
