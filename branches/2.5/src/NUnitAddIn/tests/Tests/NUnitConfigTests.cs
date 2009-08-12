@@ -12,10 +12,10 @@ namespace NUnit.AddInRunner.Tests
             Assert.That(config.Infos.Length, Is.EqualTo(2));
             Assert.That(config.Infos[0].RuntimeVersion, Is.EqualTo("v1.1.4322"));
             Assert.That(config.Infos[0].BaseDir, Is.EqualTo("net-1.1"));
-            Assert.That(config.Infos[0].ProductVersion, Is.EqualTo(new Version("2.5.0.9122")));
+            Assert.That(config.Infos[0].ProductVersion, Is.EqualTo(new Version("2.5.1.9189")));
             Assert.That(config.Infos[1].RuntimeVersion, Is.EqualTo("v2.0.50727"));
             Assert.That(config.Infos[1].BaseDir, Is.EqualTo("net-2.0"));
-            Assert.That(config.Infos[1].ProductVersion, Is.EqualTo(new Version("2.5.0.9122")));
+            Assert.That(config.Infos[1].ProductVersion, Is.EqualTo(new Version("2.5.1.9189")));
         }
     }
 }
