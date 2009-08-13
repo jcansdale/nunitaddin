@@ -128,11 +128,16 @@ namespace NUnit.AddInRunner
                         }
 
                         string binDir = Path.Combine(installDir, "bin");
-                        Version version = new Version(productVersion);
+                        if(!Directory.Exists(binDir))
+                        {
+                            continue;
+                        }
 
+                        Version version = new Version(productVersion);
+                        
                         const string runtimeVersion11 = "v1.1.4322";
                         string baseDir11 = Path.Combine(binDir, "net-1.1");
-                        if (Directory.Exists(baseDir11))
+                        if (FrameworkUtilities.IsInstalled(baseDir11))
                         {
                             NUnitInfo info = new NUnitInfo(version, runtimeVersion11, baseDir11);
                             infoList.Add(info);
@@ -140,7 +145,7 @@ namespace NUnit.AddInRunner
 
                         const string runtimeVersion20 = "v2.0.50727";
                         string baseDir20 = Path.Combine(binDir, "net-2.0");
-                        if (Directory.Exists(baseDir20))
+                        if (FrameworkUtilities.IsInstalled(baseDir20))
                         {
                             NUnitInfo info = new NUnitInfo(version, runtimeVersion20, baseDir20);
                             infoList.Add(info);
