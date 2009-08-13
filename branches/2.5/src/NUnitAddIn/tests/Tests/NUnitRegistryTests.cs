@@ -3,7 +3,6 @@ namespace NUnit.AddInRunner.Tests
     using System;
     using System.IO;
     using Microsoft.Win32;
-    using System.Runtime.InteropServices;
     using NUnit.Framework;
 
     public class NUnitRegistryTests
@@ -20,6 +19,12 @@ namespace NUnit.AddInRunner.Tests
             string libPath = string.Format(@"bin\{0}\lib", netPath);
             string libDir = Path.Combine(installDir, libPath);
             Directory.CreateDirectory(libDir);
+
+            foreach(string fileName in FrameworkUtilities.RequiredLibFiles)
+            {
+                string file = Path.Combine(libDir, fileName);
+                File.WriteAllBytes(file, new byte[0]);
+            }
 
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subkey))
             {
@@ -39,6 +44,37 @@ namespace NUnit.AddInRunner.Tests
             {
                 Registry.CurrentUser.DeleteSubKey(subkey);
                 Registry.CurrentUser.DeleteSubKey(nunitKeyName);
+                Directory.Delete(installDir, true);
+            }
+        }
+
+        [TestCase("net-1.1")]
+        [TestCase("net-2.0")]
+        public void LoadInstalledVersions_Orphan(string netPath)
+        {
+            Version version = new Version("2.5.666.1");
+            const string nunitKeyName = @"Software\nunit.org\Nunit_Orphan";
+            string subkey = Path.Combine(nunitKeyName, "__TEST__");
+
+            string installDir = Path.GetFullPath("__TEST_INSTALLDIR__");
+            string libPath = string.Format(@"bin\{0}\lib", netPath);
+            string libDir = Path.Combine(installDir, libPath);
+            Directory.CreateDirectory(libDir);
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subkey))
+            {
+                key.SetValue("InstallDir", installDir);
+                key.SetValue("ProductVersion", version);
+            }
+
+            try
+            {
+                NUnitInfo[] installedVersions = NUnitRegistry.LoadInstalledVersions(nunitKeyName);
+                Assert.That(installedVersions.Length, Is.EqualTo(0));
+            }
+            finally
+            {
+                Registry.CurrentUser.DeleteSubKeyTree(nunitKeyName);
                 Directory.Delete(installDir, true);
             }
         }

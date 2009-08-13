@@ -8,6 +8,9 @@ namespace NUnit.AddInRunner
 
     public class FrameworkUtilities
     {
+        public static string[] RequiredLibFiles = 
+            new string[] { "nunit.core.interfaces.dll", "nunit.core.dll", "nunit.util.dll" };
+
         public static AssemblyName FindFrameworkAssembyName(AssemblyName[] assemblyNames)
         {
             foreach (AssemblyName assemblyName in assemblyNames)
@@ -19,6 +22,21 @@ namespace NUnit.AddInRunner
             }
 
             return null;
+        }
+
+        public static bool IsInstalled(string baseDir)
+        {
+            string libDir = Path.Combine(baseDir, "lib");
+            foreach (string fileName in RequiredLibFiles)
+            {
+                string requiredFile = Path.Combine(libDir, fileName);
+                if (!File.Exists(requiredFile))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
