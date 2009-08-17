@@ -98,7 +98,7 @@ namespace NUnit.AddInRunner
             NUnitInfo info = findNUnit(testListener, assembly);
             if (info == null)
             {
-                return TestRunState.Error;
+                return TestRunState.NoTests;
             }
 
             testRunnerName = toFriendlyName(info.ProductVersion);
@@ -120,8 +120,6 @@ namespace NUnit.AddInRunner
             AssemblyName frameworkAssembly = FrameworkUtilities.FindFrameworkAssembyName(targetAssembly.GetReferencedAssemblies());
             if(frameworkAssembly == null)
             {
-                warningMessage.Handler("Couldn't find reference to 'nunit.framework' on:" + targetAssembly.CodeBase);
-                warningMessage.Handler(targetAssembly.CodeBase);
                 return null;
             }
 

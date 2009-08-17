@@ -39,7 +39,8 @@ namespace NUnit.AddInRunner
                 return frameworkAssembly.Version;
             }
 
-            warning("Couldn't find framework assembly for: " + assemblyFile);
+            warning("Couldn't find framework assembly for:");
+            warning(assemblyFile);
             return new Version("2.5.0.0"); // Any NUnit 2.5 version will do.
         }
 
