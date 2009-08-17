@@ -35,7 +35,7 @@
 					<Registry Id="R__25.NUnit_TypeName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="TypeName" Type="string" Value="NUnit.AddInRunner.NUnitTestRunner" />
 					<Registry Id="R__25.NUnit_TargetFrameworkAssemblyName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
-						Name="TargetFrameworkAssemblyName" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
+						Name="TargetFrameworkAssemblyName_Reference" Type="string" Value="nunit.framework, Version=2.5.0.0-2.5.65535.65535" />
 					<Registry Id="R__25.NUnit_RuntimeVersion" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="RuntimeVersion" Type="string" Value="v1.1.4322" />
 					<Registry Id="R__25.NUnit_ApplicationTypeName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
