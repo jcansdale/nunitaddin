@@ -349,5 +349,19 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(1, testListener.TestFinishedCount);
             Assert.AreEqual(1, testListener.IgnoredCount);
         }
+
+        [Test]
+        public void RunMember_NoFrameworkFreference()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Type type = typeof (Uri);
+            Assembly assembly = type.Assembly;
+
+            TestRunState result = testRunner.RunMember(testListener, assembly, type);
+
+            Assert.AreEqual(TestRunState.NoTests, result);
+            Assert.AreEqual(0, testListener.TestFinishedCount);
+        }
     }
 }

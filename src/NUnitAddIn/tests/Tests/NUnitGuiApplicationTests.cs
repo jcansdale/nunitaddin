@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace NUnit.AddInRunner.Tests
 {
     using System;
@@ -33,6 +35,22 @@ namespace NUnit.AddInRunner.Tests
             string exeFile = application.FindApplication(selector, assemblyFile, true);
 
             string expectedFile = Path.Combine(baseDir, "nunit-x86.exe");
+            Assert.That(exeFile, Is.EqualTo(expectedFile));
+        }
+
+        [Test]
+        public void FindApplicationPath_NoFrameworkReference()
+        {
+            const string baseDir = @"c:\base\dir";
+            string expectedFile = Path.Combine(baseDir, "nunit.exe");
+            Version frameworkVersion = typeof(TestAttribute).Assembly.GetName().Version;
+            NUnitSelector selector = createSelector(baseDir, frameworkVersion, "v2.0.50727");
+            NUnitGuiApplication application = new NUnitGuiApplication();
+            Assembly assembly = typeof (Uri).Assembly;
+            string assemblyFile = new Uri(assembly.CodeBase).LocalPath;
+
+            string exeFile = application.FindApplication(selector, assemblyFile, false);
+
             Assert.That(exeFile, Is.EqualTo(expectedFile));
         }
 
