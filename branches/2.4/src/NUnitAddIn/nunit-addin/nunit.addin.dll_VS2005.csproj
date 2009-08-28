@@ -55,6 +55,9 @@
     <None Include="..\..\..\install\Package.wxs">
       <Link>Package.wxs</Link>
     </None>
+    <None Include="nunit.framework.dll.tdnet">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="StackTraceFilter.cs" />
   </ItemGroup>
   <ItemGroup>
