@@ -221,6 +221,25 @@ namespace NUnit.AddInRunner.Examples
         }
     }
 
+    namespace OverrideTests
+    {
+        abstract public class FixtureBase
+        {
+            public virtual void Test()
+            {
+            }
+        }
+
+        public class OverrideFixture : FixtureBase
+        {
+            [Test]
+            public override void Test()
+            {
+                base.Test();
+            }
+        }
+    }
+
     namespace FixtureSetUpTests
     {
         /// <test pass="1" fail="0" />

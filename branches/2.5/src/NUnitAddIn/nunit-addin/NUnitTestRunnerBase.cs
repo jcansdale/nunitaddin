@@ -389,7 +389,7 @@ namespace NUnit.AddInRunner
 
             public MethodFilter(Assembly assembly, MethodInfo method)
             {
-                this.method = method.GetBaseDefinition();
+                this.method = method;
                 Type type = method.ReflectedType;
                 this.types = getCandidateTypes(assembly, type);
             }
@@ -416,7 +416,7 @@ namespace NUnit.AddInRunner
                     return false;
                 }
 
-                if (!isSameMetadata(testMethod.Method, this.method))
+                if(!isSameOrBaseMethod(testMethod.Method, this.method))
                 {
                     return false;
                 }
@@ -438,6 +438,25 @@ namespace NUnit.AddInRunner
                 }
 
                 return false;
+            }
+
+            static bool isSameOrBaseMethod(MethodInfo testMethod, MethodInfo targetMethod)
+            {
+                while(true)
+                {
+                    if (isSameMetadata(testMethod, targetMethod))
+                    {
+                        return true;
+                    }
+
+                    MethodInfo baseMethod = testMethod.GetBaseDefinition();
+                    if (baseMethod == testMethod)
+                    {
+                        return false;
+                    }
+
+                    testMethod = baseMethod;
+                }
             }
 
             static readonly PropertyInfo isGenericTypeProperty = typeof(Type).GetProperty("IsGenericType");
