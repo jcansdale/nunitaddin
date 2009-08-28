@@ -355,13 +355,41 @@ namespace NUnit.AddInRunner.Tests
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
             MockTestListener testListener = new MockTestListener();
-            Type type = typeof (Uri);
+            Type type = typeof(Uri);
             Assembly assembly = type.Assembly;
 
             TestRunState result = testRunner.RunMember(testListener, assembly, type);
 
             Assert.AreEqual(TestRunState.NoTests, result);
             Assert.AreEqual(0, testListener.TestFinishedCount);
+        }
+
+        [Test]
+        public void RunMember_OverrideTest_Success()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            MethodInfo method = new ThreadStart(new Examples.OverrideTests.OverrideFixture().Test).Method;
+            Assembly assembly = method.DeclaringType.Assembly;
+
+            TestRunState result = testRunner.RunMember(testListener, assembly, method);
+
+            Assert.AreEqual(TestRunState.Success, result);
+            Assert.AreEqual(1, testListener.TestFinishedCount);
+        }
+
+        [Test]
+        public void RunMember_OverriddenTest_Success()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            MethodInfo method = typeof(Examples.OverrideTests.FixtureBase).GetMethod("Test");
+            Assembly assembly = method.DeclaringType.Assembly;
+
+            TestRunState result = testRunner.RunMember(testListener, assembly, method);
+
+            Assert.AreEqual(TestRunState.Success, result);
+            Assert.AreEqual(1, testListener.TestFinishedCount);
         }
     }
 }
