@@ -1,9 +1,8 @@
-using System.Reflection;
-
 namespace NUnit.AddInRunner
 {
     using System;
     using System.IO;
+    using System.Reflection;
     using System.Collections;
     using Microsoft.Win32;
 
@@ -11,32 +10,23 @@ namespace NUnit.AddInRunner
     {
         readonly NUnitInfo[] defaultVersions;
         readonly NUnitInfo[] installedVersions;
-        readonly NUnitInfo[] developerVersions;
         readonly string runtimeVersion;
 
         public static NUnitRegistry Load(string nunitKeyName, string targetDir, string runtimeVersion)
         {
-            NUnitInfo[] developerVersions = LoadDeveloperVersions(runtimeVersion,
-                AppDomain.CurrentDomain.BaseDirectory, Constants.ConfigFileName);
             NUnitInfo[] defaultVersions = LoadDefaultVersions(runtimeVersion);
-            NUnitInfo[] installedVersions = LoadInstalledVersions(nunitKeyName);
-            return new NUnitRegistry(runtimeVersion, defaultVersions, installedVersions, developerVersions);
-        }
 
-        public static NUnitInfo[] LoadDeveloperVersions(string runtimeVersion, string targetDir, string configFileName)
-        {
-            while(targetDir != null)
+            NUnitInfo[] installedVersions;
+            if(nunitKeyName != null)
             {
-                string file = Path.Combine(targetDir, configFileName);
-                if (File.Exists(file))
-                {
-                    return loadConfigVersions(runtimeVersion, file);
-                }
-
-                targetDir = Path.GetDirectoryName(targetDir);
+                installedVersions = LoadInstalledVersions(nunitKeyName);
+            }
+            else
+            {
+                installedVersions = new NUnitInfo[0];
             }
 
-            return new NUnitInfo[0];
+            return new NUnitRegistry(runtimeVersion, defaultVersions, installedVersions);
         }
 
         public static NUnitInfo[] LoadDefaultVersions(string runtimeVersion)
@@ -158,12 +148,11 @@ namespace NUnit.AddInRunner
         }
 
         public NUnitRegistry(string runtimeVersion, NUnitInfo[] defaultVersions,
-            NUnitInfo[] installedVersions, NUnitInfo[] developerVersions)
+            NUnitInfo[] installedVersions)
         {
             this.runtimeVersion = runtimeVersion;
             this.defaultVersions = defaultVersions;
             this.installedVersions = installedVersions;
-            this.developerVersions = developerVersions;
         }
 
         public NUnitInfo[] DefaultVersions
@@ -174,11 +163,6 @@ namespace NUnit.AddInRunner
         public NUnitInfo[] InstalledVersions
         {
             get { return installedVersions; }
-        }
-
-        public NUnitInfo[] DeveloperVersions
-        {
-            get { return developerVersions; }
         }
 
         public string RuntimeVersion

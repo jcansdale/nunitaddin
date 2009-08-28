@@ -15,7 +15,7 @@ namespace NUnit.AddInRunner.Tests
             string runtimeVersion = "v2.0.50727";
             string expectedBaseDir = @"c:\lib\dir";
             NUnitInfo defaultVersion = new NUnitInfo(frameworkVersion, runtimeVersion, expectedBaseDir);
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[] { defaultVersion }, new NUnitInfo[0], new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[] { defaultVersion }, new NUnitInfo[0]);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, frameworkVersion, frameworkVersion, frameworkVersion);
@@ -36,7 +36,7 @@ namespace NUnit.AddInRunner.Tests
             string expectedBaseDir = Path.Combine(installDir, @"bin\net-2.0\lib");
             Version frameworkVersion = new Version("2.5.5.0");
             NUnitInfo[] versions = new NUnitInfo[] { new NUnitInfo(frameworkVersion, runtimeVersion, expectedBaseDir) };
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions, new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, minVersion, maxVersion, minVersion);
@@ -64,7 +64,7 @@ namespace NUnit.AddInRunner.Tests
                                            new NUnitInfo(frameworkVersion, runtimeVersion, expectedBaseDir),
                                            new NUnitInfo(frameworkVersion2, runtimeVersion, expectedBaseDir2)
                                        };
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions, new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, minVersion, maxVersion, minVersion);
@@ -92,7 +92,7 @@ namespace NUnit.AddInRunner.Tests
                                            new NUnitInfo(frameworkVersion, runtimeVersion1, expectedBaseDir),
                                            new NUnitInfo(frameworkVersion, runtimeVersion2, expectedBaseDir)
                                        };
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion2, new NUnitInfo[0], versions, new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion2, new NUnitInfo[0], versions);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, minVersion, maxVersion, minVersion);
@@ -107,24 +107,6 @@ namespace NUnit.AddInRunner.Tests
         }
 
         [Test]
-        public void GetInfo_Developer()
-        {
-            Version frameworkVersion = new Version("2.5.666.0");
-            string runtimeVersion = "v2.0.50727";
-            string expectedBaseDir = @"c:\lib\dir";
-            NUnitInfo developerVersion = new NUnitInfo(frameworkVersion, runtimeVersion, expectedBaseDir);
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], new NUnitInfo[0], new NUnitInfo[] { developerVersion });
-            WarningMessage warningMessage = new WarningMessage();
-            NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
-                registry, frameworkVersion, frameworkVersion, frameworkVersion);
-
-            NUnitInfo info = selector.GetInfo(frameworkVersion);
-
-            Assert.That(info.BaseDir, Is.EqualTo(expectedBaseDir));
-            Assert.That(warningMessage.Text, Is.Null);
-        }
-
-        [Test]
         public void GetInfo_Incompatible()
         {
             Version minVersion = new Version("2.5.0.0");
@@ -135,7 +117,7 @@ namespace NUnit.AddInRunner.Tests
             Version frameworkVersion = new Version("2.5.0.9015"); // Beta2
             NUnitInfo[] defaultVersions = new NUnitInfo[] { new NUnitInfo(rtmVersion, "v2.0.50727", defaultBaseDir) };
             NUnitInfo[] versions = new NUnitInfo[] { new NUnitInfo(frameworkVersion, "v2.0.50727", installedBaseDir) };
-            NUnitRegistry registry = new NUnitRegistry("v2.0.50727", defaultVersions, versions, new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry("v2.0.50727", defaultVersions, versions);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, minVersion, maxVersion, rtmVersion);
@@ -160,7 +142,7 @@ namespace NUnit.AddInRunner.Tests
             string runtimeVersion = "v2.0.50727";
             NUnitInfo[] versions = new NUnitInfo[] { new NUnitInfo(rtmVersion, runtimeVersion, installedBaseDir) };
             NUnitInfo[] defaultVersions = new NUnitInfo[] { new NUnitInfo(frameworkVersion, runtimeVersion, defaultBaseDir) };
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, defaultVersions, versions, new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, defaultVersions, versions);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, minVersion, maxVersion, rtmVersion);
@@ -184,7 +166,8 @@ namespace NUnit.AddInRunner.Tests
             string expectedBaseDir = @"c:\lib\dir";
             NUnitInfo defaultVersion = new NUnitInfo(rtmVersion, runtimeVersion, expectedBaseDir);
 
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[] { defaultVersion }, new NUnitInfo[0], new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion,
+                new NUnitInfo[] { defaultVersion }, new NUnitInfo[0]);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, minVersion, maxVersion, rtmVersion);
@@ -209,7 +192,7 @@ namespace NUnit.AddInRunner.Tests
             Version frameworkVersion = new Version("2.5.5.0");
             const string runtimeVersion = "v1.1.4322";
             NUnitInfo[] versions = new NUnitInfo[] { new NUnitInfo(frameworkVersion, "v2.0.50727", unexpectedLibDir) };
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions, new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, minVersion, maxVersion, minVersion);
@@ -230,7 +213,7 @@ namespace NUnit.AddInRunner.Tests
             Version frameworkVersion = new Version("2.5.0.0");
             const string expectedBaseDir = @"c:\install\dir";
             NUnitInfo[] versions = new NUnitInfo[] { new NUnitInfo(frameworkVersion, "v2.0.50727", expectedBaseDir) };
-            NUnitRegistry registry = new NUnitRegistry("v4.0.20409", versions, new NUnitInfo[0], new NUnitInfo[0]);
+            NUnitRegistry registry = new NUnitRegistry("v4.0.20409", versions, new NUnitInfo[0]);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler,
                 registry, frameworkVersion, frameworkVersion, frameworkVersion);

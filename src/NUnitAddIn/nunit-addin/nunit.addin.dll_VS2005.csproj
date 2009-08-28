@@ -48,14 +48,16 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="FrameworkUtilities.cs" />
+    <Compile Include="InstalledNUnitTestRunner.cs" />
     <Compile Include="LibAssemblyResolver.cs" />
     <Compile Include="NUnitGuiApplication.cs" />
     <Compile Include="NUnitConfig.cs" />
     <Compile Include="NUnitInfo.cs" />
     <Compile Include="NUnitRegistry.cs" />
     <Compile Include="NUnitSelector.cs" />
-    <Compile Include="TestDrivenOptions.cs" />
     <Compile Include="NUnitTestRunner.cs" />
+    <Compile Include="TestDrivenOptions.cs" />
+    <Compile Include="NUnitTestRunnerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="..\..\..\install\nunitaddin.wxs">
       <Link>nunitaddin.wxs</Link>
@@ -64,6 +66,9 @@
       <Link>Package.wxs</Link>
     </None>
     <None Include="nunit.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="nunit.framework.dll.tdnet">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="WarningMessageHandler.cs" />

@@ -22,13 +22,7 @@ namespace NUnit.AddInRunner
 
         public NUnitInfo GetInfo(Version frameworkVersion)
         {
-            NUnitInfo info = getDeveloperInfo(frameworkVersion, nunitRegistry.RuntimeVersion);
-            if (info != null)
-            {
-                return info;
-            }
-
-            info = getInstalledInfo(frameworkVersion, nunitRegistry.RuntimeVersion);
+            NUnitInfo info = getInstalledInfo(frameworkVersion, nunitRegistry.RuntimeVersion);
             if (info != null)
             {
                 return info;
@@ -41,18 +35,6 @@ namespace NUnit.AddInRunner
             }
 
             return null;
-        }
-
-        NUnitInfo getDeveloperInfo(Version frameworkVersion, string runtimeVersion)
-        {
-            NUnitInfo info = findInfo(
-                nunitRegistry.DeveloperVersions, minVersion, maxVersion, runtimeVersion);
-            if (info == null)
-            {
-                return null;
-            }
-
-            return info;
         }
 
         NUnitInfo getInstalledInfo(Version frameworkVersion, string runtimeVersion)
