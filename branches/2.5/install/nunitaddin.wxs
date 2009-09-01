@@ -42,6 +42,8 @@
 						Name="ApplicationTypeName" Type="string" Value="NUnit.AddInRunner.NUnitGuiApplication" />
 					<Registry Id="R__25.NUnit_ApplicationRuntimeVersion" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 						Name="ApplicationRuntimeVersion" Type="string" Value="v2.0.50727" />
+					<Registry Id="R__25.NUnit_ApartmentState" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+						Name="ApartmentState" Type="string" Value="MTA" />
 				</Component>
 				
 				<Directory Id="D__25.net_2.0" Name="net-2.0">
