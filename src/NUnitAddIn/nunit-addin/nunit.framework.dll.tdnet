@@ -3,4 +3,5 @@
 	<AssemblyPath>..\..\nunit.addin.dll</AssemblyPath>
 	<TypeName>NUnit.AddInRunner.NUnitTestRunner</TypeName>
 	<TargetResolution>Reference</TargetResolution>
+	<ApartmentState>MTA</ApartmentState>
 </TestRunner>
