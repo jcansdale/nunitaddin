@@ -36,14 +36,7 @@ namespace NUnit.AddInRunner
                 }
                 string baseDir = baseDirAttribute.Value;
 
-                Version productVersion = null;
-                XmlAttribute productVersionAttribute = infoElement.Attributes["productVersion"];
-                if (productVersionAttribute != null)
-                {
-                    productVersion = new Version(productVersionAttribute.Value);
-                }
-
-                Info info = new Info(runtimeVersion, baseDir, productVersion);
+                Info info = new Info(runtimeVersion, baseDir);
                 infoList.Add(info);
             }
 
@@ -60,13 +53,11 @@ namespace NUnit.AddInRunner
         {
             readonly string runtimeVersion;
             readonly string baseDir;
-            readonly Version productVersion;
 
-            public Info(string runtimeVersion, string baseDir, Version productVersion)
+            public Info(string runtimeVersion, string baseDir)
             {
                 this.runtimeVersion = runtimeVersion;
                 this.baseDir = baseDir;
-                this.productVersion = productVersion;
             }
 
             public string RuntimeVersion
@@ -82,14 +73,6 @@ namespace NUnit.AddInRunner
                 get
                 {
                     return baseDir;
-                }
-            }
-
-            public Version ProductVersion
-            {
-                get
-                {
-                    return productVersion;
                 }
             }
         }
