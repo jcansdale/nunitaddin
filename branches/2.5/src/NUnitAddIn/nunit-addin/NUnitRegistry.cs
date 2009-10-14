@@ -63,14 +63,14 @@ namespace NUnit.AddInRunner
             }
 
             string baseDir = Path.Combine(dir, info.BaseDir);
-            baseDir = Path.GetFullPath(baseDir);
-            Version productVersion = info.ProductVersion;
-            if(productVersion == null)
+            string coreFile = Path.Combine(baseDir, @"lib\nunit.core.dll");
+            if (!File.Exists(coreFile))
             {
-                string coreFile = Path.Combine(baseDir, @"lib\nunit.core.dll");
-                AssemblyName assemblyName = AssemblyName.GetAssemblyName(coreFile);
-                productVersion = assemblyName.Version;
+                return null;
             }
+
+            AssemblyName assemblyName = AssemblyName.GetAssemblyName(coreFile);
+            Version productVersion = assemblyName.Version;
 
             return new NUnitInfo(productVersion, info.RuntimeVersion, baseDir);
         }
