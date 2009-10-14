@@ -50,9 +50,9 @@ namespace NUnit.AddInRunner
                 if (info.ProductVersion < rtmVersion)
                 {
                     warningMessageHandler(string.Format(
-@"Please install NUnit {0} RTM or greater:
-    http://nunit.com/index.php?p=download
-    ",
+@"Please install NUnit {0} RTM or later on your machine using the MSI installer from:
+http://nunit.com/index.php?p=download
+",
                                               rtmVersion));
                     return null;
                 }
@@ -60,10 +60,9 @@ namespace NUnit.AddInRunner
                 if (info.ProductVersion < frameworkVersion)
                 {
                     warningMessageHandler(string.Format(
-@"Please install NUnit {0} or greater:
-    http://nunit.com/index.php?p=download
-    ",
-                                              frameworkVersion));
+@"Please install NUnit {0} on your machine using the MSI installer from:
+http://nunit.com/index.php?p=download
+", frameworkVersion));
 
                     return null;
                 }
@@ -81,7 +80,8 @@ namespace NUnit.AddInRunner
             {
                 warningMessageHandler(string.Format(
 @"Couldn't find NUnit test runner for .NET {0}.
-Please install the latest version of TestDriven.Net:
+
+Please check for a later version of TestDriven.Net:
 http://www.testdriven.net/download.aspx
 
 or let support@testdriven know you're seeing this message.
@@ -92,11 +92,12 @@ or let support@testdriven know you're seeing this message.
             if(info.ProductVersion < frameworkVersion)
             {
                 warningMessageHandler(string.Format(
-@"The packaged version of NUnit is older than {0}.
-Please install the latest version of TestDriven.Net:
+@"The version of NUnit packaged with TestDriven.Net is older than {0}.
+
+Please check for a later version of TestDriven.Net:
 http://www.testdriven.net/download.aspx
 
-or install NUnit {0} or later:
+or install NUnit {0} on your machine using the MSI installer from:
 http://nunit.com/index.php?p=download
 ", frameworkVersion));
             }
