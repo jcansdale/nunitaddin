@@ -150,9 +150,7 @@ namespace NUnit.AddInRunner.Tests
             NUnitInfo info = selector.GetInfo(frameworkVersion);
 
             Assert.That(info.BaseDir, Is.EqualTo(defaultBaseDir));
-            Assert.That(warningMessage.Text, Is.Not.Null);
-            StringAssert.Contains(frameworkVersion.ToString(), warningMessage.Text,
-                "Expect message re: installing target framework version.");
+            Assert.That(warningMessage.Text, Is.Null, "Shouldn't warn if packaged version will handle");
         }
 
         [Test]
