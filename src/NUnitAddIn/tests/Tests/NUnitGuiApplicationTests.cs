@@ -56,9 +56,11 @@ namespace NUnit.AddInRunner.Tests
 
         static NUnitSelector createSelector(string baseDir, Version productVersion, string runtimeVersion)
         {
-            NUnitInfo info = new NUnitInfo(productVersion, runtimeVersion, baseDir);
-            NUnitInfo[] versions = new NUnitInfo[] { info };
-            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, new NUnitInfo[0], versions);
+            NUnitInfo installedInfo = new NUnitInfo(productVersion, runtimeVersion, baseDir);
+            NUnitInfo[] installedVersions = new NUnitInfo[] { installedInfo };
+            NUnitInfo packagedInfo = new NUnitInfo(Constants.RtmVersion, runtimeVersion, baseDir);
+            NUnitInfo[] packagedVersions = new NUnitInfo[] { packagedInfo };
+            NUnitRegistry registry = new NUnitRegistry(runtimeVersion, packagedVersions, installedVersions);
             WarningMessage warningMessage = new WarningMessage();
             NUnitSelector selector = new NUnitSelector(warningMessage.Handler, registry,
                 Constants.MinVersion, Constants.MaxVersion, Constants.RtmVersion);

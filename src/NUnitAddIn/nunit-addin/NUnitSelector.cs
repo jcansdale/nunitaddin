@@ -40,11 +40,6 @@ namespace NUnit.AddInRunner
         NUnitInfo getInstalledInfo(Version frameworkVersion, string runtimeVersion)
         {
             NUnitInfo info = findInfo(nunitRegistry.InstalledVersions, frameworkVersion, runtimeVersion);
-            if (info == null)
-            {
-                info = findInfo(nunitRegistry.InstalledVersions, minVersion, maxVersion, runtimeVersion);
-            }
-
             if (info != null)
             {
                 if (info.ProductVersion < rtmVersion)
@@ -54,16 +49,6 @@ namespace NUnit.AddInRunner
 http://nunit.com/index.php?p=download
 ",
                                               rtmVersion));
-                    return null;
-                }
-
-                if (info.ProductVersion < frameworkVersion)
-                {
-                    warningMessageHandler(string.Format(
-@"Please install NUnit {0} on your machine using the MSI installer from:
-http://nunit.com/index.php?p=download
-", frameworkVersion));
-
                     return null;
                 }
             }

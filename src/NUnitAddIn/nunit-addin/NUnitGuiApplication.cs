@@ -26,6 +26,11 @@ namespace NUnit.AddInRunner
         {
             Version frameworkVersion = getFrameworkVersion(assemblyFile);
             NUnitInfo info = selector.GetInfo(frameworkVersion);
+            if(info == null)
+            {
+                return null;
+            }
+
             string fileName = is32Bit ? "nunit-x86.exe" : "nunit.exe";
             return Path.Combine(info.BaseDir, fileName);
         }
