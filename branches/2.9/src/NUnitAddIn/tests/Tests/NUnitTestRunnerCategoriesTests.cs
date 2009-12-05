@@ -1,15 +1,15 @@
 namespace NUnit.AddInRunner.Tests
 {
     using System;
-    using NUnit.Framework;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TestDriven.Framework;
     using System.Reflection;
     using Examples.Categories;
 
-    [TestFixture]
+    [TestClass]
     public class NUnitTestRunnerCategoriesTests
     {
-        [Test]
+        [TestMethod]
         public void IncludeCategories_Method()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -28,7 +28,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void ExcludeCategories_Method()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -47,7 +47,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void IncludeCategories_Type()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -66,7 +66,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void ExcludeCategories_Type()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -85,7 +85,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void IncludeCategories_Namespace()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -104,7 +104,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void ExcludeCategories_Namespace()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -123,7 +123,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void ExcludeCategories_Assembly()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -141,7 +141,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void TestFixture_IncludeCategories_Namespace()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -160,7 +160,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void TestFixture_ExcludeCategories_Namespace()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -179,7 +179,7 @@ namespace NUnit.AddInRunner.Tests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void TestFixture_IncludeCategories_Type()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -199,7 +199,7 @@ namespace NUnit.AddInRunner.Tests
         }
 
         // NOTE: We don't force tests to run when targeting a test fixture.
-        [Test]
+        [TestMethod]
         public void TestFixture_ExcludeCategories_Type()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())

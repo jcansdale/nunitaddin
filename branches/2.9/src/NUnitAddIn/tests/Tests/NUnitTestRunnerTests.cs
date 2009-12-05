@@ -1,16 +1,16 @@
 namespace NUnit.AddInRunner.Tests
 {
     using System;
-    using NUnit.Framework;
     using TestDriven.Framework;
     using System.Reflection;
     using System.Threading;
     using Examples = NUnit.AddInRunner.Examples;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    [TestFixture]
+    [TestClass]
     public class NUnitTestRunnerTests
     {
-        [Test]
+        [TestMethod]
         public void RunMember_Test()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -23,7 +23,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_TestResult_Name()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -37,7 +37,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(testName, testResult.Name);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_Test_FailWithAssert()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -51,7 +51,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Failure, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_Test_FailWithException()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -66,7 +66,7 @@ namespace NUnit.AddInRunner.Tests
         }
 
         // NOTE: Fix assert message formatting in NUnit 2.4.
-        [Test]
+        [TestMethod]
         public void RunMember_AssertMessageFormatting()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -79,11 +79,11 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Failure, "Check that tests failes");
             TestResult testResult = testListener.TestResults[0];
             string message = testResult.Message;
-            StringAssert.StartsWith(Environment.NewLine, message, "Check starts with new line");
-            StringAssert.EndsWith("2", message, "Check end has been trimmed");
+            StringAssert.StartsWith(message, Environment.NewLine, "Check starts with new line");
+            StringAssert.EndsWith(message, "2", "Check end has been trimmed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_AbstractType_Test()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -96,7 +96,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_AbstractMethod_Test()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -109,7 +109,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_BadsigTests_TestRetInt()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -124,7 +124,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_Ignored_Test()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -137,7 +137,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_NoTest_Test()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -149,7 +149,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.NoTests);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_NotAMethod_Test()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -161,7 +161,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.NoTests);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_TestFixture()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -174,7 +174,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_TestFixtureSetUp1()
         {
             Examples.FixtureSetUpTests.Counters.TestFixtureSetUpCount = 0;
@@ -188,7 +188,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_TestFixtureSetUp2()
         {
             Examples.FixtureSetUpTests.Counters.TestFixtureSetUpCount = 0;
@@ -202,7 +202,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_TestFixtureSetUpFail()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -216,7 +216,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(2, testListener.WriteLineCount, "Check that exception info was written");
         }
 
-        [Test]
+        [TestMethod]
         public void RunNamespace()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -230,7 +230,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_NoTestFixtureAttribute()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -243,7 +243,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_StaticFixture()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -256,7 +256,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_GenericFixture_Class()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -270,7 +270,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Failure);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_GenericFixture_Method()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -285,7 +285,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Failure);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_NoNamespaceFicture()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -298,7 +298,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_NestedClass()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -311,7 +311,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_ThrowException()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -324,7 +324,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(1, testListener.FailureCount);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_Inconclusive()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -337,7 +337,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(1, testListener.IgnoredCount);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_AssumeFalse()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -350,7 +350,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(1, testListener.IgnoredCount);
         }
 
-        [Test]
+        [TestMethod, Ignore]
         public void RunMember_NoFrameworkFreference()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -364,7 +364,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(0, testListener.TestFinishedCount);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_OverrideTest_Success()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
@@ -378,7 +378,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(1, testListener.TestFinishedCount);
         }
 
-        [Test]
+        [TestMethod]
         public void RunMember_OverriddenTest_Success()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
