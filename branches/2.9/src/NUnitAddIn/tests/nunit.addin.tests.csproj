@@ -53,9 +53,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\nunit-addin\nunit.addin.dll_VS2005.csproj">
+    <ProjectReference Include="..\nunit-addin\nunit.addin.dll.csproj">
       <Project>{8FEEED1C-AA39-44BD-93C5-2E2505492D6A}</Project>
-      <Name>nunit.addin.dll_VS2005</Name>
+      <Name>nunit.addin.dll</Name>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

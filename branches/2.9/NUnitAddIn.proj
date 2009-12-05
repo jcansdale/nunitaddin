@@ -1,7 +1,7 @@
 <Project DefaultTargets="Clean;Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll_VS2005.csproj</NUnitAddinProjectFile>
+		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll.csproj</NUnitAddinProjectFile>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
 		<OutputPath_V3_5>$(OutputPath)v1.1\NUnit29\</OutputPath_V3_5>
 		<Properties_V3_5>OutputPath=$(OutputPath_V3_5)</Properties_V3_5>
