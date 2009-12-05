@@ -1,0 +1,104 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8FEEED1C-AA39-44BD-93C5-2E2505492D6A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NUnit.AddInRunner</RootNamespace>
+    <AssemblyName>nunit.addin</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.core, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.core.interfaces, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.util, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="FrameworkUtilities.cs" />
+    <Compile Include="InstalledNUnitTestRunner.cs" />
+    <Compile Include="LibAssemblyResolver.cs" />
+    <Compile Include="NUnitGuiApplication.cs" />
+    <Compile Include="NUnitConfig.cs" />
+    <Compile Include="NUnitInfo.cs" />
+    <Compile Include="NUnitRegistry.cs" />
+    <Compile Include="NUnitSelector.cs" />
+    <Compile Include="NUnitTestRunner.cs" />
+    <Compile Include="TestDrivenOptions.cs" />
+    <Compile Include="NUnitTestRunnerBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="..\..\..\install\nunitaddin.wxs">
+      <Link>nunitaddin.wxs</Link>
+    </None>
+    <None Include="..\..\..\install\Package.wxs">
+      <Link>Package.wxs</Link>
+    </None>
+    <None Include="nunit.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="nunit.framework.dll.tdnet">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Compile Include="WarningMessageHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.dll">
+      <Link>nunit.core.dll</Link>
+    </Content>
+    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.interfaces.dll">
+      <Link>nunit.core.interfaces.dll</Link>
+    </Content>
+    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.util.dll">
+      <Link>nunit.util.dll</Link>
+    </Content>
+    <Content Include="..\..\..\artifacts\NUnit\license.txt">
+      <Link>license.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
+      <Link>TestDriven.Framework.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="addins.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
