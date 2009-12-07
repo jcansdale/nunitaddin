@@ -34,8 +34,14 @@
 			DestinationFiles="@(ArtefactFiles->'$(PackageDirectory)%(RecursiveDir)%(Filename)%(Extension)')"
         />
         
+		<Copy SourceFiles="$(OutputPath_V3_5)nunit.addin.dll" DestinationFolder="$(PackageDirectory)bin\net-2.0" />
+		<Copy SourceFiles="$(OutputPath_V3_5)nunit.framework.dll.tdnet" DestinationFolder="$(PackageDirectory)bin\net-2.0" />
+		
 		<Copy SourceFiles="$(OutputPath_V3_5)nunit.addin.dll" DestinationFolder="$(PackageDirectory)bin\net-3.5" />
 		<Copy SourceFiles="$(OutputPath_V3_5)nunit.framework.dll.tdnet" DestinationFolder="$(PackageDirectory)bin\net-3.5" />
+		
+		<Copy SourceFiles="$(OutputPath_V3_5)nunit.addin.dll" DestinationFolder="$(PackageDirectory)bin\net-4.0" />
+		<Copy SourceFiles="$(OutputPath_V3_5)nunit.framework.dll.tdnet" DestinationFolder="$(PackageDirectory)bin\net-4.0" />
 	
 		<CreateItem Include="$(PackageDirectory)\**\*.*">
 			<Output TaskParameter="Include" ItemName="PackageFiles"/>
