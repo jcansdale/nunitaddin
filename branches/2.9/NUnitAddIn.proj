@@ -1,11 +1,21 @@
-<Project DefaultTargets="Clean;Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Clean;Build;Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
+		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll.csproj</NUnitAddinProjectFile>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
-		<OutputPath_V3_5>$(OutputPath)v1.1\NUnit29\</OutputPath_V3_5>
+		<OutputPath_V3_5>$(OutputPath)v3.5\</OutputPath_V3_5>
 		<Properties_V3_5>OutputPath=$(OutputPath_V3_5)</Properties_V3_5>
+		<PackageFile>$(OutputPath)\NUnit-2.9.3-tdnet.zip</PackageFile>
+		<PackageDirectory>$(OutputPath)package\</PackageDirectory>
+		<ArtefactsDirectory>$(MSBuildProjectDirectory)\artifacts\NUnit\</ArtefactsDirectory>
 	</PropertyGroup>
+	
+    <ItemGroup>
+        <ArtefactFiles Include="$(ArtefactsDirectory)\**\*.*" Exclude="$(ArtefactsDirectory)\**\.svn\**" />
+    </ItemGroup>
+    
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
 
 	<Target Name="Clean">
 		<RemoveDir Directories="$(OutputPath)" />
@@ -14,6 +24,24 @@
 	
 	<Target Name="Build">
 		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Rebuild" Properties="$(Properties_V3_5)" />
+	</Target>
+	
+	<Target Name="Package">
+		<MakeDir Directories="$(PackageDirectory)" />
+
+        <Copy
+			SourceFiles="@(ArtefactFiles)"
+			DestinationFiles="@(ArtefactFiles->'$(PackageDirectory)%(RecursiveDir)%(Filename)%(Extension)')"
+        />
+        
+		<Copy SourceFiles="$(OutputPath_V3_5)nunit.addin.dll" DestinationFolder="$(PackageDirectory)bin\net-3.5" />
+		<Copy SourceFiles="$(OutputPath_V3_5)nunit.framework.dll.tdnet" DestinationFolder="$(PackageDirectory)bin\net-3.5" />
+	
+		<CreateItem Include="$(PackageDirectory)\**\*.*">
+			<Output TaskParameter="Include" ItemName="PackageFiles"/>
+		</CreateItem>
+		
+		<Zip Files="@(PackageFiles)" WorkingDirectory="$(PackageDirectory)" ZipFileName="$(PackageFile)" />
 	</Target>
 	
 </Project>
