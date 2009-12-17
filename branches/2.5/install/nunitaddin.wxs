@@ -72,6 +72,8 @@
 						<File Id="F__25.net_2.0.nunit_console_exe_config" Name="NUC.CFG" LongName="nunit-console.exe.config" src="..\artifacts\NUnit\bin\net-2.0\nunit-console.exe.config" />
 						<File Id="F__25.net_2.0.nunit_agent_exe" Name="NUA.EXE" LongName="nunit-agent.exe" src="..\artifacts\NUnit\bin\net-2.0\nunit-agent.exe" />
 						<File Id="F__25.net_2.0.nunit_agent_exe_config" Name="NUA.CFG" LongName="nunit-agent.exe.config" src="..\artifacts\NUnit\bin\net-2.0\nunit-agent.exe.config" />
+						<File Id="F__25.net_2.0.nunit_agent_x86_exe" Name="NUA.EXE" LongName="nunit-agent-x86.exe" src="..\artifacts\NUnit\bin\net-2.0\nunit-agent-x86.exe" />
+						<File Id="F__25.net_2.0.nunit_agent_x86_exe_config" Name="NUA.CFG" LongName="nunit-agent-x86.exe.config" src="..\artifacts\NUnit\bin\net-2.0\nunit-agent-x86.exe.config" />
 					</Component>
 					
 					<Component Id="C__25.net_2.0.gui" DiskId="1" Guid="6d014440-9b88-11dd-ad8b-0800200c9a66">
