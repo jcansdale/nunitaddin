@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C793FA34-0A35-4530-A8C4-ABF6E8B5922E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -39,7 +39,9 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.util, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -59,7 +61,6 @@
     <Compile Include="Tests\LibAssemblyResolverTests.cs" />
     <Compile Include="Tests\MockTestListener.cs" />
     <Compile Include="Tests\NUnitGuiApplicationTests.cs" />
-    <Compile Include="Tests\NUnitConfigTests.cs" />
     <Compile Include="Tests\NUnitRegistryTests.cs" />
     <Compile Include="Tests\NUnitSelectorTests.cs" />
     <Compile Include="Tests\NUnitTestRunnerCategoriesTests.cs" />
@@ -74,46 +75,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.dll">
-      <Link>net-1.1\lib\nunit.core.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.core.interfaces.dll">
-      <Link>net-1.1\lib\nunit.core.interfaces.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-1.1\lib\nunit.util.dll">
-      <Link>net-1.1\lib\nunit.util.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.dll">
-      <Link>lib\nunit.framework.dll</Link>
+      <Link>nunit.framework.dll</Link>
     </Content>
     <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll">
-      <Link>net-2.0\lib\nunit.core.dll</Link>
+      <Link>lib\nunit.core.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.interfaces.dll">
-      <Link>net-2.0\lib\nunit.core.interfaces.dll</Link>
+      <Link>lib\nunit.core.interfaces.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.util.dll">
-      <Link>net-2.0\lib\nunit.util.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\nunit.exe">
-      <Link>net-2.0\nunit.exe</Link>
+      <Link>lib\nunit.util.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
-      <Link>lib\TestDriven.Framework.dll</Link>
+      <Link>TestDriven.Framework.dll</Link>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\artifacts\NUnit\bin\net-2.0\nunit.exe.config">
-      <Link>net-2.0\nunit.exe.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

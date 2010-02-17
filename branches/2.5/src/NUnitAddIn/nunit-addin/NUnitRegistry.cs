@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace NUnit.AddInRunner
 {
     using System;
@@ -31,11 +33,24 @@ namespace NUnit.AddInRunner
 
         public static NUnitInfo[] LoadDefaultVersions(string runtimeVersion)
         {
-            string dir = getDefaultBinDir();
-            string configFile = Path.Combine(dir, Constants.ConfigFileName);
-            return loadConfigVersions(runtimeVersion, configFile);
+            string baseDir = getDefaultBaseDir();
+            string coreFile = Path.Combine(baseDir, @"lib\nunit.core.dll");
+            if (!File.Exists(coreFile))
+            {
+                throw new Exception("Couldn't find: " + coreFile);
+            }
+
+            AssemblyName assemblyName = AssemblyName.GetAssemblyName(coreFile);
+            Version productVersion = assemblyName.Version;
+
+            NUnitInfo defaultVersion = new NUnitInfo(productVersion, runtimeVersion, baseDir);
+            return new NUnitInfo[] {defaultVersion};
+
+            //string configFile = Path.Combine(dir, Constants.ConfigFileName);
+            //return loadConfigVersions(runtimeVersion, configFile);
         }
 
+        /*
         static NUnitInfo[] loadConfigVersions(string runtimeVersion, string configFile)
         {
             NUnitConfig config = NUnitConfig.Load(configFile);
@@ -74,13 +89,16 @@ namespace NUnit.AddInRunner
 
             return new NUnitInfo(productVersion, info.RuntimeVersion, baseDir);
         }
+        */
 
+        /*
         static Version toVersion(string runtimeVersion)
         {
             return new Version(runtimeVersion.Substring(1));
         }
+        */
 
-        static string getDefaultBinDir()
+        static string getDefaultBaseDir()
         {
             string localPath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
             return Path.GetDirectoryName(localPath);

@@ -38,7 +38,7 @@ namespace NUnit.AddInRunner
         static Version getFrameworkVersion(string assemblyFile)
         {
             AssemblyName[] assemblyNames = AssemblyReflector.GetReferencedAssemblies(assemblyFile);
-            AssemblyName frameworkAssembly = FrameworkUtilities.FindFrameworkAssembyName(assemblyNames);
+            AssemblyName frameworkAssembly = FrameworkUtilities.FindFrameworkAssembyName(assemblyFile, assemblyNames);
             if(frameworkAssembly != null)
             {
                 return frameworkAssembly.Version;
