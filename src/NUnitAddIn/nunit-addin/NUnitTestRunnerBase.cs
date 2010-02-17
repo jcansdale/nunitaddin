@@ -17,9 +17,9 @@ namespace NUnit.AddInRunner
     public abstract class NUnitTestRunnerBase : ITestRunner
     {
         string testRunnerName;
-        string nunitRegistryRoot;
+        readonly string nunitRegistryRoot;
 
-        public NUnitTestRunnerBase(string nunitRegistryRoot)
+        protected NUnitTestRunnerBase(string nunitRegistryRoot)
         {
             this.nunitRegistryRoot = nunitRegistryRoot;
         }
@@ -123,7 +123,9 @@ namespace NUnit.AddInRunner
         {
             WarningMessage warningMessage = new WarningMessage(testListener);
 
-            AssemblyName frameworkAssembly = FrameworkUtilities.FindFrameworkAssembyName(targetAssembly.GetReferencedAssemblies());
+            string assemblyFile = new Uri(targetAssembly.CodeBase).LocalPath;
+            AssemblyName frameworkAssembly = FrameworkUtilities.FindFrameworkAssembyName(
+                assemblyFile, targetAssembly.GetReferencedAssemblies());
             if(frameworkAssembly == null)
             {
                 return null;

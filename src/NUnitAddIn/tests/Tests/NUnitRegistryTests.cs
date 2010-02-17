@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace NUnit.AddInRunner.Tests
 {
     using System;
@@ -88,6 +90,16 @@ namespace NUnit.AddInRunner.Tests
         }
 
         [Test]
+        public void LoadDefaultVersions()
+        {
+            string runtimeVersion = RuntimeEnvironment.GetSystemVersion();
+            NUnitInfo[] defaultVersions = NUnitRegistry.LoadDefaultVersions(runtimeVersion);
+            Assert.That(defaultVersions.Length, Is.EqualTo(1));
+            Assert.That(defaultVersions[0].RuntimeVersion, Is.EqualTo(runtimeVersion));
+        }
+
+        /*
+        [Test]
         public void LoadDefaultVersions_Net10()
         {
             NUnitInfo[] defaultVersions = NUnitRegistry.LoadDefaultVersions("v1.0.3705");
@@ -118,5 +130,6 @@ namespace NUnit.AddInRunner.Tests
             Assert.That(defaultVersions.Length, Is.EqualTo(2));
             Assert.That(defaultVersions[1].RuntimeVersion, Is.EqualTo("v2.0.50727"));
         }
+        */
     }
 }
