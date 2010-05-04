@@ -57,12 +57,8 @@
   <ItemGroup>
     <Compile Include="Examples\NUnitTestRunnerCategoriesExamples.cs" />
     <Compile Include="Examples\NUnitTestRunnerExamples.cs" />
-    <Compile Include="Tests\FrameworkUtilitiesTests.cs" />
     <Compile Include="Tests\LibAssemblyResolverTests.cs" />
     <Compile Include="Tests\MockTestListener.cs" />
-    <Compile Include="Tests\NUnitGuiApplicationTests.cs" />
-    <Compile Include="Tests\NUnitRegistryTests.cs" />
-    <Compile Include="Tests\NUnitSelectorTests.cs" />
     <Compile Include="Tests\NUnitTestRunnerCategoriesTests.cs" />
     <Compile Include="Tests\NUnitTestRunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
