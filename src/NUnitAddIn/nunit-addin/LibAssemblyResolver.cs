@@ -1,12 +1,9 @@
-﻿using System.Globalization;
-using System.Runtime.InteropServices;
-
-namespace NUnit.AddInRunner
+﻿namespace NUnit.AddInRunner
 {
     using System;
     using System.IO;
     using System.Reflection;
-    using TestDriven.Framework;
+    using System.Globalization;
 
     public class LibAssemblyResolver : IDisposable
     {

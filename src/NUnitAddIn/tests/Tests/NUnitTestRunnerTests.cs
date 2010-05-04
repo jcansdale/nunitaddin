@@ -350,8 +350,9 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(1, testListener.IgnoredCount);
         }
 
+        /*
         [Test]
-        public void RunMember_NoFrameworkFreference()
+        public void RunMember_NoFrameworkReference()
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
             MockTestListener testListener = new MockTestListener();
@@ -363,6 +364,7 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(TestRunState.NoTests, result);
             Assert.AreEqual(0, testListener.TestFinishedCount);
         }
+        */
 
         [Test]
         public void RunMember_OverrideTest_Success()
