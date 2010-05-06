@@ -5,7 +5,7 @@
 	<TargetResolution>Reference</TargetResolution>
 	<ApartmentState>MTA</ApartmentState>
 	
-	<ApplicationName>NUnit<ApplicationName>
-	<Application>..\nunit.exe<Application>
-	<Application86>..\nunit-x86.exe<Application86>
+	<ApplicationName>NUnit</ApplicationName>
+	<Application>..\nunit.exe</Application>
+	<Application86>..\nunit-x86.exe</Application86>
 </TestRunner>
