@@ -53,6 +53,8 @@
 												Name="RuntimeVersion" Type="string" Value="v2.0.50727" />
 							  <Registry Id="R__25.net_2.0.NUnit_ApartmentState" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 												Name="ApartmentState" Type="string" Value="MTA" />
+              <Registry Id="R__25.net_2.0.NUnit_ApplicationName" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
+                      Name="ApplicationName" Type="string" Value="NUnit" />
               <Registry Id="R__25.net_2.0.NUnit_Application" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
                       Name="Application" Type="string" Value="[D__25.nunitaddin_2_5]nunit.exe" />
               <Registry Id="R__25.net_2.0.NUnit_Application86" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
