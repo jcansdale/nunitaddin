@@ -683,8 +683,8 @@ namespace NUnit.AddInRunner
                         if (result.FailureSite != FailureSite.Child)
                         {
                             // HACK: Output as much info as we have (no exception type).
-                            this.testListener.WriteLine("TestFixture failed: " + result.Message, Category.Info);
-                            this.testListener.WriteLine(result.StackTrace, Category.Info);
+                            this.testListener.WriteLine("TestFixture failed: " + result.Message, Category.Warning);
+                            this.testListener.WriteLine(result.StackTrace, Category.Warning);
                         }
 					}
                 }
@@ -692,8 +692,9 @@ namespace NUnit.AddInRunner
 
 			public void UnhandledException(Exception exception)
 			{
-				this.testListener.WriteLine(exception.ToString(), Category.Info);
-			}
+                this.testListener.WriteLine("UnhandledException in test runner:", Category.Warning);
+                this.testListener.WriteLine(exception.ToString(), Category.Warning);
+            }
 
 			public void TestOutput(TestOutput testOutput)
 			{
