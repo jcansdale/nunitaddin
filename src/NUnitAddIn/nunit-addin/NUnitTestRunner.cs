@@ -339,7 +339,7 @@ namespace NUnit.AddInRunner
         TestRunState run(ITestListener testListener, Assembly assembly, ITestFilter filter)
         {
             // Add Standard Services to ServiceManager
-            ServiceManager.Services.AddService(new SettingsService());
+
             ServiceManager.Services.AddService(new DomainManager());
             ServiceManager.Services.AddService(new AddinRegistry());
             ServiceManager.Services.AddService(new AddinManager());
