@@ -1,7 +1,7 @@
 namespace NUnit.AddInRunner
 {
     using System;
-    using System.Text;
+    using System.IO;
     using System.Reflection;
     using System.Diagnostics;
     using System.Collections;
@@ -12,35 +12,173 @@ namespace NUnit.AddInRunner
     using NUC = NUnit.Core;
     using NUnit.Util;
 	using NUnit.Core.Filters;
-    using NUnit.Core.Builders;
 
     public class NUnitTestRunner : ITestRunner
     {
-        // TODO: Always run test fixture excluded by category when targeted directly.
+        string testRunnerName;
 
         public TestRunState RunAssembly(ITestListener testListener, Assembly assembly)
         {
-            ITestFilter filter = TestFilter.Empty;
-            filter = addCategoriesFilter(filter);
-            return run(testListener, assembly, filter);
+            return run(testListener, assembly, new AssemblyRun());
         }
 
         public TestRunState RunMember(ITestListener testListener, Assembly assembly, MemberInfo member)
         {
-            MethodInfo method = member as MethodInfo;
-            if (method != null)
-            {
-                return runMethod(testListener, assembly, method);
-            }
-
-            Type type = member as Type;
-            if (type != null)
-            {
-                return runType(testListener, assembly, type);
-            }
-
-            return TestRunState.NoTests;
+            return run(testListener, assembly, new MemberRun(member));
         }
+
+        public TestRunState RunNamespace(ITestListener testListener, Assembly assembly, string ns)
+        {
+            return run(testListener, assembly, new NamespaceRun(ns));
+        }
+
+        interface IRun
+        {
+            TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly);
+        }
+
+        class AssemblyRun : IRun
+        {
+            public TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly)
+            {
+                ITestFilter filter = TestFilter.Empty;
+                filter = testRunner.addCategoriesFilter(filter);
+                return testRunner.run(testListener, assembly, filter);
+            }
+        }
+
+        class MemberRun : IRun
+        {
+            readonly MemberInfo member;
+
+            public MemberRun(MemberInfo member)
+            {
+                this.member = member;
+            }
+
+            public TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly)
+            {
+                MethodInfo method = member as MethodInfo;
+                if (method != null)
+                {
+                    return testRunner.runMethod(testListener, assembly, method);
+                }
+
+                Type type = member as Type;
+                if (type != null)
+                {
+                    return testRunner.runType(testListener, assembly, type);
+                }
+
+                return TestRunState.NoTests;
+            }
+        }
+
+        class NamespaceRun : IRun
+        {
+            readonly string ns;
+
+            public NamespaceRun(string ns)
+            {
+                this.ns = ns;
+            }
+
+            public TestRunState Run(NUnitTestRunner testRunner, ITestListener testListener, Assembly assembly)
+            {
+                ITestFilter filter = new NamespaceFilter(assembly, ns);
+                filter = testRunner.addCategoriesFilter(filter);
+
+                return testRunner.run(testListener, assembly, filter);
+            }
+        }
+
+        TestRunState run(ITestListener testListener, Assembly assembly, IRun run)
+        {
+            NUnitInfo info = findNUnit(testListener);
+            if (info == null)
+            {
+                return TestRunState.NoTests;
+            }
+
+            testRunnerName = toFriendlyName(info.ProductVersion);
+            using (new LibAssemblyResolver(info.LibDir))
+            {
+                return run.Run(this, testListener, assembly);
+            }
+        }
+
+        static string toFriendlyName(Version version)
+        {
+            return string.Format("NUnit {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+        }
+
+        static NUnitInfo findNUnit(ITestListener testListener)
+        {
+            string filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            string baseDir = Path.GetDirectoryName(filePath);
+
+            string coreFile = Path.Combine(baseDir, @"lib\nunit.core.dll");
+            if (!File.Exists(coreFile))
+            {
+                testListener.WriteLine("Couldn't find: " + coreFile, Category.Warning);
+                return null;
+            }
+
+            AssemblyName assemblyName = AssemblyName.GetAssemblyName(coreFile);
+            Version productVersion = assemblyName.Version;
+
+            return new NUnitInfo(productVersion, null, baseDir);
+        }
+
+        /*
+        NUnitInfo findNUnit(ITestListener testListener, Assembly targetAssembly)
+        {
+            WarningMessage warningMessage = new WarningMessage(testListener);
+
+            string assemblyFile = new Uri(targetAssembly.CodeBase).LocalPath;
+            AssemblyName frameworkAssembly = FrameworkUtilities.FindFrameworkAssembyName(
+                assemblyFile, targetAssembly.GetReferencedAssemblies());
+            if(frameworkAssembly == null)
+            {
+                return null;
+            }
+
+            NUnitRegistry nunitRegistry = NUnitRegistry.Load(nunitRegistryRoot,
+                AppDomain.CurrentDomain.BaseDirectory, RuntimeEnvironment.GetSystemVersion());
+            NUnitSelector selector = new NUnitSelector(warningMessage.Handler, nunitRegistry,
+                Constants.MinVersion, Constants.MaxVersion, Constants.RtmVersion);
+            Version frameworkVersion = frameworkAssembly.Version;
+            NUnitInfo info = selector.GetInfo(frameworkVersion);
+            if(info == null)
+            {
+                warningMessage.Handler("Couldn't find NUnit runner for:");
+                warningMessage.Handler(frameworkAssembly.FullName);
+                return null;
+            }
+
+            return info;
+        }
+
+        class WarningMessage
+        {
+            readonly ITestListener testListener;
+
+            public WarningMessage(ITestListener testListener)
+            {
+                this.testListener = testListener;
+            }
+
+            public WarningMessageHandler Handler
+            {
+                get { return new WarningMessageHandler(warningMessage); }
+            }
+
+            void warningMessage(string text)
+            {
+                testListener.WriteLine(text, Category.Warning);
+            }
+        }
+        */
 
         TestRunState runMethod(ITestListener testListener, Assembly assembly, MethodInfo method)
         {
@@ -64,6 +202,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "Test methods must be public.";
                     summary.Name = method.ReflectedType.FullName + "." + method.Name;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -76,6 +215,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "No fixture attribute on parent class.";
                     summary.Name = method.ReflectedType.FullName + "." + method.Name;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -87,6 +227,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "Parent fixture must be public.";
                     summary.Name = method.ReflectedType.FullName + "." + method.Name;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -110,6 +251,7 @@ namespace NUnit.AddInRunner
                     summary.Message = "Test fixtures must be public.";
                     summary.Name = type.FullName;
                     summary.TotalTests = 1;
+                    summary.TestRunnerName = testRunnerName;
                     testListener.TestFinished(summary);
                     return TestRunState.Success;
                 }
@@ -194,18 +336,10 @@ namespace NUnit.AddInRunner
             return null;
         }
 
-        public TestRunState RunNamespace(ITestListener testListener, Assembly assembly, string ns)
-        {
-            ITestFilter filter = new NamespaceFilter(assembly, ns);
-            filter = addCategoriesFilter(filter);
-
-            return run(testListener, assembly, filter);
-        }
-
         TestRunState run(ITestListener testListener, Assembly assembly, ITestFilter filter)
         {
             // Add Standard Services to ServiceManager
-            ServiceManager.Services.AddService(new SettingsService());
+
             ServiceManager.Services.AddService(new DomainManager());
             ServiceManager.Services.AddService(new AddinRegistry());
             ServiceManager.Services.AddService(new AddinManager());
@@ -232,7 +366,7 @@ namespace NUnit.AddInRunner
                 return TestRunState.NoTests;
             }
 
-            EventListener listener = new ProxyEventListener(testListener, totalTestCases);
+            EventListener listener = new ProxyEventListener(testListener, totalTestCases, testRunnerName);
 
             NUC.TestResult result = testAssembly.Run(listener, filter);
 
@@ -270,13 +404,15 @@ namespace NUnit.AddInRunner
 
             public MethodFilter(Assembly assembly, MethodInfo method)
             {
-                this.method = method.GetBaseDefinition();
+                this.method = method;
                 Type type = method.ReflectedType;
                 this.types = getCandidateTypes(assembly, type);
             }
 
             public override bool Match(ITest test)
             {
+                // HACK: What should this be replaced by?
+                /*
                 NotRunnableTestCase notRunnableTestCase = test as NotRunnableTestCase;
                 if(notRunnableTestCase != null)
                 {
@@ -287,6 +423,7 @@ namespace NUnit.AddInRunner
                         return true;
                     }
                 }
+                */
 
                 TestMethod testMethod = test as TestMethod;
                 if (testMethod == null)
@@ -294,15 +431,22 @@ namespace NUnit.AddInRunner
                     return false;
                 }
 
-                if (testMethod.Method.MethodHandle.Value != this.method.MethodHandle.Value)
+                if(!isSameOrBaseMethod(testMethod.Method, this.method))
                 {
                     return false;
                 }
 
-                Type reflectedType = testMethod.Method.ReflectedType;
+                Type baseType = testMethod.FixtureType;
+
+                Type genericTypeDefinition = getGenericTypeDefinition(baseType);
+                if(genericTypeDefinition != null)
+                {
+                    baseType = genericTypeDefinition;
+                }
+
                 foreach (Type type in this.types)
                 {
-                    if (reflectedType == type)
+                    if (baseType == type)
                     {
                         return true;
                     }
@@ -310,37 +454,75 @@ namespace NUnit.AddInRunner
 
                 return false;
             }
+
+            static bool isSameOrBaseMethod(MethodInfo testMethod, MethodInfo targetMethod)
+            {
+                while(true)
+                {
+                    if (isSameMetadata(testMethod, targetMethod))
+                    {
+                        return true;
+                    }
+
+                    MethodInfo baseMethod = testMethod.GetBaseDefinition();
+                    if (baseMethod == testMethod)
+                    {
+                        return false;
+                    }
+
+                    testMethod = baseMethod;
+                }
+            }
+
+            static readonly PropertyInfo isGenericTypeProperty = typeof(Type).GetProperty("IsGenericType");
+            static readonly MethodInfo getGenericTypeDefinitionMethod = typeof(Type).GetMethod("GetGenericTypeDefinition");
+
+            static Type getGenericTypeDefinition(Type baseType)
+            {
+                if(isGenericTypeProperty == null)
+                {
+                    return null;
+                }
+
+                bool isGenericType = (bool)isGenericTypeProperty.GetValue(baseType, null);
+                if (!isGenericType) return null;
+
+                if (getGenericTypeDefinitionMethod == null)
+                {
+                    return null;
+                }
+
+                Type genericTypeDefinition = (Type)getGenericTypeDefinitionMethod.Invoke(baseType, null);
+                return genericTypeDefinition;
+
+                //if (baseType.IsGenericType)
+                //{
+                //    baseType = baseType.GetGenericTypeDefinition();
+                //}
+            }
         }
 
-        //class MethodFilter : SimpleNameFilter
-        //{
-        //    public MethodFilter(Assembly assembly, MethodInfo method)
-        //    {
-        //        Type type = method.ReflectedType;
-        //        foreach (Type candidateType in getCandidateTypes(assembly, type))
-        //        {
-        //            this.Add(candidateType.FullName + "." + method.Name);
+        static readonly PropertyInfo metadataTokenProperty = typeof(MemberInfo).GetProperty("MetadataToken");
+        static readonly PropertyInfo moduleProperty = typeof(MemberInfo).GetProperty("Module");
 
-        //            /* TODO:
-        //            // Support for parameterized tests.
-        //            if (testFullName.StartsWith(fullName + "("))
-        //            {
-        //                return true;
-        //            }
-        //            */
+        static bool isSameMetadata(MethodInfo memberA, MethodInfo memberB)
+        {
+            if (metadataTokenProperty != null && moduleProperty != null)
+            {
+                int tokenA = (int) metadataTokenProperty.GetValue(memberA, null);
+                int tokenB = (int) metadataTokenProperty.GetValue(memberB, null);
+                if (tokenA != tokenB) return false;
 
-        //            /* TODO
-        //            // Test name might be qualified with method's type name.
-        //            string qualifiedMethodName = this.method.DeclaringType.Name + "." + this.method.Name;
-        //            string fullName2 = type.FullName + "." + qualifiedMethodName;
-        //            if (testFullName == fullName2)
-        //            {
-        //                return true;
-        //            }
-        //            */
-        //        }
-        //    }
-        //}
+                object moduleA = moduleProperty.GetValue(memberA, null);
+                object moduleB = moduleProperty.GetValue(memberB, null);
+                if (moduleA != moduleB) return false;
+
+                return true;
+            }
+
+            // No need to wory about generics or 64-bit on .NET 1.x.
+            return (ulong)memberA.MethodHandle.Value == (ulong)memberB.MethodHandle.Value;
+        }
 
 		class TypeFilter : SimpleNameFilter
 		{
@@ -348,7 +530,13 @@ namespace NUnit.AddInRunner
 			{
                 foreach (Type candidateType in getCandidateTypes(assembly, type))
                 {
-                    this.Add(candidateType.FullName);
+                    string name = TypeHelper.GetDisplayName(candidateType);
+                    string ns = candidateType.Namespace;
+                    if(ns != null)
+                    {
+                        name = ns + "." + name;
+                    }
+                    this.Add(name);
                 }
 			}
 		}
@@ -364,7 +552,8 @@ namespace NUnit.AddInRunner
         static IList getCandidateTypes(Assembly assembly, Type type)
         {
             ArrayList types = new ArrayList();
-            if (type.IsAbstract)
+            // NOTE: Static classes are abstract and sealed.
+            if (type.IsAbstract && !type.IsSealed)
             {
                 foreach (Type candidateType in assembly.GetExportedTypes())
                 {
@@ -378,253 +567,26 @@ namespace NUnit.AddInRunner
 
             types.Add(type);
             return types;
-        }
-
-		/*
-        class NoFilter : IFilter
-        {
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.IsExplicit)
-                {
-                    return false;
-                }
-
-                if (isAbstract(suite))
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                if (test.IsExplicit)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-
-        class MethodFilter : IFilter
-        {
-            Assembly assembly;
-            MethodInfo method;
-            IList types;
-
-            public MethodFilter(Assembly assembly, MethodInfo method)
-            {
-                this.assembly = assembly;
-                this.method = method;
-                Type type = method.ReflectedType;
-                this.types = getCandidateTypes(assembly, type);
-            }
-
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.FixtureType == null)
-                {
-                    return true;
-                }
-
-                foreach (Type type in types)
-                {
-                    if (type == suite.FixtureType)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                string testFullName = test.FullName;
-
-                foreach (Type type in this.types)
-                {
-                    string fullName = type.FullName + "." + this.method.Name;
-                    if (testFullName == fullName)
-                    {
-                        return true;
-                    }
-
-                    // Support for parameterized tests.
-                    if (testFullName.StartsWith(fullName + "("))
-                    {
-                        return true;
-                    }
-
-					// Test name might be qualified with method's type name.
-					string qualifiedMethodName = this.method.DeclaringType.Name + "." + this.method.Name;
-					string fullName2 = type.FullName + "." + qualifiedMethodName;
-					if (testFullName == fullName2)
-					{
-						return true;
-					}
-				}
-
-                return false;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-
-        class TypeFilter : IFilter
-        {
-            Assembly assembly;
-            IList types;
-
-            public TypeFilter(Assembly assembly, Type type)
-            {
-                this.assembly = assembly;
-                this.types = getCandidateTypes(assembly, type);
-            }
-
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.FixtureType == null)
-                {
-                    return true;
-                }
-
-                foreach (Type type in types)
-                {
-                    if (type == suite.FixtureType)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                if (test.IsExplicit)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-
-        static IList getCandidateTypes(Assembly assembly, Type type)
-        {
-            ArrayList types = new ArrayList();
-            if (type.IsAbstract)
-            {
-                foreach (Type candidateType in assembly.GetExportedTypes())
-                {
-                    if (type.IsAssignableFrom(candidateType) && !candidateType.IsAbstract)
-                    {
-                        types.Add(candidateType);
-                    }
-                }
-                return types;
-            }
-
-            types.Add(type);
-            return types;
-        }
-
-        class NamespaceFilter : IFilter
-        {
-            Assembly assembly;
-            string ns;
-
-            public NamespaceFilter(Assembly assembly, string ns)
-            {
-                this.assembly = assembly;
-                this.ns = ns;
-            }
-
-            public bool Pass(TestSuite suite)
-            {
-                if (suite.IsExplicit)
-                {
-                    return false;
-                }
-
-                if (isAbstract(suite))
-                {
-                    return false;
-                }
-
-                if (suite.FullName == assembly.FullName)
-                {
-                    return true;
-                }
-
-                if (this.ns == "" || this.ns.StartsWith(suite.FullName + ".") || this.ns == suite.FullName || suite.FullName.StartsWith(ns + "."))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            public bool Pass(TestCase test)
-            {
-                if (test.IsExplicit)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public bool Exclude
-            {
-                get { return false; }
-            }
-        }
-		*/
-
-		static bool isAbstract(TestSuite testSuite)
-        {
-            if (testSuite.FixtureType == null)
-            {
-                return false;
-            }
-
-            return testSuite.FixtureType.IsAbstract;
         }
 
         class ProxyEventListener : EventListener
         {
             ITestListener testListener;
             int totalTestCases;
+            string testRunnerName;
 
-            public ProxyEventListener(ITestListener testListener, int totalTestCases)
+            public ProxyEventListener(ITestListener testListener, int totalTestCases, string testRunnerName)
             {
                 this.testListener = testListener;
                 this.totalTestCases = totalTestCases;
+                this.testRunnerName = testRunnerName;
             }
 
 			public void RunFinished(Exception exception)
 			{
 			}
 
-            public void TestFinished(TestCaseResult result)
+            public void TestFinished(NUC.TestResult result)
             {
                 TDF.TestResult summary = new TDF.TestResult();
                 summary.TotalTests = totalTestCases;
@@ -644,38 +606,37 @@ namespace NUnit.AddInRunner
                     }
                 }
                 summary.Message = message;
-                summary.Name = result.Name;
+                summary.Name = result.FullName;
                 summary.StackTrace = StackTraceFilter.Filter(result.StackTrace);
                 summary.TimeSpan = TimeSpan.FromSeconds(result.Time);
+                summary.TestRunnerName = testRunnerName;
                 this.testListener.TestFinished(summary);
             }
 
-            static TDF.TestState toTestState(TestCaseResult result)
+            static TDF.TestState toTestState(NUC.TestResult result)
             {
-                if (result.IsFailure)
+                switch(result.ResultState)
                 {
-                    return TDF.TestState.Failed;
+                    case ResultState.Success:
+                        return TDF.TestState.Passed;
+                    case ResultState.Failure:   // Assert.Fail
+                    case ResultState.Error:     // Exception
+                        return TDF.TestState.Failed;
+                    case ResultState.Ignored:
+                    case ResultState.Skipped:
+                    case ResultState.NotRunnable:
+                    case ResultState.Inconclusive:
+                        return TDF.TestState.Ignored;
+                    default:
+                        Trace.WriteLine("Unknown ResultState: " + result.ResultState);
+                        return TDF.TestState.Ignored;
                 }
-
-                if (!result.Executed)
-                {
-                    // NOTE: Does this always mean ignored?
-                    return TDF.TestState.Ignored;
-                }
-
-                if (result.IsSuccess)
-                {
-                    return TDF.TestState.Passed;
-                }
-
-
-                // NOTE: What would this mean?
-                return TDF.TestState.Ignored;
             }
 
-            public void SuiteFinished(TestSuiteResult result)
+            public void SuiteFinished(NUC.TestResult result)
             {
-                if (result.Test.TestType == "Test Fixture" && result.IsFailure)
+                // NOTE: Output if we have a stack trace.
+                if (result.StackTrace != null)
                 {
                     if (result.Message != null && result.Message.Length > 0)
 					{
@@ -683,8 +644,8 @@ namespace NUnit.AddInRunner
                         if (result.FailureSite != FailureSite.Child)
                         {
                             // HACK: Output as much info as we have (no exception type).
-                            this.testListener.WriteLine("TestFixture failed: " + result.Message, Category.Info);
-                            this.testListener.WriteLine(result.StackTrace, Category.Info);
+                            this.testListener.WriteLine("TestFixture failed: " + result.Message, Category.Warning);
+                            this.testListener.WriteLine(result.StackTrace, Category.Warning);
                         }
 					}
                 }
@@ -692,7 +653,7 @@ namespace NUnit.AddInRunner
 
 			public void UnhandledException(Exception exception)
 			{
-				this.testListener.WriteLine(exception.ToString(), Category.Info);
+				this.testListener.WriteLine(exception.ToString(), Category.Warning);
 			}
 
 			public void TestOutput(TestOutput testOutput)

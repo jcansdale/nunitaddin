@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>
 
-  <Product Name='NUnitAddin' Id='AB679633-3BD8-4b21-9043-BACB811A72C7'
+  <Product Name='NUnitAddin25' Id='B97011D0-9B88-11DD-AD8B-0800200C9A66'
     Language='1033' Codepage='1252' Version='1.0.0' Manufacturer='Mutant Design Ltd.'>
 
     <Package Id='????????-????-????-????-????????????' Keywords='Installer'
-      Description="NUnit plugin for TestDriven.NET"
+      Description="TestDriven.NET add-in for NUnit 2.5"
       Manufacturer='Mutant Design Ltd.'
       InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
       
@@ -14,10 +14,10 @@
     
   <Directory Id="TARGETDIR" Name="SourceDir">
 	  <Directory Id="ProgramFilesFolder" Name="PFiles">
-		  <Directory Id="INSTALLDIR" Name="TDNET" LongName="NUnitAddIn" />
+		  <Directory Id="INSTALLDIR" Name="TDNET25" LongName="NUnitAddIn 2.5" />
 	  </Directory>
    </Directory>
 	  
-   <FeatureRef Id="F__nunitaddin24" />
+   <FeatureRef Id="F__nunitaddin25" />
    </Product>
 </Wix>
