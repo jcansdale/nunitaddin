@@ -359,6 +359,7 @@ namespace NUnit.AddInRunner
 			TestPackage package = new TestPackage(assemblyFile);
 			TestSuiteBuilder builder = new TestSuiteBuilder();
 			TestSuite testAssembly = builder.Build(package);
+            TestExecutionContext.CurrentContext.TestPackage = new TestPackage("TestDriven");   // HACK
 
             int totalTestCases = testAssembly.CountTestCases(filter);
             if (totalTestCases == 0)
