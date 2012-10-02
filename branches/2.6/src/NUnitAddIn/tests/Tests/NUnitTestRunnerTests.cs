@@ -121,7 +121,6 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(0, testListener.SuccessCount);
             Assert.AreEqual(1, testListener.IgnoredCount);
             Assert.AreEqual(0, testListener.FailureCount);
-            Assert.AreEqual(result, TestRunState.Success);
         }
 
         [Test]
