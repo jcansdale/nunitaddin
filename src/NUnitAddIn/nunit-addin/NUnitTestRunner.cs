@@ -114,7 +114,9 @@ namespace NUnit.AddInRunner
 
         static NUnitInfo findNUnit(ITestListener testListener)
         {
-            string filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            //string filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;  <--- HERE
+
+            string filePath = toLocalPath(Assembly.GetExecutingAssembly());
             string baseDir = Path.GetDirectoryName(filePath);
 
             string coreFile = Path.Combine(baseDir, @"lib\nunit.core.dll");
