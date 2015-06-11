@@ -22,7 +22,7 @@
 							<Component Id="C__25.net_2.0.framework" DiskId="1" Guid="208927e0-9b88-11dd-ad8b-0800200c9a66">
 								<File Id="F__25.net_2.0.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.dll" />
 								<File Id="F__25.net_2.0.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.xml" />
-								<File Id="F__25.net_2.0.nunit_framework_dll_tdnet" Name="NUFDLL.TDN" LongName="nunit.framework.dll.tdnet" src="v1.1\NUnit25\nunit.framework.dll.tdnet" />
+								<File Id="F__25.net_2.0.nunit_framework_dll_tdnet" Name="NUFDLL.TDN" LongName="nunit.framework.dll.tdnet" src="v2.0\NUnit25\nunit.framework.dll.tdnet" />
 							</Component>
 						</Directory>
 							
@@ -39,9 +39,9 @@
 						</Directory>
 						
 						<Component Id="C__25.net_2.0.addin" DiskId="1" Guid="559f5c3c-9406-4819-8c0e-f54a9787e05c">
-							<File Id="F__25.net_2.0.nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.tdnet.dll" src="v1.1\NUnit25\nunit.tdnet.dll" />
-							<File Id="F__25.net_2.0.TestDriven_Framework_dll" Name="TDF.DLL" LongName="TestDriven.Framework.dll" src="v1.1\NUnit25\TestDriven.Framework.dll" />
-							  <File Id="F__25.net_2.0.addins_txt" Name="addins.txt" src="v1.1\NUnit25\addins.txt" />
+							<File Id="F__25.net_2.0.nunit_addin_dll" Name="NADDIN.DLL" LongName="nunit.tdnet.dll" src="v2.0\NUnit25\nunit.tdnet.dll" />
+							<File Id="F__25.net_2.0.TestDriven_Framework_dll" Name="TDF.DLL" LongName="TestDriven.Framework.dll" src="v2.0\NUnit25\TestDriven.Framework.dll" />
+							  <File Id="F__25.net_2.0.addins_txt" Name="addins.txt" src="v2.0\NUnit25\addins.txt" />
 							  <Registry Id="R__25.net_2.0.NUnit" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5" Type="string" Value="5" />
 							  <Registry Id="R__25.net_2.0.NUnit_AssemblyPath" Root="HKMU" Key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\NUnit 2.5"
 												Name="AssemblyPath" Type="string" Value="[D__25.nunitaddin_2_5]nunit.tdnet.dll" />
