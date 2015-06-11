@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C793FA34-0A35-4530-A8C4-ABF6E8B5922E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -33,11 +33,11 @@
   <ItemGroup>
     <Reference Include="nunit.core, Version=2.3.6006.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v1.1\nunit.core.dll</HintPath>
+      <HintPath>..\..\..\lib\v1.1\NUnit\nunit.core.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.3.6006.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v1.1\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\lib\v1.1\NUnit\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -59,14 +59,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\build\v1.1\NUnit24\nunit.core.dll">
-      <Link>nunit.core.dll</Link>
-    </Content>
-    <Content Include="..\..\..\build\v1.1\NUnit24\nunit.framework.dll">
-      <Link>nunit.framework.dll</Link>
-    </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
       <Link>TestDriven.Framework.dll</Link>
+    </Content>
+    <Content Include="..\..\..\lib\v1.1\NUnit\nunit.core.dll">
+      <Link>nunit.core.dll</Link>
+    </Content>
+    <Content Include="..\..\..\lib\v1.1\NUnit\nunit.framework.dll">
+      <Link>nunit.framework.dll</Link>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

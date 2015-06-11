@@ -1,48 +1,37 @@
 <Project DefaultTargets="Clean;Build;Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-	<PropertyGroup Condition="'$(NUnitDirectory)' == ''" >
-		<NUnitDirectory>lib\v1.1\NUnit</NUnitDirectory>
-	</PropertyGroup>
-	
 	<PropertyGroup>
+		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
 		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll_VS2005.csproj</NUnitAddinProjectFile>
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
-		<OutputPath_V1_1>$(OutputPath)v1.1\NUnit24\</OutputPath_V1_1>
-		<Properties_V1_1>OutputPath=$(OutputPath_V1_1);NoWarn=;TargetFrameworkVersion=v1.1;MSBuildExtensionsPath=$(MSBuildExtensionsPath);CustomAfterMicrosoftCommonTargets=$(MSBuildExtensionsPath)\CrossCompile.CSharp.v1.1.targets</Properties_V1_1>
+		<OutputPath_V2_0>$(OutputPath)v2.0\NUnit24\</OutputPath_V2_0>
+		<Properties_v2_0>OutputPath=$(OutputPath_v2_0);NoWarn=;TargetFrameworkVersion=v2.0</Properties_v2_0>
 		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
-		<PackageId>{AB679633-3BD8-4b21-9043-BACB811A72C7}</PackageId>
+		<PackageId>{B97011D0-9B88-11DD-AD8B-0800200C9A66}</PackageId>
 	</PropertyGroup>
 	
 	<ItemGroup>
 		<Wxs Include="install\nunitaddin.wxs" />
 		<Wxs Include="install\Package.wxs" />
 	</ItemGroup>
-	
-    <ItemGroup>
-        <NUnitFiles Include="$(NUnitDirectory)\*.*"/>
-    </ItemGroup>
-    		
+
 	<Target Name="Clean">
 		<RemoveDir Directories="$(OutputPath)" />
-		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Clean" Properties="$(Properties_V1_1)" />
+		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Clean" Properties="$(Properties_V2_0)" />
 	</Target>
 	
-	<Target Name="Build" DependsOnTargets="CopyNUnit;BuildNUnitAddin" />
+	<Target Name="Build" DependsOnTargets="BuildNUnitAddin" />
 
 	<Target Name="BuildNUnitAddin">
-		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Rebuild" Properties="$(Properties_V1_1)" />
-	</Target>
-
-	<Target Name="CopyNUnit">
-        <Copy SourceFiles="@(NUnitFiles)" DestinationFolder="$(OutputPath_V1_1)" />
+		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Rebuild" Properties="$(Properties_V2_0)" />
 	</Target>
 	
 	<Target Name="Package">
 		<Exec Command='candle.exe "@(Wxs)" -out "$(OutputPath)%(Wxs.Filename).wixobj"' />	
 		<Exec Command="light.exe @(Wxs->'$(OutputPath)%(Filename).wixobj', ' ') -b $(OutputPath) -out $(Msi)" />
 	</Target>
-
+	
 	<Target Name="Uninstall" Condition="Exists('$(ProgramFiles)\NUnitAddIn\NUnit\nunit.addin.dll')">
 		<Exec Command="start /wait msiexec /q /x $(PackageId) /l* uninstall.log" />
 	</Target>
@@ -52,4 +41,3 @@
 	</Target>
 	
 </Project>
-
