@@ -1,0 +1,43 @@
+<Project DefaultTargets="Clean;Build;Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
+		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll_VS2005.csproj</NUnitAddinProjectFile>
+		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
+		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
+		<OutputPath_V2_0>$(OutputPath)v2.0\NUnit26\</OutputPath_V2_0>
+		<Properties_v2_0>OutputPath=$(OutputPath_v2_0);NoWarn=;TargetFrameworkVersion=v2.0</Properties_v2_0>
+		<Msi>$(OutputPath)NUnitAddin.msi</Msi>
+		<PackageId>{B97011D0-9B88-11DD-AD8B-0800200C9A66}</PackageId>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<Wxs Include="install\nunitaddin.wxs" />
+		<Wxs Include="install\Package.wxs" />
+	</ItemGroup>
+
+	<Target Name="Clean">
+		<RemoveDir Directories="$(OutputPath)" />
+		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Clean" Properties="$(Properties_V2_0)" />
+	</Target>
+	
+	<Target Name="Build" DependsOnTargets="BuildNUnitAddin" />
+
+	<Target Name="BuildNUnitAddin">
+		<MSBuild Projects="$(NUnitAddinProjectFile)" Targets="Rebuild" Properties="$(Properties_V2_0)" />
+	</Target>
+	
+	<Target Name="Package">
+		<Exec Command='candle.exe "@(Wxs)" -out "$(OutputPath)%(Wxs.Filename).wixobj"' />	
+		<Exec Command="light.exe @(Wxs->'$(OutputPath)%(Filename).wixobj', ' ') -b $(OutputPath) -out $(Msi)" />
+	</Target>
+	
+	<Target Name="Uninstall" Condition="Exists('$(ProgramFiles)\NUnitAddIn\NUnit\nunit.addin.dll')">
+		<Exec Command="start /wait msiexec /q /x $(PackageId) /l* uninstall.log" />
+	</Target>
+	
+	<Target Name="Install" DependsOnTargets="Uninstall">
+		<Exec Command="start /wait msiexec /q /i $(Msi) /l* install.log" />
+	</Target>
+	
+</Project>
