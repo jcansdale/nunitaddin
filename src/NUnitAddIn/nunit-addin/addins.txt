@@ -2,14 +2,22 @@
 NUnit Extensions
 ================
 
-Place your NUnit extension assemblies in a directory
-called 'addins' next to this file. If the extension
-references 'nunit.core' make sure that it's compiled
-against the same version of 'nunit.core' that's in
-the parent directory.
+To install NUnit extensions, create a new 'addins' directory here:
+\Program Files (x86)\TestDriven.NET 3\NUnit\2.5\addins
 
-For an example extension see the NUnit source distribution:
+To ensure that your extensions are always available, the following
+directory can be xcopy deployed along with your solution:
+\Program Files (x86)\TestDriven.NET 3\NUnit\2.5
+
+You can read more about xcopy deployable test runners here:
+http://www.paraesthesia.com/archive/2010/05/03/how-to-run-a-different-nunit-version-with-testdriven.net.aspx
+http://weblogs.asp.net/nunitaddin/archive/2009/11/05/testdriven-net-2-24-xcopy-deployable-test-runners.aspx
+
+Example extensions can be found in the NUnit source distribution:
 src\samples\Extensibility\Core\CoreExtensibility.sln
 
-Please direct questions to the 'nunit-developer' list:
+For more information you can contact:
+Jamie Cansdale <jamie.cansdale@testdriven.net>
+
+or the 'nunit-developer' mailing list:
 http://sourceforge.net/mail?group_id=10749

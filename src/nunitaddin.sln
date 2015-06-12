@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C# Express 2005
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.addin.dll_VS2005", "NUnitAddIn\nunit-addin\nunit.addin.dll_VS2005.csproj", "{8FEEED1C-AA39-44BD-93C5-2E2505492D6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.addin.tests_VS2005", "NUnitAddIn\tests\nunit.addin.tests_VS2005.csproj", "{C793FA34-0A35-4530-A8C4-ABF6E8B5922E}"
