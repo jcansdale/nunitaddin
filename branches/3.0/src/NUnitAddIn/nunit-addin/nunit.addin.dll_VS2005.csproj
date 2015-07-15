@@ -50,61 +50,36 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.core, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+    <Reference Include="nunit.framework, Version=3.0.5610.33196, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.core.interfaces, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.util, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
+      <HintPath>..\..\..\artifacts\NUnit\bin\net-2.0\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2">
       <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibAssemblyResolver.cs" />
+    <Compile Include="AssemblyResolver.cs" />
     <Compile Include="NUnitInfo.cs" />
     <Compile Include="TestDrivenOptions.cs" />
     <Compile Include="NUnitTestRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="..\..\..\install\nunitaddin.wxs">
-      <Link>nunitaddin.wxs</Link>
-    </None>
     <None Include="..\..\..\install\Package.wxs">
       <Link>Package.wxs</Link>
     </None>
     <None Include="nunit.framework.dll.tdnet">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll">
-      <Link>nunit.core.dll</Link>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.interfaces.dll">
-      <Link>nunit.core.interfaces.dll</Link>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.util.dll">
-      <Link>nunit.util.dll</Link>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\license.txt">
-      <Link>license.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
       <Link>TestDriven.Framework.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="addins.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

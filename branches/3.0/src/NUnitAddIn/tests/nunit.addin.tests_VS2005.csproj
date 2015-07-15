@@ -50,21 +50,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.core, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=3.0.5610.33196, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.core.interfaces, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.util, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
+      <HintPath>..\nunit-addin\bin\Debug\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -75,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Examples\ExplicitTests.cs" />
     <Compile Include="Examples\NUnitTestRunnerCategoriesExamples.cs" />
     <Compile Include="Examples\NUnitTestRunnerExamples.cs" />
     <Compile Include="Tests\LibAssemblyResolverTests.cs" />
@@ -89,26 +78,6 @@
       <Name>nunit.addin.dll_VS2005</Name>
       <Private>True</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.dll">
-      <Link>nunit.framework.dll</Link>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll">
-      <Link>lib\nunit.core.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.interfaces.dll">
-      <Link>lib\nunit.core.interfaces.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.util.dll">
-      <Link>lib\nunit.util.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
-      <Link>TestDriven.Framework.dll</Link>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

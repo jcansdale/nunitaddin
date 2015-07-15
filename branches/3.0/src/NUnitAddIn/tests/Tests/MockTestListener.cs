@@ -1,5 +1,6 @@
 ﻿namespace NUnit.AddInRunner.Tests
 {
+    using System.IO;
     using TestDriven.Framework;
     using System.Collections;
 
@@ -12,6 +13,7 @@
         public int FailureCount;
         public int IgnoredCount;
         ArrayList testResults = new ArrayList();
+        StringWriter outputWriter = new StringWriter();
 
         public TestResult[] TestResults
         {
@@ -44,6 +46,15 @@
         public void WriteLine(string text, Category category)
         {
             this.WriteLineCount++;
+            this.outputWriter.WriteLine(text);
+        }
+
+        public string Output
+        {
+            get
+            {
+                return this.outputWriter.ToString();
+            }
         }
     }
 }

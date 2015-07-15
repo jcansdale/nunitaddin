@@ -5,13 +5,13 @@
     using System.Reflection;
     using System.Globalization;
 
-    public class LibAssemblyResolver : IDisposable
+    public class AssemblyResolver : IDisposable
     {
         readonly string dir;
 
-        public LibAssemblyResolver(string libDir)
+        public AssemblyResolver(string baseDir)
         {
-            this.dir = libDir;
+            this.dir = baseDir;
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolve);
         }
 
