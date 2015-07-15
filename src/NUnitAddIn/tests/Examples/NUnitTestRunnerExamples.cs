@@ -5,6 +5,22 @@ namespace NUnit.AddInRunner.Examples
     using System.Collections;
     using System;
 
+    public class ConsoleTests
+    {
+        [Test]
+        public void HelloWorld()
+        {
+            Console.WriteLine("Hello, World!");
+        }
+
+        [Test]
+        public void HelloWorld2()
+        {
+            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Hello, World!");
+        }
+    }
+
     public class AssumeTests
     {
         [Test]
@@ -209,7 +225,8 @@ namespace NUnit.AddInRunner.Examples
     [TestFixture]
     public class TestFixtureSetUpFail
     {
-        [TestFixtureSetUp]
+        // [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             throw new Exception("Boom!");
