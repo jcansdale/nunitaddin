@@ -50,15 +50,15 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.0.5610.33196, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.framework">
       <HintPath>..\nunit-addin\bin\Debug\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="TestDriven.Framework">
+      <HintPath>..\nunit-addin\bin\Debug\TestDriven.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

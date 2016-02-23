@@ -67,6 +67,25 @@ namespace NUnit.AddInRunner.Tests
         }
 
         [Test]
+        public void IncludeCategories_Type_Multiple()
+        {
+            using (CategoriesContext categoriesContext = new CategoriesContext())
+            {
+                categoriesContext.IncludeCategories = new string[] { "A", "B" };
+                NUnitTestRunner testRunner = new NUnitTestRunner();
+                MockTestListener testListener = new MockTestListener();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Type type = typeof(CategoriesTests);
+                TestRunState result = testRunner.RunMember(testListener, assembly, type);
+                Assert.AreEqual(2, testListener.TestFinishedCount, "expect tests");
+                Assert.AreEqual(1, testListener.SuccessCount, "Expect tests to succeed");
+                Assert.AreEqual(1, testListener.FailureCount, "Expect tests to fail");
+                Assert.AreEqual(0, testListener.IgnoredCount, "Expect tests ignored");
+                Assert.AreEqual(result, TestRunState.Failure, "Check that tests were executed");
+            }
+        }
+
+        [Test]
         public void ExcludeCategories_Type()
         {
             using (CategoriesContext categoriesContext = new CategoriesContext())
@@ -82,6 +101,25 @@ namespace NUnit.AddInRunner.Tests
                 Assert.AreEqual(1, testListener.FailureCount, "Expect tests to fail");
                 Assert.AreEqual(0, testListener.IgnoredCount, "Expect tests ignored");
                 Assert.AreEqual(result, TestRunState.Failure, "Check that tests were executed");
+            }
+        }
+
+        [Test]
+        public void ExcludeCategories_Type_Multiple()
+        {
+            using (CategoriesContext categoriesContext = new CategoriesContext())
+            {
+                categoriesContext.ExcludeCategories = new string[] { "A", "B" };
+                NUnitTestRunner testRunner = new NUnitTestRunner();
+                MockTestListener testListener = new MockTestListener();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Type type = typeof(CategoriesTests);
+                TestRunState result = testRunner.RunMember(testListener, assembly, type);
+                Assert.AreEqual(1, testListener.TestFinishedCount, "expect tests");
+                Assert.AreEqual(1, testListener.SuccessCount, "Expect tests to succeed");
+                Assert.AreEqual(0, testListener.FailureCount, "Expect tests to fail");
+                Assert.AreEqual(0, testListener.IgnoredCount, "Expect tests ignored");
+                Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
             }
         }
 

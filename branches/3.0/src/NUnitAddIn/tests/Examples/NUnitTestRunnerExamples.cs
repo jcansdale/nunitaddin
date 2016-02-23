@@ -221,13 +221,29 @@ namespace NUnit.AddInRunner.Examples
         }
     }
 
-    /// <test pass="0" fail="0" />
+    /// <test pass="0" fail="1" />
     [TestFixture]
     public class TestFixtureSetUpFail
     {
         // [TestFixtureSetUp]
         [OneTimeSetUp]
         public void TestFixtureSetUp()
+        {
+            throw new Exception("Boom!");
+        }
+
+        [Test]
+        public void Test1()
+        {
+        }
+    }
+
+    /// <test pass="0" fail="1" />
+    [TestFixture]
+    public class TestFixtureTearDownFail
+    {
+        [OneTimeTearDown]
+        public void TestFixtureTearDown()
         {
             throw new Exception("Boom!");
         }

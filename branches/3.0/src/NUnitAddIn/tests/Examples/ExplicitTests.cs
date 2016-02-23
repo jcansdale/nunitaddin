@@ -13,7 +13,8 @@
             }
         }
 
-        [TestFixture, Explicit]
+        [Explicit]
+        [TestFixture]
         public class ExplicitFixture
         {
             [Test]
