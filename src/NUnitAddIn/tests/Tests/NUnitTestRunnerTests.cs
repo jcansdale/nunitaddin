@@ -91,8 +91,9 @@ namespace NUnit.AddInRunner.Tests
 
             TestRunState result = testRunner.RunNamespace(testListener, assembly, ns);
 
-            Assert.That(testListener.TestFinishedCount, Is.EqualTo(0), "Expect no tests to finnish");
-            Assert.That(result, Is.EqualTo(TestRunState.NoTests), "Check that no tests were executed");
+            Assert.That(testListener.IgnoredCount, Is.EqualTo(2), "Expect explicit tests to be ignored");
+            Assert.That(testListener.TestFinishedCount, Is.EqualTo(2), "Expect 2 ignored tests");
+            Assert.That(result, Is.EqualTo(TestRunState.Success), "Expect success");
         }
 
         [Test]
@@ -105,8 +106,11 @@ namespace NUnit.AddInRunner.Tests
 
             TestRunState result = testRunner.RunMember(testListener, assembly, member);
 
-            Assert.That(testListener.TestFinishedCount, Is.EqualTo(0), "Expect no tests to finnish");
-            Assert.That(result, Is.EqualTo(TestRunState.NoTests), "Check that no tests were executed");
+            Assert.That(testListener.SuccessCount, Is.EqualTo(0), "Expect no tests passed");
+            Assert.That(testListener.FailureCount, Is.EqualTo(0), "Expect no tests failed");
+            Assert.That(testListener.IgnoredCount, Is.EqualTo(1), "Expect 1 tests ignored");
+            Assert.That(testListener.TestFinishedCount, Is.EqualTo(1), "Expect 1 tests to finnish");
+            Assert.That(result, Is.EqualTo(TestRunState.Success), "Check that was success");
         }
 
         [Test]
@@ -303,7 +307,25 @@ namespace NUnit.AddInRunner.Tests
         }
 
         [Test]
-        public void RunNamespace()
+        public void RunMember_TestFixtureTearDownFail()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type fixtureType = typeof(Examples.TestFixtureTearDownFail);
+
+            TestRunState result = testRunner.RunMember(testListener, assembly, fixtureType);
+
+            Assert.AreEqual(1, testListener.TestFinishedCount, "expect 1 tests to finish");
+            Assert.AreEqual(0, testListener.FailureCount, "Expect 0 tests to fail");
+            Assert.AreEqual(1, testListener.SuccessCount, "Expect 1 test to pass");
+            var testResult = testListener.TestResults[0];
+            Assert.That(testResult.TotalTests, Is.EqualTo(1), "Check TotalTests reported in TestResut");
+            Assert.AreEqual(TestRunState.Failure, result, "TearDown exception causes Failure");
+        }
+
+        [Test]
+        public void RunNamespace() 
         {
             NUnitTestRunner testRunner = new NUnitTestRunner();
             MockTestListener testListener = new MockTestListener();

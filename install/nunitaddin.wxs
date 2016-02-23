@@ -19,8 +19,8 @@
           </Component>
           <Directory Id="D__30.net_2.0.framework" Name="fwk" LongName="framework">
             <Component Id="C__30.net_2.0.framework" DiskId="1" Guid="9468b342-172c-42ec-9ead-c6797b125ae8">
-              <File Id="F__30.net_2.0.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="..\..\nunitaddin_3.0\artifacts\NUnit\bin\net-2.0\nunit.framework.dll" />
-              <File Id="F__30.net_2.0.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="..\..\nunitaddin_3.0\artifacts\NUnit\bin\net-2.0\nunit.framework.xml" />
+              <File Id="F__30.net_2.0.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="..\..\nunitaddin_3.0\artifacts\NUnit\lib\net20\nunit.framework.dll" />
+              <File Id="F__30.net_2.0.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="..\..\nunitaddin_3.0\artifacts\NUnit\lib\net20\nunit.framework.xml" />
               <File Id="F__30.net_2.0.nunit_framework_dll_tdnet" Name="NUFDLL.TDN" LongName="nunit.framework.dll.tdnet" src="v2.0\NUnit30\nunit.framework.dll.tdnet" />
             </Component>
           </Directory>

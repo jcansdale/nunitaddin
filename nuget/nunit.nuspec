@@ -2,38 +2,20 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NUnitTDNet</id>
-    <title>NUnit Version 3 framework for use with TestDriven.Net</title>
+    <title>NUnit 3.0.1 framework for use with TestDriven.Net</title>
     <version>$version$</version>
-    <authors>Jamie Cansdale</authors>
+    <authors>Charlie Poole, Jamie Cansdale</authors>
     <owners>Jamie Cansdale</owners>
     <licenseUrl>http://nunit.org/nuget/nunit3-license.txt</licenseUrl>
     <projectUrl>http://testdriven.net</projectUrl>
     <iconUrl>http://nunit.org/nuget/nunitv3_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>NUnit 3.0 framework assembly and test runner adaptor for TestDriven.Net</summary>
-    <description>NUnit features a fluent assert syntax, parameterized, generic and theory tests
-    and is user-extensible. A number of runners, both from the NUnit project and by third parties,
-    are able to execute NUnit tests.&#10;&#13;This package includes the NUnit 3.0 framework
-    assembly, which is referenced by your tests. You will need to install version 3.0 of the
-    nunit-console program or a third-party runner that supports NUnit 3.0 in order to execute
-    tests. Runners intended for use with NUnit 2.x will not run 3.0 tests correctly.&#10;&#13;
-    This is an beta release, but is ready for production use for people with prior NUnit
-    experience.</description>
-    <releaseNotes>This package includes the NUnit 3.0 framework assembly, which is referenced
-    by your tests. You will need to install version 3.0 of the nunit-console program or a
-    third-party runner that supports NUnit 3.0 in order to execute tests. Runners intended
-    for use with NUnit 2.x will not run 3.0 tests correctly.&#10;&#13;This is an beta release,
-    but is ready for production use for people with prior NUnit experience.</releaseNotes>
+    <summary>NUnit 3.0.1 framework and test runner adapter for TestDriven.Net</summary>
+    <description>This package includes the NUnit 3.0.1 framework assembly, which is referenced by your tests. It also includes a test runner adapter that is used by TestDriven.Net when executing tests. The adapter is named 'nunit.framework.dll.tdnet' and must live in the same directory as the referenced 'nunit.framework.dll'.</description>
+    <releaseNotes>Update for NUnit 3.0.1</releaseNotes>
     <language>en-US</language>
-    <tags>nunit test testing tdd framework fluent assert theory plugin addin</tags>
-    <copyright>Copyright (c) 2015 Jamie Cansdale</copyright>
-    <dependencies>
-      <group targetFramework="net40">
-        <dependency id="Microsoft.Bcl.Async" version="1.0.165" />
-      </group>
-      <!-- This is required otherwise 4.5 will pull in the 4.0 dependencies -->
-      <group targetFramework="net45" />
-    </dependencies>
+    <tags>nunit testdriven tdnet test testing tdd framework addin</tags>
+    <copyright>Copyright (c) 2015 Charlie Poole, Jamie Cansdale</copyright>
     <references>
       <reference file="nunit.framework.dll" />
     </references>
@@ -43,18 +25,18 @@
     <file src="artifacts\NUnit\NOTICES.txt" />
     <file src="artifacts\NUnit\CHANGES.txt" />
     
-    <file src="artifacts\NUnit\bin\net-2.0\nunit.framework.dll" target="lib\net20" />
-    <file src="artifacts\NUnit\bin\net-2.0\nunit.framework.xml" target="lib\net20" />
+    <file src="artifacts\NUnit\lib\net20\nunit.framework.dll" target="lib\net20" />
+    <file src="artifacts\NUnit\lib\net20\nunit.framework.xml" target="lib\net20" />
     <file src="build\v2.0\NUnit30\nunit.framework.dll.tdnet" target="lib\net20" />
     <file src="build\v2.0\NUnit30\nunit.tdnet.dll" target="lib\net20" />
 
-    <file src="artifacts\NUnit\bin\net-4.0\nunit.framework.dll" target="lib\net40" />
-    <file src="artifacts\NUnit\bin\net-4.0\nunit.framework.xml" target="lib\net40" />
+    <file src="artifacts\NUnit\lib\net40\nunit.framework.dll" target="lib\net40" />
+    <file src="artifacts\NUnit\lib\net40\nunit.framework.xml" target="lib\net40" />
     <file src="build\v2.0\NUnit30\nunit.framework.dll.tdnet" target="lib\net40" />
     <file src="build\v2.0\NUnit30\nunit.tdnet.dll" target="lib\net40" />
 
-    <file src="artifacts\NUnit\bin\net-4.5\nunit.framework.dll" target="lib\net45" />
-    <file src="artifacts\NUnit\bin\net-4.5\nunit.framework.xml" target="lib\net45" />
+    <file src="artifacts\NUnit\lib\net45\nunit.framework.dll" target="lib\net45" />
+    <file src="artifacts\NUnit\lib\net45\nunit.framework.xml" target="lib\net45" />
     <file src="build\v2.0\NUnit30\nunit.framework.dll.tdnet" target="lib\net45" />
     <file src="build\v2.0\NUnit30\nunit.tdnet.dll" target="lib\net45" />
   </files>

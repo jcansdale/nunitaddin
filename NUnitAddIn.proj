@@ -7,7 +7,8 @@
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
 		<OutputPath_V2_0>$(OutputPath)v2.0\NUnit30\</OutputPath_V2_0>
 		<Properties_v2_0>OutputPath=$(OutputPath_v2_0);NoWarn=;TargetFrameworkVersion=v2.0</Properties_v2_0>
-    <NugetVersion>3.0</NugetVersion>
+    <!--<NugetVersion>3.0.0-beta-3</NugetVersion>-->
+    <NugetVersion>3.0.1.0</NugetVersion>
     <!--
     <Msi>$(OutputPath)NUnitAddin.msi</Msi>
 		<PackageId>{B97011D0-9B88-11DD-AD8B-0800200C9A66}</PackageId>
