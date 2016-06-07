@@ -4,3 +4,4 @@
 
 set path=%path%;%SystemRoot%\Microsoft.NET\Framework\v3.5
 set path=%path%;%cd%\tools\WiX
+
