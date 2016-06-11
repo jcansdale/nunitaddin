@@ -26,6 +26,20 @@ namespace NUnit.AddInRunner.Tests
             Assert.AreEqual(result, TestRunState.Success, "Check that tests were executed");
         }
 
+        [Test]
+        public void RunMember_TestResult()
+        {
+            NUnitTestRunner testRunner = new NUnitTestRunner();
+            MockTestListener testListener = new MockTestListener();
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            MemberInfo member = new ThreadStart(new Examples.MockTestFixture().Test1).Method;
+            TestRunState result = testRunner.RunMember(testListener, assembly, member);
+            Assert.AreEqual(1, testListener.TestFinishedCount, "Expect 1 test to finnish");
+            TestResult testResult = testListener.TestResults[0];
+            string testName = member.DeclaringType.FullName + "." + member.Name;
+            Assert.AreEqual(testName, testResult.Name);
+        }
+
         // NOTE: Fix assert message formatting in NUnit 2.4.
         [Test]
         public void RunMember_AssertMessageFormatting()

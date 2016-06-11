@@ -10,9 +10,14 @@
  
 	<!-- Not supported in .NET 1.0 -->
   <ErrorReport Condition=" '$(TargetFrameworkVersion)' == 'v1.0' "></ErrorReport>
+
+<!--   $(SystemRoot)\Microsoft.NET\Framework\v1.0.3705 -->
+  <TargetFrameworkDirectory Condition=" '$(TargetFrameworkVersion)' == 'v1.0'">
+   $(SystemRoot)\Microsoft.NET\Framework\v1.1.4322
+  </TargetFrameworkDirectory>
   
 	<!-- Use the 1.0 compiler -->
-  <CscToolPath Condition=" '$(TargetFrameworkVersion)' == 'v1.0' ">$(SystemRoot)\Microsoft.NET\Framework\v1.0.3705</CscToolPath>
+  <CscToolPath Condition=" '$(TargetFrameworkVersion)' == 'v1.0' ">$(TargetFrameworkDirectory)</CscToolPath>
   
   <AssemblySearchPaths Condition=" '$(TargetFrameworkVersion)' == 'v1.0' ">
    {CandidateAssemblyFiles};
@@ -24,14 +29,10 @@
    {GAC}
   </AssemblySearchPaths>
 
-  <TargetFrameworkDirectory Condition=" '$(TargetFrameworkVersion)' == 'v1.0'">
-   $(SystemRoot)\Microsoft.NET\Framework\v1.0.3705
-  </TargetFrameworkDirectory>
-
  </PropertyGroup>
 
  <ItemGroup Condition=" '$(TargetFrameworkVersion)' == 'v1.0'">
-  <TargetFrameworkDirectoryItem Include="$(SystemRoot)\Microsoft.NET\Framework\v1.0.3705">
+  <TargetFrameworkDirectoryItem Include="$(TargetFrameworkDirectory)">
    <InProject>false</InProject>
   </TargetFrameworkDirectoryItem>
  </ItemGroup>

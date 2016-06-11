@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,6 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NUnit.AddInRunner</RootNamespace>
     <AssemblyName>nunit.addin</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,7 +39,7 @@
     </Reference>
     <Reference Include="nunit.util, Version=2.4.0.2, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\build\v1.0\NUnit24\nunit.util.dll</HintPath>
+      <HintPath>..\..\..\lib\v1.1\NUnit\nunit.util.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -42,8 +47,8 @@
     <Reference Include="TestDriven.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=50ecb853f8c6b8d2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\nunit20_Release-2-4-Current\src\license.rtf">
-      <Link>license.rtf</Link>
+    <None Include="..\..\..\lib\v1.1\NUnit\license.txt">
+      <Link>license.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="TestDrivenOptions.cs" />
@@ -55,16 +60,19 @@
     <None Include="..\..\..\install\Package.wxs">
       <Link>Package.wxs</Link>
     </None>
+    <None Include="nunit.framework.dll.tdnet">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="StackTraceFilter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\build\v1.0\NUnit24\nunit.core.dll">
+    <Content Include="..\..\..\lib\v1.1\NUnit\nunit.core.dll">
       <Link>nunit.core.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v1.0\NUnit24\nunit.core.interfaces.dll">
+    <Content Include="..\..\..\lib\v1.1\NUnit\nunit.core.interfaces.dll">
       <Link>nunit.core.interfaces.dll</Link>
     </Content>
-    <Content Include="..\..\..\build\v1.0\NUnit24\nunit.util.dll">
+    <Content Include="..\..\..\lib\v1.1\NUnit\nunit.util.dll">
       <Link>nunit.util.dll</Link>
     </Content>
     <Content Include="..\..\..\lib\v1.0\TestDriven.Framework.dll">
