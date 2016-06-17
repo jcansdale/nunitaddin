@@ -2,12 +2,11 @@
 
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
-		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll_VS2005.csproj</NUnitAddinProjectFile>
+		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll.csproj</NUnitAddinProjectFile>
 		<MSBuildExtensionsPath>$(MSBuildProjectDirectory)\tools\MSBuildExtensions</MSBuildExtensionsPath>
 		<OutputPath>$(MSBuildProjectDirectory)\build\</OutputPath>
 		<OutputPath_V2_0>$(OutputPath)v2.0\NUnit30\</OutputPath_V2_0>
 		<Properties_v2_0>OutputPath=$(OutputPath_v2_0);NoWarn=;TargetFrameworkVersion=v2.0</Properties_v2_0>
-    <!--<NugetVersion>3.0.0-beta-3</NugetVersion>-->
     <NugetVersion>3.0.1.0</NugetVersion>
     <!--
     <Msi>$(OutputPath)NUnitAddin.msi</Msi>
