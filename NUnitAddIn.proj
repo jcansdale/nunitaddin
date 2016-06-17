@@ -1,5 +1,4 @@
 <Project DefaultTargets="Clean;Build;Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
 	<PropertyGroup>
 		<NUnitAddinSolutionFile>src\nunitaddin.sln</NUnitAddinSolutionFile>
 		<NUnitAddinProjectFile>src\NUnitAddIn\nunit-addin\nunit.addin.dll.csproj</NUnitAddinProjectFile>
@@ -8,14 +7,9 @@
 		<OutputPath_V2_0>$(OutputPath)v2.0\NUnit30\</OutputPath_V2_0>
 		<Properties_v2_0>OutputPath=$(OutputPath_v2_0);NoWarn=;TargetFrameworkVersion=v2.0</Properties_v2_0>
     <NugetVersion>3.0.1.0</NugetVersion>
-    <!--
-    <Msi>$(OutputPath)NUnitAddin.msi</Msi>
-		<PackageId>{B97011D0-9B88-11DD-AD8B-0800200C9A66}</PackageId>
-		-->
 	</PropertyGroup>  
 	
 	<ItemGroup>
-		<Wxs Include="install\nunitaddin.wxs" />
 		<Wxs Include="install\Package.wxs" />
 	</ItemGroup>
 
@@ -38,20 +32,6 @@
   </Target>
 
   <Target Name="PackageWix">
-		<Exec Command='candle.exe "@(Wxs)" -out "$(OutputPath)%(Wxs.Filename).wixobj"' />	
-		<!--
-		<Exec Command="light.exe @(Wxs->'$(OutputPath)%(Filename).wixobj', ' ') -b $(OutputPath) -out $(Msi)" />
-		-->
+		<Exec Command='candle.exe "@(Wxs)" -out "$(OutputPath)%(Wxs.Filename).wixobj"' />
 	</Target>
-
-<!--			
-	<Target Name="Uninstall" Condition="Exists('$(ProgramFiles)\NUnitAddIn\NUnit\nunit.addin.dll')">
-		<Exec Command="start /wait msiexec /q /x $(PackageId) /l* uninstall.log" />
-	</Target>
-	
-	<Target Name="Install" DependsOnTargets="Uninstall">
-		<Exec Command="start /wait msiexec /q /i $(Msi) /l* install.log" />
-	</Target>
--->	
-	
 </Project>
