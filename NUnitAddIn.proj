@@ -12,8 +12,8 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-<!--		<Wxs Include="install\nunitaddin.wxs" /> -->
-		<Wxs Include="install\Package.wxs" />
+		<Wxs Include="install\nunitaddin.wxs" />
+<!-- <Wxs Include="install\Package.wxs" /> -->
 	</ItemGroup>
 
 	<Target Name="Clean">
