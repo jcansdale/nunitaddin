@@ -10,7 +10,7 @@
 	</PropertyGroup>  
 	
 	<ItemGroup>
-		<Wxs Include="install\Package.wxs" />
+		<Wxs Include="install\nunitaddin.wxs" />
 	</ItemGroup>
 
 	<Target Name="Clean">
