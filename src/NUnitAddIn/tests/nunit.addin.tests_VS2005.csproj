@@ -91,18 +91,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.dll">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\bin\net-2.0\framework\nunit.framework.dll">
       <Link>nunit.framework.dll</Link>
     </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.core.dll">
       <Link>lib\nunit.core.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.interfaces.dll">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.core.interfaces.dll">
       <Link>lib\nunit.core.interfaces.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.util.dll">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.util.dll">
       <Link>lib\nunit.util.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

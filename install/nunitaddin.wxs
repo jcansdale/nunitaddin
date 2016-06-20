@@ -15,26 +15,26 @@
 			<Directory Id="D__26.nunitaddin" Name="NUnit">
 				<Directory Id="D__26.nunitaddin_2_6" Name="2.6">		
 					<Component Id="C__26.readme" DiskId="1" Guid="2625adb4-4ab2-4aae-b048-e325ba09a900">
-						<File Id="F__26.nunit_license_txt" Name="license.txt" src="..\..\nunitaddin_2.6\artifacts\NUnit\license.txt" />
+						<File Id="F__26.nunit_license_txt" Name="license.txt" src="..\artifacts\NUnit_2.6\license.txt" />
 					</Component>
 
 						<Directory Id="D__26.net_2.0.framework" Name="fwk" LongName="framework">
 							<Component Id="C__26.net_2.0.framework" DiskId="1" Guid="3e011754-aa37-4cca-befd-f8bd7390f569">
-								<File Id="F__26.net_2.0.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.dll" />
-								<File Id="F__26.net_2.0.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\framework\nunit.framework.xml" />
+								<File Id="F__26.net_2.0.nunit_framework_dll" Name="NUF.DLL" LongName="nunit.framework.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\framework\nunit.framework.dll" />
+								<File Id="F__26.net_2.0.nunit_framework_xml" Name="NUF.XML" LongName="nunit.framework.xml" src="..\artifacts\NUnit_2.6\bin\net-2.0\framework\nunit.framework.xml" />
 								<File Id="F__26.net_2.0.nunit_framework_dll_tdnet" Name="NUFDLL.TDN" LongName="nunit.framework.dll.tdnet" src="v2.0\NUnit26\nunit.framework.dll.tdnet" />
 							</Component>
 						</Directory>
 							
 						<Directory Id="D__26.net_2.0.lib" Name="lib">
 							<Component Id="C__26.net_2.0.lib" DiskId="1" Guid="9b0255e2-1292-44ed-9b8e-0139660df42a">
-								<File Id="F__26.net_2.0.nunit_core_dll" Name="NUC.DLL" LongName="nunit.core.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll" />
-								<File Id="F__26.net_2.0.nunit_core_interfaces_dll" Name="NUCI.DLL" LongName="nunit.core.interfaces.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\lib\nunit.core.interfaces.dll" />
-								<File Id="F__26.net_2.0.nunit_uiexception_dll" Name="NUUIE.DLL" LongName="nunit.uiexception.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\lib\nunit.uiexception.dll" />
-								<File Id="F__26.net_2.0.nunit_uikit_dll" Name="NUUIK.DLL" LongName="nunit.uikit.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\lib\nunit.uikit.dll" />
-								<File Id="F__26.net_2.0.nunit_util_dll" Name="NUU.DLL" LongName="nunit.util.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\lib\nunit.util.dll" />
-								<File Id="F__26.net_2.0.nunit_console_runner_dll" Name="NUCR.DLL" LongName="nunit-console-runner.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\lib\nunit-console-runner.dll" />
-								<File Id="F__26.net_2.0.nunit_gui_runner_dll" Name="NUGR.DLL" LongName="nunit-gui-runner.dll" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\lib\nunit-gui-runner.dll" />
+								<File Id="F__26.net_2.0.nunit_core_dll" Name="NUC.DLL" LongName="nunit.core.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.core.dll" />
+								<File Id="F__26.net_2.0.nunit_core_interfaces_dll" Name="NUCI.DLL" LongName="nunit.core.interfaces.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.core.interfaces.dll" />
+								<File Id="F__26.net_2.0.nunit_uiexception_dll" Name="NUUIE.DLL" LongName="nunit.uiexception.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.uiexception.dll" />
+								<File Id="F__26.net_2.0.nunit_uikit_dll" Name="NUUIK.DLL" LongName="nunit.uikit.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.uikit.dll" />
+								<File Id="F__26.net_2.0.nunit_util_dll" Name="NUU.DLL" LongName="nunit.util.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.util.dll" />
+								<File Id="F__26.net_2.0.nunit_console_runner_dll" Name="NUCR.DLL" LongName="nunit-console-runner.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit-console-runner.dll" />
+								<File Id="F__26.net_2.0.nunit_gui_runner_dll" Name="NUGR.DLL" LongName="nunit-gui-runner.dll" src="..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit-gui-runner.dll" />
 							</Component>
 						</Directory>
 						
@@ -64,21 +64,21 @@
 						</Component>
 						
 						<Component Id="C__26.net_2.0.console" DiskId="1" Guid="4749baf0-88ac-4912-8ab5-5c866d6c63d6">
-							<File Id="F__26.net_2.0.nunit_console_exe" Name="NUC.EXE" LongName="nunit-console.exe" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-console.exe" />
-              <File Id="F__26.net_2.0.nunit_console_exe_config" Name="NUC.CFG" LongName="nunit-console.exe.config" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-console.exe.config" />
-              <File Id="F__26.net_2.0.nunit_console_x86_exe" Name="NUCX86.EXE" LongName="nunit-console-x86.exe" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-console-x86.exe" />
-              <File Id="F__26.net_2.0.nunit_console_x86_exe_config" Name="NUCX86EX.CFG" LongName="nunit-console-x86.exe.config" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-console-x86.exe.config" />
+							<File Id="F__26.net_2.0.nunit_console_exe" Name="NUC.EXE" LongName="nunit-console.exe" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-console.exe" />
+              <File Id="F__26.net_2.0.nunit_console_exe_config" Name="NUC.CFG" LongName="nunit-console.exe.config" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-console.exe.config" />
+              <File Id="F__26.net_2.0.nunit_console_x86_exe" Name="NUCX86.EXE" LongName="nunit-console-x86.exe" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-console-x86.exe" />
+              <File Id="F__26.net_2.0.nunit_console_x86_exe_config" Name="NUCX86EX.CFG" LongName="nunit-console-x86.exe.config" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-console-x86.exe.config" />
             </Component>
 						
 						<Component Id="C__26.net_2.0.gui" DiskId="1" Guid="d924149b-bb1e-475e-843a-6818ac8b1e98">
-							<File Id="F__26.net_2.0.nunit_gui" Name="NUGUI.EXE" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit.exe" LongName="nunit.exe" Vital="yes" KeyPath="yes" />
-							<File Id="F__26.net_2.0.nunit_exe_config" Name="NUEXE.CFG" LongName="nunit.exe.config" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit.exe.config" />
-							<File Id="F__26.net_2.0.nunit86_gui" Name="NUGUI86.EXE" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-x86.exe" LongName="nunit-x86.exe" />
-              <File Id="F__26.net_2.0.nunit86_exe_config" Name="NUEXE86.CFG" LongName="nunit-x86.exe.config" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-x86.exe.config" />
-              <File Id="F__26.net_2.0.nunit_agent_exe" Name="NUA.EXE" LongName="nunit-agent.exe" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-agent.exe" />
-              <File Id="F__26.net_2.0.nunit_agent_exe_config" Name="NUAEXE.CFG" LongName="nunit-agent.exe.config" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-agent.exe.config" />
-              <File Id="F__26.net_2.0.nunit_agent_x86_exe" Name="NUAX86.EXE" LongName="nunit-agent-x86.exe" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-agent-x86.exe" />
-              <File Id="F__26.net_2.0.nunit_agent_x86_exe_config" Name="NUAX86EX.CFG" LongName="nunit-agent-x86.exe.config" src="..\..\nunitaddin_2.6\artifacts\NUnit\bin\net-2.0\nunit-agent-x86.exe.config" />
+							<File Id="F__26.net_2.0.nunit_gui" Name="NUGUI.EXE" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit.exe" LongName="nunit.exe" Vital="yes" KeyPath="yes" />
+							<File Id="F__26.net_2.0.nunit_exe_config" Name="NUEXE.CFG" LongName="nunit.exe.config" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit.exe.config" />
+							<File Id="F__26.net_2.0.nunit86_gui" Name="NUGUI86.EXE" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-x86.exe" LongName="nunit-x86.exe" />
+              <File Id="F__26.net_2.0.nunit86_exe_config" Name="NUEXE86.CFG" LongName="nunit-x86.exe.config" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-x86.exe.config" />
+              <File Id="F__26.net_2.0.nunit_agent_exe" Name="NUA.EXE" LongName="nunit-agent.exe" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-agent.exe" />
+              <File Id="F__26.net_2.0.nunit_agent_exe_config" Name="NUAEXE.CFG" LongName="nunit-agent.exe.config" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-agent.exe.config" />
+              <File Id="F__26.net_2.0.nunit_agent_x86_exe" Name="NUAX86.EXE" LongName="nunit-agent-x86.exe" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-agent-x86.exe" />
+              <File Id="F__26.net_2.0.nunit_agent_x86_exe_config" Name="NUAX86EX.CFG" LongName="nunit-agent-x86.exe.config" src="..\artifacts\NUnit_2.6\bin\net-2.0\nunit-agent-x86.exe.config" />
             </Component>
 				</Directory>
 			</Directory>

@@ -86,16 +86,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.dll">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.core.dll">
       <Link>nunit.core.dll</Link>
     </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.core.interfaces.dll">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.core.interfaces.dll">
       <Link>nunit.core.interfaces.dll</Link>
     </Content>
-    <Content Include="..\..\..\artifacts\NUnit\bin\net-2.0\lib\nunit.util.dll">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\bin\net-2.0\lib\nunit.util.dll">
       <Link>nunit.util.dll</Link>
     </Content>
-    <Content Include="..\..\..\artifacts\NUnit\license.txt">
+    <Content Include="..\..\..\artifacts\NUnit_2.6\license.txt">
       <Link>license.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
