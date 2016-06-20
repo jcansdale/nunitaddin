@@ -1,4 +1,3 @@
-/src/NUnitAddIn/nunit-addin/obj/Debug
-/src/NUnitAddIn/tests/obj/Debug
+**/obj/Debug
 /src/*.suo
 /build
