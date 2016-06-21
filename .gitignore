@@ -1,3 +1,6 @@
 **/obj/Debug
 /src/*.suo
 /build
+*.suo
+/src/NUnitAddIn/nunit-addin/bin/Debug
+/src/NUnitAddIn/tests/bin/Debug
