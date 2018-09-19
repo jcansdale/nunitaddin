@@ -1,4 +1,4 @@
 /build/
 **/bin/Debug/
-**/obj/Debug/
+**/obj/
 *.suo
